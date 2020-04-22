@@ -1,0 +1,7 @@
+C:\Users\Aleksander.Parol\Documents\GitHub\TMS_XLZ_Basic\TMS_XLZ_Basic\TMS_XLZ_Basic\bin\Debug\TMS_XLZ_Basic.exe.config
+C:\Users\Aleksander.Parol\Documents\GitHub\TMS_XLZ_Basic\TMS_XLZ_Basic\TMS_XLZ_Basic\bin\Debug\TMS_XLZ_Basic.exe
+C:\Users\Aleksander.Parol\Documents\GitHub\TMS_XLZ_Basic\TMS_XLZ_Basic\TMS_XLZ_Basic\bin\Debug\TMS_XLZ_Basic.pdb
+C:\Users\Aleksander.Parol\Documents\GitHub\TMS_XLZ_Basic\TMS_XLZ_Basic\TMS_XLZ_Basic\obj\Debug\TMS_XLZ_Basic.csprojAssemblyReference.cache
+C:\Users\Aleksander.Parol\Documents\GitHub\TMS_XLZ_Basic\TMS_XLZ_Basic\TMS_XLZ_Basic\obj\Debug\TMS_XLZ_Basic.csproj.CoreCompileInputs.cache
+C:\Users\Aleksander.Parol\Documents\GitHub\TMS_XLZ_Basic\TMS_XLZ_Basic\TMS_XLZ_Basic\obj\Debug\TMS_XLZ_Basic.exe
+C:\Users\Aleksander.Parol\Documents\GitHub\TMS_XLZ_Basic\TMS_XLZ_Basic\TMS_XLZ_Basic\obj\Debug\TMS_XLZ_Basic.pdb

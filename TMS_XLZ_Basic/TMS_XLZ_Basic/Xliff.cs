@@ -60,6 +60,19 @@ namespace TMS_XLZ_Basic
 			}
 		}
 
+		public XmlNode GetTransUnitByID(int transUnitID)
+		{
+			foreach(XmlNode ent in transUnitList)
+			{
+				if(Int32.Parse(ent.Attributes["id"].Value) == transUnitID)
+				{
+					return ent;
+				}
+			}
+
+			return null;
+		}
+
 		/* This method will check the value of the attribute "translate" in the trans-unit node. */ 
 
 		public bool IfTransUnitIsTranslatable(int transUnitID)
@@ -118,7 +131,7 @@ namespace TMS_XLZ_Basic
 		public Xliff(XmlDocument inputFile)
 		{
 			transUnitList = inputFile.GetElementsByTagName("trans-unit");
-			List<XmlNode> transUnitTranslationNoList = new List<XmlNode>();
+			/*List<XmlNode> transUnitTranslationNoList = new List<XmlNode>();
 			List<XmlNode> transUnitTranslationYesList = new List<XmlNode>();
 			foreach(XmlNode en in transUnitList)
 			{
@@ -131,7 +144,7 @@ namespace TMS_XLZ_Basic
 				{
 					transUnitTranslationYesList.Add(en);
 				}
-			}
+			}*/
 										 
 		}
 

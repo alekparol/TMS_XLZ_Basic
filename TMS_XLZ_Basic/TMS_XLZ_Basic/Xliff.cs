@@ -19,6 +19,7 @@ namespace TMS_XLZ_Basic
 		/* Fields */
 
 		public XmlNodeList transUnitList;
+		public List<TransUnit> listOfTransUnitObjects;
 
 		//public XmlNodeList transUnitTranslationYesList;
 		//public XmlNodeList transUnitTranslationNoList;
@@ -93,7 +94,7 @@ namespace TMS_XLZ_Basic
 		{
 			/* Check if everything is on its place - transunitnode is named trans-unit, and if it has any child nodes.*/
 
-			return transUnitNode.SelectSingleNode("/source");
+			return transUnitNode.SelectSingleNode("./source");
 
 		}
 
@@ -128,9 +129,26 @@ namespace TMS_XLZ_Basic
 
 		}
 
+		public TransUnit CreateTransUnitNode(XmlNode transUnitNode)
+		{
+			TransUnit tr = new TransUnit(transUnitNode);
+			return tr;
+		}
+
 		public Xliff(XmlDocument inputFile)
 		{
 			transUnitList = inputFile.GetElementsByTagName("trans-unit");
+
+			listOfTransUnitObjects = new List<TransUnit>();
+			TransUnit auxillaryTransUnit;
+
+			foreach(XmlNode en in transUnitList)
+			{
+				auxillaryTransUnit = new TransUnit(en);
+				listOfTransUnitObjects.Add(auxillaryTransUnit);
+				auxillaryTransUnit = null;
+			}
+
 			/*List<XmlNode> transUnitTranslationNoList = new List<XmlNode>();
 			List<XmlNode> transUnitTranslationYesList = new List<XmlNode>();
 			foreach(XmlNode en in transUnitList)

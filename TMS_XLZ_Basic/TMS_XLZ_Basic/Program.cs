@@ -11,6 +11,7 @@ using System.Xml.XPath;
 using System.Xml.Linq;
 using System.Runtime.CompilerServices;
 using System.Threading;
+using System.Text.RegularExpressions;
 
 /* When the document is XML with CDATA, nodes don't have "ID" fields filled by number but it is "cdata x.x". */
 
@@ -49,40 +50,81 @@ namespace TMS_XLZ_Basic
             Xliff sourceXliff = new Xliff(sourceXLF);
             Xliff targetXliff = new Xliff(targetXLF);
 
-            Console.WriteLine(sourceXliff.transUnitTranslationYesList[0].GetSourceXml());
-            Console.WriteLine(targetXliff.transUnitTranslationYesList[0].GetSourceXml());
+            /* This regex will match:
+             * - <ept></ept> tags in content.xlf,
+             * - <bpt></bpt> tags in content.xlf,
+             * - <ph></ph> tags in content.xlf
+             * And all the content which is in the scope of those tags and their attributes as well.*/
+            Regex rx = new Regex("(<ept.*?>.*</?ept.*?>)|(<bpt.*?>.*</?bpt.*?>)|(<ph.*?>.*</?ph.*?>)");
+
+            Console.WriteLine(sourceXliff.transUnitTranslationYesList[0].transUnitNode.LastChild.InnerXml);
+            Console.WriteLine(targetXliff.transUnitTranslationYesList[0].transUnitNode.FirstChild.InnerXml);
+
+            Console.WriteLine(sourceXliff.transUnitTranslationYesList[0].GetSourceInnerXmlWithoutText());
+            Console.WriteLine(targetXliff.transUnitTranslationYesList[0].GetSourceInnerXmlWithoutText());
+
+            XmlDocument sourceSKL = new XmlDocument();
+            XmlDocument targetSKL = new XmlDocument();
+
+            sourceSKL.Load("C:\\Users\\Aleksander.Parol\\Desktop\\GLT_Engineering\\Documentation\\Script\\C# Script Translate with the source\\de-de\\source\\skeleton.skl");
+            targetSKL.Load("C:\\Users\\Aleksander.Parol\\Desktop\\GLT_Engineering\\Documentation\\Script\\C# Script Translate with the source\\de-de\\target\\skeleton.skl");
+
+            Skeleton sourceSkeleton = new Skeleton(sourceSKL);
+            Skeleton targetSkeleton = new Skeleton(targetSKL);
+
+            //Console.WriteLine(sourceSkeleton.skeletonUnitsList[0].formattingNode.InnerText);
+            //Console.WriteLine(targetSkeleton.skeletonUnitsList[0].formattingNode.InnerText);
 
             XmlElement targetNode;
 
-            for(int i = 0; i < sourceXliff.transUnitTranslationYesList.Count; i++)
+            for (int i = 0; i < sourceXliff.transUnitTranslationYesList.Count; i++)
             {
+
+                int ID = sourceXliff.transUnitTranslationYesList[i].GetTransUnitID();
+                targetNode = sourceXLF.CreateElement("target");
+
+                if (sourceXliff.GetTransUnitByID(ID).GetSourceInnerXmlWithoutText() ==
+                    targetXliff.GetTransUnitByID(ID).GetSourceInnerXmlWithoutText())
+                {
+                    if (sourceSkeleton.GetSkeletonUnitByID(ID).formattingNode != null &&
+                    targetSkeleton.GetSkeletonUnitByID(ID).formattingNode != null)
+                    {
+                        if (sourceSkeleton.GetSkeletonUnitByID(ID).formattingNode.InnerText ==
+                            targetSkeleton.GetSkeletonUnitByID(ID).formattingNode.InnerText)
+                        {
+
+                            targetNode.InnerXml = targetXliff.transUnitTranslationYesList[i].GetSourceXml();
+
+                            sourceXliff.transUnitTranslationYesList[i].transUnitNode.AppendChild(targetNode);
+
+                        }
+                    }
+                    else
+                    {
+
+                        if (sourceSkeleton.GetSkeletonUnitByID(ID).formattingNode == null &&
+                            targetSkeleton.GetSkeletonUnitByID(ID).formattingNode == null)
+                        {
+
+                            targetNode.InnerXml = targetXliff.transUnitTranslationYesList[i].GetSourceXml();
+
+                            sourceXliff.transUnitTranslationYesList[i].transUnitNode.AppendChild(targetNode);
+
+                        }
+
+                    }
+                }     
+                        
+            }
+
+            /*XmlElement targetNode;
+
+            for(int i = 0; i < sourceXliff.transUnitTranslationYesList.Count; i++)
+            {          
                 targetNode = sourceXLF.CreateElement("target");
                 targetNode.InnerXml = targetXliff.transUnitTranslationYesList[i].GetSourceXml();
 
                 sourceXliff.transUnitTranslationYesList[i].transUnitNode.AppendChild(targetNode);
-            }
-
-            /*int auxillaryID;
-            string auxillaryNodeString;
-
-            TransUnit auxillaryTransUnit;
-
-            XmlNode sourceNode;
-            XmlElement auxillaryNode;*/
-
-            /*foreach(TransUnit entity in targetXliff.transUnitTranslationYesList)
-            {
-
-                auxillaryID = entity.GetTransUnitID();
-
-                auxillaryNode = sourceXLF.CreateElement("target");
-                auxillaryTransUnit = targetXliff.GetTransUnitByID(auxillaryID);
-
-                auxillaryNode.InnerXml = auxillaryTransUnit.GetSourceXml();
-
-                sourceNode = sourceXLF.GetElementById(auxillaryID.ToString());
-                sourceNode.AppendChild(auxillaryNode);
-
             }*/
 
             sourceXLF.Save("C:\\Users\\Aleksander.Parol\\Desktop\\GLT_Engineering\\Documentation\\Script\\C# Script Translate with the source\\content.xlf");

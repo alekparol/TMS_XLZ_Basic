@@ -10,6 +10,7 @@ using System.Xml.Xsl;
 using System.Xml.XPath;
 using System.Xml.Linq;
 using System.Runtime.CompilerServices;
+using System.Text.RegularExpressions;
 
 /*TODO: Extending this class according to the http://docs.oasis-open.org/xliff/v1.2/os/xliff-core.html */
 
@@ -99,10 +100,20 @@ namespace TMS_XLZ_Basic
 
         public string GetSourceInnerXmlWithoutText()
         {
-            string sourceText = sourceNode.InnerText;
-            string xmlWithoutText = sourceNode.InnerXml.Replace(sourceText, "");
 
-            return xmlWithoutText;
+
+            string unionOfMatches = "";
+            string auxilliaryInnerXml = sourceNode.InnerXml;
+
+            Regex rx = new Regex("(<ept.*?>.*</?ept.*?>)|(<bpt.*?>.*</?bpt.*?>)|(<ph.*?>.*</?ph.*?>)");
+            MatchCollection matches = rx.Matches(auxilliaryInnerXml);
+
+            foreach(Match en in matches)
+            {
+                unionOfMatches = unionOfMatches + en.Value;
+            }
+
+            return unionOfMatches;
         }
 
         public string GetTargetInnerXmlWithoutText()

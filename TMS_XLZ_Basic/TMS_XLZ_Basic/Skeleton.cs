@@ -18,12 +18,27 @@ namespace TMS_XLZ_Basic
 
         /* Fields */
 
-        XmlDocument baseDocument;
+        public XmlDocument baseDocument;
 
-        List<SkeletonUnit> skeletonUnitsList;
+        public List<SkeletonUnit> skeletonUnitsList;
 
 
         /* Methods */
+
+        public SkeletonUnit GetSkeletonUnitByID(int ID)
+        {
+            for (int i = 0; i < skeletonUnitsList.Count; i++)
+            {
+
+                if (skeletonUnitsList[i].GetSkeletonUnitID() == ID)
+                {
+                    return skeletonUnitsList[i];
+                }
+
+            }
+
+            return null;
+        }
 
         /* Constructors */
 

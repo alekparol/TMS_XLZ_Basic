@@ -15,5 +15,37 @@ namespace TMS_XLZ_Basic
 {
     class Skeleton
     {
+
+        /* Fields */
+
+        XmlDocument baseDocument;
+
+        List<SkeletonUnit> skeletonUnitsList;
+
+
+        /* Methods */
+
+        /* Constructors */
+
+        public Skeleton(XmlDocument inputFile)
+        {
+            baseDocument = inputFile;
+
+            skeletonUnitsList = new List<SkeletonUnit>();
+
+            XmlNodeList auxillaryList = baseDocument.GetElementsByTagName("tu-placeholder");
+            SkeletonUnit auxillarySkeletonUnit;
+
+            foreach(XmlNode entity in auxillaryList)
+            {
+
+                auxillarySkeletonUnit = new SkeletonUnit(entity);
+                skeletonUnitsList.Add(auxillarySkeletonUnit);
+
+            }
+
+        }
+
+
     }
 }

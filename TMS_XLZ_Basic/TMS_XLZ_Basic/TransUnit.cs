@@ -98,15 +98,21 @@ namespace TMS_XLZ_Basic
 
         /* Functions for Get source and target Xml nodes' inner Xml code without translatable text. */
 
-        public string GetSourceInnerXmlWithoutText()
+        public string GetInnerXmlWithoutText(XmlNode sourceOrTargetNode)
         {
 
 
             string unionOfMatches = "";
-            string auxilliaryInnerXml = sourceNode.InnerXml;
+            string innerTextOfTheNode = sourceOrTargetNode.InnerXml;
+
+            /* This regex will match:
+            * - <ept></ept> tags in content.xlf,
+            * - <bpt></bpt> tags in content.xlf,
+            * - <ph></ph> tags in content.xlf
+            * And all the content which is in the scope of those tags and their attributes as well.*/
 
             Regex rx = new Regex("(<ept.*?>.*</?ept.*?>)|(<bpt.*?>.*</?bpt.*?>)|(<ph.*?>.*</?ph.*?>)");
-            MatchCollection matches = rx.Matches(auxilliaryInnerXml);
+            MatchCollection matches = rx.Matches(innerTextOfTheNode);
 
             foreach(Match en in matches)
             {
@@ -116,12 +122,14 @@ namespace TMS_XLZ_Basic
             return unionOfMatches;
         }
 
+        public string GetSourceInnerXmlWithoutText()
+        {
+            return GetInnerXmlWithoutText(sourceNode);
+        }
+
         public string GetTargetInnerXmlWithoutText()
         {
-            string targetText = targetNode.InnerText;
-            string xmlWithoutText = targetNode.InnerXml.Replace(targetText, "");
-
-            return xmlWithoutText;
+            return GetInnerXmlWithoutText(targetNode);
         }
 
         /* Functions for Get source and target Xml nodes' outer Xml code without translatable text. */

@@ -63,6 +63,9 @@ namespace TMS_XLZ_Basic
             Console.WriteLine(sourceXliff.transUnitTranslationYesList[0].GetSourceInnerXmlWithoutText());
             Console.WriteLine(targetXliff.transUnitTranslationYesList[0].GetSourceInnerXmlWithoutText());
 
+            Console.WriteLine(sourceXliff.transUnitTranslationYesList[0].GetSourceInnerTextWithoutXml()); 
+            Console.WriteLine(targetXliff.transUnitTranslationYesList[0].GetSourceInnerTextWithoutXml());
+
             XmlDocument sourceSKL = new XmlDocument();
             XmlDocument targetSKL = new XmlDocument();
 

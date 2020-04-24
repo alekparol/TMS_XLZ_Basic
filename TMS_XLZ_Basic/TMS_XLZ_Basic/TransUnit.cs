@@ -62,8 +62,7 @@ namespace TMS_XLZ_Basic
         /* Functions for Get source and target Xml nodes.*/
 
         public XmlNode GetSourceNode()
-        {
-            
+        {            
             return sourceNode;
         }
 
@@ -130,6 +129,30 @@ namespace TMS_XLZ_Basic
         public string GetTargetInnerXmlWithoutText()
         {
             return GetInnerXmlWithoutText(targetNode);
+        }
+
+        public string GetInnerTextWithoutXml(XmlNode sourceOrTargetNode)
+        {
+
+            string setminusOfMatches = "";
+            string innerTextOfTheNode = sourceOrTargetNode.InnerXml;
+
+            Regex rx = new Regex("(<ept.*?>.*</?ept.*?>)|(<bpt.*?>.*</?bpt.*?>)|(<ph.*?>.*</?ph.*?>)");
+            setminusOfMatches = rx.Replace(innerTextOfTheNode,string.Empty);
+
+
+            return setminusOfMatches;
+
+        }
+
+        public string GetSourceInnerTextWithoutXml()
+        {
+            return GetInnerTextWithoutXml(sourceNode);
+        }
+
+        public string GetTargetInnerTextWithoutXml()
+        {
+            return GetInnerTextWithoutXml(targetNode);
         }
 
         /* Functions for Get source and target Xml nodes' outer Xml code without translatable text. */

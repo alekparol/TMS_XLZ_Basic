@@ -23,6 +23,8 @@ namespace TMS_XLZ_Basic
         public string outerXml;
         public string innerXml;
 
+        public XmlNode transUnitNode;
+
         public XmlNode sourceNode;
         public XmlNode targetNode;
 
@@ -58,7 +60,7 @@ namespace TMS_XLZ_Basic
 
         /* Functions for Get source and target Xml nodes.*/
 
-        public XmlNode GetSourceNode(XmlNode transUnitNode)
+        public XmlNode GetSourceNode()
         {
             
             return sourceNode;
@@ -147,6 +149,10 @@ namespace TMS_XLZ_Basic
 
         public TransUnit(XmlNode transUnitNode)
         {
+
+            /* Initializing transUnitNode field. */
+
+            this.transUnitNode = transUnitNode;
 
             /* Initializing ID field. */
 

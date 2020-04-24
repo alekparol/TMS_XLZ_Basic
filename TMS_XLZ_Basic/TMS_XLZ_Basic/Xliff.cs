@@ -18,6 +18,8 @@ namespace TMS_XLZ_Basic
 
 		/* Fields */
 
+		public XmlDocument baseDocument;
+
 		public XmlNodeList transUnitList;
 		public List<TransUnit> listOfTransUnitObjects;
 
@@ -27,11 +29,24 @@ namespace TMS_XLZ_Basic
 
 		/* Methods */
 
-		public XmlNode GetTransUnitByID(int transUnitID)
+		public XmlNode GetNodeByID(int transUnitID)
 		{
 			foreach(XmlNode ent in transUnitList)
 			{
 				if(Int32.Parse(ent.Attributes["id"].Value) == transUnitID)
+				{
+					return ent;
+				}
+			}
+
+			return null;
+		}
+
+		public TransUnit GetTransUnitByID(int transUnitID)
+		{
+			foreach (TransUnit ent in listOfTransUnitObjects)
+			{
+				if ((ent.GetTransUnitID()) == transUnitID)
 				{
 					return ent;
 				}
@@ -64,6 +79,8 @@ namespace TMS_XLZ_Basic
 
 		public Xliff(XmlDocument inputFile)
 		{
+			baseDocument = inputFile;
+
 			transUnitList = inputFile.GetElementsByTagName("trans-unit");
 
 			listOfTransUnitObjects = new List<TransUnit>();

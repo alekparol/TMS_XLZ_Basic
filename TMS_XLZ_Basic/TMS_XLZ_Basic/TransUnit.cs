@@ -131,7 +131,7 @@ namespace TMS_XLZ_Basic
 
         /* Function that returns boolean value responsible for translation. */
 
-        public bool IfTranslatable()
+        public bool IsTranslatable()
         {
             return translatable;
         }
@@ -154,11 +154,11 @@ namespace TMS_XLZ_Basic
 
             if (success)
             {
-                ID = -1;
+                ID = transUnitID;
             }
             else
             {
-                ID = transUnitID;
+                ID = -1;
             }
 
             /* Initializing translatable field. */

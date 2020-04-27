@@ -65,7 +65,7 @@ namespace TMS_XLZ_Basic
         /* Functions for Get source and target Xml nodes.*/
 
         public XmlNode GetSourceNode()
-        {            
+        {
             return sourceNode;
         }
 
@@ -115,7 +115,7 @@ namespace TMS_XLZ_Basic
             Regex rx = new Regex("(<ept.*?>.*</?ept.*?>)|(<bpt.*?>.*</?bpt.*?>)|(<ph.*?>.*</?ph.*?>)");
             MatchCollection matches = rx.Matches(innerTextOfTheNode);
 
-            foreach(Match en in matches)
+            foreach (Match en in matches)
             {
                 unionOfMatches = unionOfMatches + en.Value;
             }
@@ -140,7 +140,7 @@ namespace TMS_XLZ_Basic
             string innerTextOfTheNode = sourceOrTargetNode.InnerXml;
 
             Regex rx = new Regex("(<ept.*?>.*</?ept.*?>)|(<bpt.*?>.*</?bpt.*?>)|(<ph.*?>.*</?ph.*?>)");
-            setminusOfMatches = rx.Replace(innerTextOfTheNode,string.Empty);
+            setminusOfMatches = rx.Replace(innerTextOfTheNode, string.Empty);
 
 
             return setminusOfMatches;
@@ -205,7 +205,7 @@ namespace TMS_XLZ_Basic
         {
 
         }
-        
+
         public void GetTextBPTID(int BPTID)
         {
             /*<bpt id="x"></bpt>We are talking abouth this text<ept id="x"></ept>*/
@@ -241,7 +241,7 @@ namespace TMS_XLZ_Basic
             {
                 translatable = false;
             }
-            else if(transUnitNode.Attributes["translate"].Value == "yes")
+            else if (transUnitNode.Attributes["translate"].Value == "yes")
             {
                 translatable = true;
             }
@@ -249,7 +249,7 @@ namespace TMS_XLZ_Basic
 
             /* Initializing sourceNode and targetNode fields. */
 
-            if(transUnitNode.SelectSingleNode("./source") != null)
+            if (transUnitNode.SelectSingleNode("./source") != null)
             {
                 validationResult += 1;
                 sourceNode = transUnitNode.SelectSingleNode("./source");
@@ -259,7 +259,7 @@ namespace TMS_XLZ_Basic
                 validationResult -= 2;
             }
 
-            if(transUnitNode.SelectSingleNode("./target") != null)
+            if (transUnitNode.SelectSingleNode("./target") != null)
             {
                 validationResult += 1;
                 targetNode = transUnitNode.SelectSingleNode("./target");
@@ -271,7 +271,7 @@ namespace TMS_XLZ_Basic
 
             outerXml = transUnitNode.OuterXml;
             innerXml = transUnitNode.InnerXml;
-            
+
 
         }
 

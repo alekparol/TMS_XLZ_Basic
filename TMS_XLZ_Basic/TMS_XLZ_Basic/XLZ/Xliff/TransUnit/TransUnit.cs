@@ -26,6 +26,9 @@ namespace TMS_XLZ_Basic
 
         public XmlNode transUnitNode;
 
+        public XmlNode previousTranslatableNode;
+        public XmlNode previousUntranslatableNode;
+
         public XmlNode sourceNode;
         public XmlNode targetNode;
 
@@ -99,7 +102,6 @@ namespace TMS_XLZ_Basic
 
         public string GetInnerXmlWithoutText(XmlNode sourceOrTargetNode)
         {
-
 
             string unionOfMatches = "";
             string innerTextOfTheNode = sourceOrTargetNode.InnerXml;
@@ -187,6 +189,28 @@ namespace TMS_XLZ_Basic
             return ID;
         }
 
+        /* Experimental methods */
+
+        public void GetBPT()
+        {
+
+        }
+
+        public void GetEPT()
+        {
+
+        }
+
+        public void GetPH()
+        {
+
+        }
+        
+        public void GetTextBPTID(int BPTID)
+        {
+            /*<bpt id="x"></bpt>We are talking abouth this text<ept id="x"></ept>*/
+        }
+
         /* Constructors */
 
         public TransUnit(XmlNode transUnitNode)
@@ -195,6 +219,8 @@ namespace TMS_XLZ_Basic
             /* Initializing transUnitNode field. */
 
             this.transUnitNode = transUnitNode;
+
+            /* Initializing previous syblings fields. */
 
             /* Initializing ID field. */
 

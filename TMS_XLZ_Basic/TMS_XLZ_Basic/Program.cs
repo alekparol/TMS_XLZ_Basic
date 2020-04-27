@@ -15,6 +15,13 @@ using System.Text.RegularExpressions;
 
 /* When the document is XML with CDATA, nodes don't have "ID" fields filled by number but it is "cdata x.x". */
 
+/* This regex will match:
+             * - <ept></ept> tags in content.xlf,
+             * - <bpt></bpt> tags in content.xlf,
+             * - <ph></ph> tags in content.xlf
+             * And all the content which is in the scope of those tags and their attributes as well.
+              Regex rx = new Regex("(<ept.*?>.*</?ept.*?>)|(<bpt.*?>.*</?bpt.*?>)|(<ph.*?>.*</?ph.*?>)");*/
+
 namespace TMS_XLZ_Basic
 {
     class Program
@@ -22,7 +29,9 @@ namespace TMS_XLZ_Basic
         static void Main(string[] args)
         {
 
-            /*XmlDocument doc = new XmlDocument();
+            /* 0. Test program.
+             * 
+             * XmlDocument doc = new XmlDocument();
             doc.Load("C:\\Users\\Aleksander.Parol\\Desktop\\GLT_Engineering\\Documentation\\Script\\source\\content.xlf");
 
 
@@ -41,6 +50,8 @@ namespace TMS_XLZ_Basic
             Console.WriteLine(xliffFile.GetNodeByID(1).InnerText);
             Console.WriteLine(xliffFile.GetNodeByID(1).SelectSingleNode("./source").InnerText);*/
 
+            /* 1. Copying source from one XLZ to the other. 
+
             XmlDocument sourceXLF = new XmlDocument();
             XmlDocument targetXLF = new XmlDocument();
 
@@ -50,11 +61,6 @@ namespace TMS_XLZ_Basic
             Xliff sourceXliff = new Xliff(sourceXLF);
             Xliff targetXliff = new Xliff(targetXLF);
 
-            /* This regex will match:
-             * - <ept></ept> tags in content.xlf,
-             * - <bpt></bpt> tags in content.xlf,
-             * - <ph></ph> tags in content.xlf
-             * And all the content which is in the scope of those tags and their attributes as well.*/
             Regex rx = new Regex("(<ept.*?>.*</?ept.*?>)|(<bpt.*?>.*</?bpt.*?>)|(<ph.*?>.*</?ph.*?>)");
 
             Console.WriteLine(sourceXliff.transUnitTranslationYesList[0].transUnitNode.LastChild.InnerXml);
@@ -75,10 +81,58 @@ namespace TMS_XLZ_Basic
             Skeleton sourceSkeleton = new Skeleton(sourceSKL);
             Skeleton targetSkeleton = new Skeleton(targetSKL);
 
+          
+
+
             //Console.WriteLine(sourceSkeleton.skeletonUnitsList[0].formattingNode.InnerText);
             //Console.WriteLine(targetSkeleton.skeletonUnitsList[0].formattingNode.InnerText);
 
             XmlElement targetNode;
+
+            for (int i = 0; i < sourceSkeleton.skeletonUnitsList.Count; i++)
+            {
+                if (sourceSkeleton.skeletonUnitsList[i].formattingNode != null &&
+                    targetSkeleton.skeletonUnitsList[i].formattingNode != null)
+                {
+                    if(sourceSkeleton.skeletonUnitsList[i].formattingNode.InnerText != 
+                       targetSkeleton.skeletonUnitsList[i].formattingNode.InnerText)
+                    {
+                        /* Then we search through the target skeleton for the formatting node which is the same. 
+                         * If the node is the same:
+                         * 1) We should get skeletonUnit ID, 
+                         * 2) With this ID we can get corresponding transUnit,
+                         * 3) TransUnit inner text we save to the auxillary string variable, 
+                         * 4) This string we concatate to the previous transUnit which is translatable,
+                         * 5) Then we copy the formatting of the skeletonUnit from the step 1), to the skeletonUnit 
+                         * of the index [i] on the list. 
+                         * 6) The same thing we do for the corresponding transUnit.*/
+            /*for(int j = i; j < targetSkeleton.skeletonUnitsList.Count; j++)
+            {
+                if (targetSkeleton.skeletonUnitsList[j].formattingNode != null)
+                {
+                    if (sourceSkeleton.skeletonUnitsList[i].formattingNode.InnerText ==
+                        targetSkeleton.skeletonUnitsList[j].formattingNode.InnerText)
+                    {
+                        int skeletonUnitID = targetSkeleton.skeletonUnitsList[j].GetSkeletonUnitID();
+                        TransUnit correspondingTransUnit = targetXliff.GetTransUnitByID(skeletonUnitID);
+
+                        string auxillaryString = correspondingTransUnit.GetSourceText();
+
+                        TransUnit previousTranslatableTransUnit = new TransUnit(correspondingTransUnit.transUnitNode.PreviousSibling.PreviousSibling);
+                        previousTranslatableTransUnit.innerXml += auxillaryString;
+
+                        targetSkeleton.skeletonUnitsList[j].formattingNode.InnerText = targetSkeleton.skeletonUnitsList[i].formattingNode.InnerText;
+                        targetXliff.transUnitList[j].InnerText = targetXliff.transUnitList[i].InnerText;
+                    }
+                }
+
+            }
+        }
+    }
+}*/
+
+            /*targetSKL.Save("C:\\Users\\Aleksander.Parol\\Desktop\\GLT_Engineering\\Documentation\\Script\\C# Script Translate with the source\\skeleton.skl");
+
 
             for (int i = 0; i < sourceXliff.transUnitTranslationYesList.Count; i++)
             {
@@ -119,6 +173,8 @@ namespace TMS_XLZ_Basic
                 }     
                         
             }
+            sourceXLF.Save("C:\\Users\\Aleksander.Parol\\Desktop\\GLT_Engineering\\Documentation\\Script\\C# Script Translate with the source\\content.xlf");
+             */
 
             /*XmlElement targetNode;
 
@@ -130,10 +186,35 @@ namespace TMS_XLZ_Basic
                 sourceXliff.transUnitTranslationYesList[i].transUnitNode.AppendChild(targetNode);
             }*/
 
-            sourceXLF.Save("C:\\Users\\Aleksander.Parol\\Desktop\\GLT_Engineering\\Documentation\\Script\\C# Script Translate with the source\\content.xlf");
+            /* 2. Block Yellow Highlight.
+             * Description: blocking other way that TMS scripts - it will block all segments, if whole segment is highlighted, 
+             * and it will block only a phrase if only a phrase is highlighted, using tilt tag. 
+             * <ph equiv-text="World Safety Day" tilt:type="do-not-translate" id="2">World Safety Day</ph>.
+             * Id thing is related to number of <*.?id=\d+.*?> tags in the segment. So firstly we need to check what is the maximal id there
+             * and then add one.
+             *    */
+        
+            /* Of course the initial part should be changed to work on the XLZ files, not content.xlf. */    
+            XmlDocument doc = new XmlDocument();
+            doc.Load("C:\\Users\\Aleksander.Parol\\Desktop\\GLT_Engineering\\Documentation\\Script\\C# Script Block all except yellow highlight\\Blocked by the existing script\\content.xlf");
 
+            Xliff xlifffile = new Xliff(doc);
 
-			Thread.Sleep(7000);
+            BPT testBPT = new BPT("<bpt id=\"1\">&lt;cf font=\"Arial\" asiantextfont=\"Arial\" complexscriptsfont=\"Arial\"&gt;</bpt>");
+            Console.WriteLine(testBPT.bptID);
+            Console.WriteLine(testBPT.bptContent);
+
+            //foreach(TransUnit segemtent in xlifffile.listOfTransUnitObjects)
+            //{
+
+            /*If whole inner text is between yellow highligh tags 
+             *that is - whole inner text is between <bpt></bpt><ept></ept> tags in which <bpt> there is highlight="yellow".
+             * 1. If it is the whole text, script should change only translatable="" attribute in the transUnit into "No".
+             * 2. If this is not the whole text, script should add tilt tag.*/
+
+            //}
+
+            Thread.Sleep(7000);
 
 
 

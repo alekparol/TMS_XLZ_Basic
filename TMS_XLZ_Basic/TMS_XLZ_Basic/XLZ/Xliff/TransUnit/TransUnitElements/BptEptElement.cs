@@ -48,7 +48,9 @@ namespace TMS_XLZ_Basic.XLZ.Xliff.TransUnit.TransUnitElements
 
         private bool hasNested;
         private bool parsingSuccess = false;
-        private bool isPaired = false; 
+        private bool isPaired = false;
+
+        private BptEptElement nestedElement;
 
         /* Properties */
 
@@ -74,7 +76,7 @@ namespace TMS_XLZ_Basic.XLZ.Xliff.TransUnit.TransUnitElements
         public BptEptElement(string matchBptEpt)
         {
 
-            Regex regexBptEpt = new Regex("(<bpt.*?(id=\"(\\d)\")?>.*?</bpt>)(.*?)(<ept.*?(id=\"(\\d)\")?>.*?</ept>)");
+            Regex regexBptEpt = new Regex("(<bpt.*?(id=\"(\\d+)\")?>.*?</bpt>)(.*?)(<ept.*?(id=\"(\\d+)\")?>.*?</ept>)");
             Match matchesBptEpt = regexBptEpt.Match(matchBptEpt);
 
             if (matchesBptEpt.Value != string.Empty)
@@ -93,11 +95,21 @@ namespace TMS_XLZ_Basic.XLZ.Xliff.TransUnit.TransUnitElements
                 if (bptElement.BptID == eptElement.EptID)
                 {
                     isPaired = true;
-
                     textBetween = matchesBptEpt.Groups[4].Value;
+
+                    Match matchesNestedBptEpt = regexBptEpt.Match(textBetween);
+                    
+                    if(matchesNestedBptEpt.Value != string.Empty)
+                    {
+                        hasNested = true;
+                        nestedElement = new BptEptElement(matchesNestedBptEpt.Value);
+                       
+                    }
                 }
                 else
                 {
+
+                    Regex regexBptEptPaired = new Regex("(<bpt.*?(id=\"(\\d)\")?>.*?</bpt>)(.*?)(<ept.*?(id=\"(\\d)\")?>.*?</ept>)");
 
                 }
 

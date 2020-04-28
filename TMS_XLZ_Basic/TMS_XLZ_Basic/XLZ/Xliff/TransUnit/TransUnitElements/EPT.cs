@@ -49,7 +49,7 @@ namespace TMS_XLZ_Basic
         public EPT(string matchEPT)
         {
 
-            Regex regexEPT = new Regex("(<ept.*?(id=\"(\\d)\")?>(.*?)</ept>)");
+            Regex regexEPT = new Regex("(<ept.*?(id=\"(\\d+)\")?>(.*?)</ept>)");
             Match matchesEPT = regexEPT.Match(matchEPT);
 
             if (matchesEPT.Value != string.Empty)

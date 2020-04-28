@@ -32,8 +32,10 @@ namespace TMS_XLZ_Basic
 
         /* Fields */
 
-        public string bptContent;
-        public int bptID;
+        private string bptContent;
+        private int bptID;
+
+        private bool parsingSuccess = false; 
 
         /* Properties */
 
@@ -50,6 +52,14 @@ namespace TMS_XLZ_Basic
             get
             {
                 return bptID;
+            }
+        }
+
+        public bool ParsingSuccess
+        {
+            get
+            {
+                return parsingSuccess;
             }
         }
 
@@ -72,23 +82,30 @@ namespace TMS_XLZ_Basic
         /* Constructors */
         public BPT(string matchBPT)
         {
-
-            Regex regexBPT = new Regex("(<bpt.*?(id=\"(\\d)\")?>(.*?)</?bpt>)");
+                           
+            Regex regexBPT = new Regex("(<bpt.*?(id=\"(\\d)\")?>(.*?)</bpt>)");
             Match matchesBPT = regexBPT.Match(matchBPT);
 
-            /* Initializing value of bptID with the valuse of the third group in the regex pattern and converting to int32.*/
-
-            bool success = Int32.TryParse(matchesBPT.Groups[3].Value, out int transUnitID);
-            if (success)
+            if(matchesBPT.Value != string.Empty)
             {
-                bptID = transUnitID;
-            }
-            else
-            {
-                bptID = -1;
-            }
 
-            bptContent = matchesBPT.Groups[4].Value;
+                parsingSuccess = true;
+
+                /* Initializing value of bptID with the valuse of the third group in the regex pattern and converting to int32.*/
+
+                bool success = Int32.TryParse(matchesBPT.Groups[3].Value, out int transUnitID);
+
+                if (success)
+                {
+                    bptID = transUnitID;
+                }
+                else
+                {
+                    bptID = -1;
+                }
+
+                bptContent = matchesBPT.Groups[4].Value;
+            }
 
         }
 

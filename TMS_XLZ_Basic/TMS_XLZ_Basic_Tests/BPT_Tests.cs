@@ -33,7 +33,7 @@ namespace TMS_XLZ_Basic_Tests
         [TestMethod]
         public void BPT_Parsing_Success_Test_3()
         {
-            string testBPTRaw = "teststring test<\bpt>";
+            string testBPTRaw = "teststring test</bpt>";
 
             BPT parsedBPT = new BPT(testBPTRaw);
 

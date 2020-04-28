@@ -1,20 +1,33 @@
 ﻿using System;
-using System.IO;
 using System.Diagnostics;
 using System.Collections.Specialized;
-using System.Collections.Generic;
-using System.Linq;
 using System.Text;
-using System.Xml;
-using System.Xml.Xsl;
-using System.Xml.XPath;
-using System.Xml.Linq;
-using System.Runtime.CompilerServices;
 using System.Text.RegularExpressions;
+using System.Dynamic;
+
+/* BPT class is used to model all the information from <bpt></bpt> tags in trans-unit nodes. Usually the form of the <bpt> node is 
+ * as below:
+ * <bpt id="x">&lt;attr_1="a_1",...,attr_i="a_i"&gt;</bpt>,
+ * where &lt; and &gt; are entities corresponding to "<" and ">",
+ * attr_1,...,attr_i are denoting some specifical attribute, 
+ * a_1,...,a_i are denoting some specifical value of the attribute. 
+ * 
+ * 
+ * Notes: 
+ * - bptID 
+ * 
+ * Further development: This class could be improved by adding fields corresponding to more document attributes, which could be 
+ * covered by the BPT class. For example <bpt> tags contains information:
+ * - font="Arial",
+ * - asiantextfont="Arial",
+ * - complexscriptsbold="on",
+ * - bold="on",
+ * - hyperlink Id="1",
+ * - size="18"*/
 
 namespace TMS_XLZ_Basic
 {
-    class BPT
+    public class BPT
     {
 
         /* Fields */
@@ -22,8 +35,39 @@ namespace TMS_XLZ_Basic
         public string bptContent;
         public int bptID;
 
+        /* Properties */
+
+        public string BptContent
+        {
+            get
+            {
+                return bptContent;
+            }
+        }
+
+        public int BptID
+        {
+            get
+            {
+                return bptID;
+            }
+        }
+
         /* Methods */
 
+        /* Method that checks if the text between <bpt> tags contain information regarding yellow highlight. */
+
+        public bool IsYellowHighlight()
+        {
+            if (bptContent.Contains("highlight=\"yellow\""))
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
 
         /* Constructors */
         public BPT(string matchBPT)

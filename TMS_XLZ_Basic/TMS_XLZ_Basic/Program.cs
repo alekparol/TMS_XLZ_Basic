@@ -12,6 +12,7 @@ using System.Xml.Linq;
 using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Text.RegularExpressions;
+using System.Net;
 
 /* When the document is XML with CDATA, nodes don't have "ID" fields filled by number but it is "cdata x.x". */
 
@@ -193,16 +194,15 @@ namespace TMS_XLZ_Basic
              * Id thing is related to number of <*.?id=\d+.*?> tags in the segment. So firstly we need to check what is the maximal id there
              * and then add one.
              *    */
-        
-            /* Of course the initial part should be changed to work on the XLZ files, not content.xlf. */    
-            XmlDocument doc = new XmlDocument();
-            doc.Load("C:\\Users\\Aleksander.Parol\\Desktop\\GLT_Engineering\\Documentation\\Script\\C# Script Block all except yellow highlight\\Blocked by the existing script\\content.xlf");
 
-            Xliff xlifffile = new Xliff(doc);
+            /* Of course the initial part should be changed to work on the XLZ files, not content.xlf. */
+            //XmlDocument doc = new XmlDocument();
+            //doc.Load("C:\\Users\\Aleksander.Parol\\Desktop\\GLT_Engineering\\Documentation\\Script\\C# Script Block all except yellow highlight\\Blocked by the existing script\\content.xlf");
 
-            BPT testBPT = new BPT("<bpt id=\"1\">&lt;cf font=\"Arial\" asiantextfont=\"Arial\" complexscriptsfont=\"Arial\"&gt;</bpt>");
-            Console.WriteLine(testBPT.bptID);
-            Console.WriteLine(testBPT.bptContent);
+            // Xliff xlifffile = new Xliff(doc);
+
+            //BPT testBPT = new BPT("<bpt id=\"1\">&lt;cf font=\"Arial\" asiantextfont=\"Arial\" complexscriptsfont=\"Arial\"&gt;</bpt>");
+            //Console.WriteLine(testBPT.bptID);
 
             //foreach(TransUnit segemtent in xlifffile.listOfTransUnitObjects)
             //{
@@ -213,6 +213,20 @@ namespace TMS_XLZ_Basic
              * 2. If this is not the whole text, script should add tilt tag.*/
 
             //}
+
+            string aspxFile = File.ReadAllText(@"C:\Users\Aleksander.Parol\Desktop\GLT_Engineering\Outlook\2020.04.27\HR Bulk Translations, aspx files ( ENG)\Process\Decodin - Encoding\Business_Resource_Groups.aspx");
+            aspxFile = aspxFile.Replace("<!--[if gte mso 9]>", "<placeholder>");
+            aspxFile = aspxFile.Replace("<![endif]-->", "</placeholder>");
+
+            string decoded = WebUtility.HtmlDecode(aspxFile);            
+
+            File.WriteAllText(@"C:\Users\Aleksander.Parol\Desktop\GLT_Engineering\Outlook\2020.04.27\HR Bulk Translations, aspx files ( ENG)\Process\Decodin - Decoded.aspx", decoded);
+
+            string encoded = WebUtility.HtmlEncode(decoded);
+            encoded = encoded.Replace("<placeholder>","<!--[if gte mso 9]>");
+            encoded = encoded.Replace("</placeholder>","<![endif]-->");
+
+            File.WriteAllText(@"C:\Users\Aleksander.Parol\Desktop\GLT_Engineering\Outlook\2020.04.27\HR Bulk Translations, aspx files ( ENG)\Process\Decodin - Encoded.aspx", encoded);
 
             Thread.Sleep(7000);
 

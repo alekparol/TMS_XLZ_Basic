@@ -83,7 +83,7 @@ namespace TMS_XLZ_Basic
         public BPT(string matchBPT)
         {
                            
-            Regex regexBPT = new Regex("(<bpt.*?(id=\"(\\d)\")?>(.*?)</bpt>)");
+            Regex regexBPT = new Regex("(<bpt.*?(id=\"(\\d+)\")?>(.*?)</bpt>)");
             Match matchesBPT = regexBPT.Match(matchBPT);
 
             if(matchesBPT.Value != string.Empty)

@@ -49,6 +49,7 @@
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BptEptElement_Tests.cs" />
     <Compile Include="EPT_Tests.cs" />
     <Compile Include="BPT_Tests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

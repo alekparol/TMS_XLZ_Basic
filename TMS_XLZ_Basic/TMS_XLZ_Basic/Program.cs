@@ -214,7 +214,7 @@ namespace TMS_XLZ_Basic
 
             //}
 
-            string aspxFile = File.ReadAllText(@"C:\Users\Aleksander.Parol\Desktop\GLT_Engineering\Outlook\2020.04.27\HR Bulk Translations, aspx files ( ENG)\Process\Decodin - Encoding\Business_Resource_Groups.aspx");
+            /*string aspxFile = File.ReadAllText(@"C:\Users\Aleksander.Parol\Desktop\GLT_Engineering\Outlook\2020.04.27\HR Bulk Translations, aspx files ( ENG)\Process\Decodin - Encoding\Business_Resource_Groups.aspx");
             aspxFile = aspxFile.Replace("<!--[if gte mso 9]>", "<placeholder>");
             aspxFile = aspxFile.Replace("<![endif]-->", "</placeholder>");
 
@@ -226,9 +226,44 @@ namespace TMS_XLZ_Basic
             encoded = encoded.Replace("<placeholder>","<!--[if gte mso 9]>");
             encoded = encoded.Replace("</placeholder>","<![endif]-->");
 
-            File.WriteAllText(@"C:\Users\Aleksander.Parol\Desktop\GLT_Engineering\Outlook\2020.04.27\HR Bulk Translations, aspx files ( ENG)\Process\Decodin - Encoded.aspx", encoded);
+            File.WriteAllText(@"C:\Users\Aleksander.Parol\Desktop\GLT_Engineering\Outlook\2020.04.27\HR Bulk Translations, aspx files ( ENG)\Process\Decodin - Encoded.aspx", encoded);*/
 
-            Thread.Sleep(7000);
+
+            /*string aspxFileForEncoding = File.ReadAllText(@"C:\Users\Aleksander.Parol\Desktop\GLT_Engineering\Outlook\2020.04.27\HR Bulk Translations, aspx files ( ENG)\Process\Updated\Test Files\HTML encoding test\Accelerated-Leadership-Development-Process.aspx");
+            Regex rx = new Regex("<mso:.*?>(.*?)</mso:.*?>");
+
+            string newAspxFile = aspxFileForEncoding;
+
+            MatchCollection msoContent = rx.Matches(aspxFileForEncoding);
+            List<string> listOfInnerStrings = new List<string>();
+
+            string a;
+
+            foreach(Match en in msoContent)
+            {
+                a = en.Groups[1].Value;
+                listOfInnerStrings.Add(a);
+            }
+
+
+            foreach(string innerText in listOfInnerStrings)
+            {
+
+
+                Console.WriteLine(innerText);
+                Console.WriteLine(WebUtility.HtmlEncode(innerText));
+
+                if (innerText.Length != 0)
+                {
+                    a = WebUtility.HtmlEncode(innerText);
+                    aspxFileForEncoding = aspxFileForEncoding.Replace(innerText, a);
+                }
+
+            }
+
+            File.WriteAllText(@"C:\Users\Aleksander.Parol\Desktop\GLT_Engineering\Outlook\2020.04.27\HR Bulk Translations, aspx files ( ENG)\Process\Updated\Test Files\HTML encoding test\Accelerated-Leadership-Development-Process.aspx", aspxFileForEncoding);
+
+            Thread.Sleep(3000);*/
 
 
 

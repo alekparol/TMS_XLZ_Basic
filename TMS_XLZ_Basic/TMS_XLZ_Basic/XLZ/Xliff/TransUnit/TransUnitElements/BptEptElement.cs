@@ -31,12 +31,16 @@ using System.Dynamic;
  *      b.2. modify the regex expression "(<bpt.*?(id=\"bptID\")?>.*?</bpt>)(.*?)(<ept.*?(id=\"bptID\")?>.*?</ept>)",
  *      b.3. parse the input string with this expression. 
  *      
+ *  Note: If there is a <bpt></bpt> tag there must be corresponding <ept></ept> pair. But if there is a <ept></ept> that does not means that
+ *  the <bpt></bpt> pair of the same ID can be found in the place preceeding the <ept></ept>. This should be added.
  *  
+ *  Note: "</ept><bpt id = \"2\" > &lt; hyperlink Id = &quot;1&quot; tkn=&quot;734&quot;&gt;</bpt><bpt id = \"3\" > &lt; cf style = &quot; Hyperlink&quot; font=&quot;Arial&quot; asiantextfont=&quot;Arial&quot; complexscriptsfont=&quot;Arial&quot;&gt;</bpt>https://connect.otis.com/news/Pages/Global-Coronavirus-Update.aspx<ept id=\"3\">&lt;/cf&gt;</ept><ept id=\"2\">" 
+ *  gives a result in which the program says that parsing succeeded. We need a stronger validation on the constructor level.
  */
 
 namespace TMS_XLZ_Basic.XLZ.Xliff.TransUnit.TransUnitElements
 {
-    class BptEptElement
+    public class BptEptElement
     {
         /* Fields */
 
@@ -46,7 +50,7 @@ namespace TMS_XLZ_Basic.XLZ.Xliff.TransUnit.TransUnitElements
         private int elementID;
         private string textBetween;
 
-        private bool hasNested;
+        private bool hasNestedNodes;
         private bool parsingSuccess = false;
         private bool isPaired = false;
 
@@ -70,7 +74,61 @@ namespace TMS_XLZ_Basic.XLZ.Xliff.TransUnit.TransUnitElements
             }
         }
 
-        /* Methods */
+        public string TextBetween
+        {
+            get
+            {
+                return textBetween;
+            }
+        }
+
+        public bool IsNested
+        {
+            get
+            {
+                return hasNestedNodes;
+            }
+        }
+
+        public bool IsPaired
+        {
+            get
+            {
+                return isPaired;
+            }
+        }
+
+        public BPT BptElement
+        {
+            get
+            {
+                if (bptElement.ParsingSuccess)
+                {
+                    return bptElement;
+                }
+                else
+                {
+                    return null;
+                }
+            }
+        }
+
+        public EPT EptElement
+        {
+            get
+            {
+                if (eptElement.ParsingSuccess)
+                {
+                    return eptElement;
+                }
+                else
+                {
+                    return null;
+                }
+            }
+        }
+
+        /* Methods *
 
         /* Constructors */
         public BptEptElement(string matchBptEpt)
@@ -95,22 +153,58 @@ namespace TMS_XLZ_Basic.XLZ.Xliff.TransUnit.TransUnitElements
                 if (bptElement.BptID == eptElement.EptID)
                 {
                     isPaired = true;
+                    elementID = bptElement.BptID;
+
                     textBetween = matchesBptEpt.Groups[4].Value;
 
                     Match matchesNestedBptEpt = regexBptEpt.Match(textBetween);
-                    
-                    if(matchesNestedBptEpt.Value != string.Empty)
+
+                    if (matchesNestedBptEpt.Value != string.Empty)
                     {
-                        hasNested = true;
+
+                        hasNestedNodes = true;
                         nestedElement = new BptEptElement(matchesNestedBptEpt.Value);
-                       
+
                     }
                 }
                 else
                 {
 
-                    Regex regexBptEptPaired = new Regex("(<bpt.*?(id=\"(\\d)\")?>.*?</bpt>)(.*?)(<ept.*?(id=\"(\\d)\")?>.*?</ept>)");
+                    Regex regexBptEptPaired = new Regex("(<bpt.*?(id=\"" + bptElement.BptID + "\")?>.*?</bpt>)(.*?)(<ept.*?(id=\"" + bptElement.BptID + "\")?>.*?</ept>)");
+                    matchesBptEpt = regexBptEpt.Match(matchBptEpt);
 
+                    if (matchesBptEpt.Value != string.Empty)
+                    {
+
+                        parsingSuccess = true;
+
+                        /* Initializing value of bptID with the valuse of the third group in the regex pattern and converting to int32.*/
+
+                        bptElementRaw = matchesBptEpt.Groups[1].Value;
+                        eptElementRaw = matchesBptEpt.Groups[5].Value;
+
+                        bptElement = new BPT(bptElementRaw);
+                        eptElement = new EPT(eptElementRaw);
+
+                        if (bptElement.BptID == eptElement.EptID)
+                        {
+                            isPaired = true;
+                            elementID = bptElement.BptID;
+
+                            textBetween = matchesBptEpt.Groups[4].Value;
+
+                            Match matchesNestedBptEpt = regexBptEpt.Match(textBetween);
+
+                            if (matchesNestedBptEpt.Value != string.Empty)
+                            {
+
+                                hasNestedNodes = true;
+                                nestedElement = new BptEptElement(matchesNestedBptEpt.Value);
+
+                            }
+
+                        }
+                    }
                 }
 
                 

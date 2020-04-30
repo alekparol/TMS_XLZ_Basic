@@ -50,6 +50,7 @@
     <Compile Include="XLZ\Skeleton\SkeletonUnit.cs" />
     <Compile Include="XLZ\Xliff\TransUnit\TransUnit.cs" />
     <Compile Include="XLZ\Xliff\TransUnit\TransUnitElements\BPT.cs" />
+    <Compile Include="XLZ\Xliff\TransUnit\TransUnitElements\BptEptElement.cs" />
     <Compile Include="XLZ\Xliff\TransUnit\TransUnitElements\EPT.cs" />
     <Compile Include="XLZ\Xliff\TransUnit\TransUnitElements\PH.cs" />
     <Compile Include="XLZ\Skeleton\Skeleton.cs" />

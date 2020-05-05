@@ -40,6 +40,8 @@ using System.Dynamic;
 
 namespace TMS_XLZ_Basic.XLZ.Xliff.TransUnit.TransUnitElements
 {
+
+
     public class BptEptElement
     {
         /* Fields */
@@ -50,53 +52,13 @@ namespace TMS_XLZ_Basic.XLZ.Xliff.TransUnit.TransUnitElements
         private int elementID;
         private string textBetween;
 
-        private bool hasNestedNodes;
-        private bool parsingSuccess = false;
+        private bool hasNestedNodes = false;
         private bool isPaired = false;
+        private bool parsingSuccess = false;
 
         private BptEptElement nestedElement;
 
         /* Properties */
-
-        public int ElementID
-        {
-            get
-            {
-                return elementID;
-            }
-        }
-
-        public bool ParsingSuccess
-        {
-            get
-            {
-                return parsingSuccess;
-            }
-        }
-
-        public string TextBetween
-        {
-            get
-            {
-                return textBetween;
-            }
-        }
-
-        public bool IsNested
-        {
-            get
-            {
-                return hasNestedNodes;
-            }
-        }
-
-        public bool IsPaired
-        {
-            get
-            {
-                return isPaired;
-            }
-        }
 
         public BPT BptElement
         {
@@ -128,13 +90,55 @@ namespace TMS_XLZ_Basic.XLZ.Xliff.TransUnit.TransUnitElements
             }
         }
 
+        public int ElementID
+        {
+            get
+            {
+                return elementID;
+            }
+        }
+
+        public string TextBetween
+        {
+            get
+            {
+                return textBetween;
+            }
+        }
+
+        public bool ParsingSuccess
+        {
+            get
+            {
+                return parsingSuccess;
+            }
+        }
+
+        public bool IsNested
+        {
+            get
+            {
+                return hasNestedNodes;
+            }
+        }
+
+        public bool IsPaired
+        {
+            get
+            {
+                return isPaired;
+            }
+        }
+
+
+
         /* Methods *
 
         /* Constructors */
         public BptEptElement(string matchBptEpt)
         {
 
-            Regex regexBptEpt = new Regex("(<bpt.*?(id=\"(\\d+)\")?>.*?</bpt>)(.*?)(<ept.*?(id=\"(\\d+)\")?>.*?</ept>)");
+            Regex regexBptEpt = new Regex("(<bpt.*?(id=\"(\\d+)\")?>.*?</bpt>)(.*)(<ept.*?(id=\"(\\d+)\")?>.*?</ept>)");
             Match matchesBptEpt = regexBptEpt.Match(matchBptEpt);
 
             if (matchesBptEpt.Value != string.Empty)
@@ -167,46 +171,6 @@ namespace TMS_XLZ_Basic.XLZ.Xliff.TransUnit.TransUnitElements
 
                     }
                 }
-                else
-                {
-
-                    Regex regexBptEptPaired = new Regex("(<bpt.*?(id=\"" + bptElement.BptID + "\")?>.*?</bpt>)(.*?)(<ept.*?(id=\"" + bptElement.BptID + "\")?>.*?</ept>)");
-                    matchesBptEpt = regexBptEpt.Match(matchBptEpt);
-
-                    if (matchesBptEpt.Value != string.Empty)
-                    {
-
-                        parsingSuccess = true;
-
-                        /* Initializing value of bptID with the valuse of the third group in the regex pattern and converting to int32.*/
-
-                        bptElementRaw = matchesBptEpt.Groups[1].Value;
-                        eptElementRaw = matchesBptEpt.Groups[5].Value;
-
-                        bptElement = new BPT(bptElementRaw);
-                        eptElement = new EPT(eptElementRaw);
-
-                        if (bptElement.BptID == eptElement.EptID)
-                        {
-                            isPaired = true;
-                            elementID = bptElement.BptID;
-
-                            textBetween = matchesBptEpt.Groups[4].Value;
-
-                            Match matchesNestedBptEpt = regexBptEpt.Match(textBetween);
-
-                            if (matchesNestedBptEpt.Value != string.Empty)
-                            {
-
-                                hasNestedNodes = true;
-                                nestedElement = new BptEptElement(matchesNestedBptEpt.Value);
-
-                            }
-
-                        }
-                    }
-                }
-
                 
             }
 

@@ -229,9 +229,10 @@ namespace TMS_XLZ_Basic
             File.WriteAllText(@"C:\Users\Aleksander.Parol\Desktop\GLT_Engineering\Outlook\2020.04.27\HR Bulk Translations, aspx files ( ENG)\Process\Decodin - Encoded.aspx", encoded);*/
 
 
-            /*string aspxFileForEncoding = File.ReadAllText(@"C:\Users\Aleksander.Parol\Desktop\GLT_Engineering\Outlook\2020.04.27\HR Bulk Translations, aspx files ( ENG)\Process\Updated\Test Files\HTML encoding test\Accelerated-Leadership-Development-Process.aspx");
-            Regex rx = new Regex("<mso:.*?>(.*?)</mso:.*?>");
+            string aspxFileForEncoding = File.ReadAllText(@"C:\Users\Aleksander.Parol\Desktop\GLT_Engineering\Outlook\2020.05.04\HR Bulk Translations, aspx files ( ENG)\Files which cause problems\Annual-Year-End-Review-Guide.aspx");
+            Regex rx = new Regex("<mso:.*?>([\\S\\W]*)</mso:.*?>");
 
+            aspxFileForEncoding = aspxFileForEncoding.Trim();
             string newAspxFile = aspxFileForEncoding;
 
             MatchCollection msoContent = rx.Matches(aspxFileForEncoding);
@@ -251,19 +252,28 @@ namespace TMS_XLZ_Basic
 
 
                 Console.WriteLine(innerText);
-                Console.WriteLine(WebUtility.HtmlEncode(innerText));
+                Console.WriteLine(WebUtility.HtmlDecode(innerText));
 
                 if (innerText.Length != 0)
                 {
-                    a = WebUtility.HtmlEncode(innerText);
+                    a = WebUtility.HtmlDecode(innerText);
                     aspxFileForEncoding = aspxFileForEncoding.Replace(innerText, a);
                 }
 
             }
 
-            File.WriteAllText(@"C:\Users\Aleksander.Parol\Desktop\GLT_Engineering\Outlook\2020.04.27\HR Bulk Translations, aspx files ( ENG)\Process\Updated\Test Files\HTML encoding test\Accelerated-Leadership-Development-Process.aspx", aspxFileForEncoding);
+            Regex nr = new Regex("<mso:PublishingPageContent.*?>(.*?)</mso:PublishingPageContent.*?>");
+            MatchCollection msoContent2 = nr.Matches(aspxFileForEncoding);
 
-            Thread.Sleep(3000);*/
+            foreach (Match en in msoContent2)
+            {
+                a = en.Groups[1].Value;
+                Console.WriteLine(a);
+            }
+
+            File.WriteAllText(@"C:\Users\Aleksander.Parol\Desktop\GLT_Engineering\Outlook\2020.05.04\HR Bulk Translations, aspx files ( ENG)\Files which cause problems\new.aspx", aspxFileForEncoding);
+
+            Thread.Sleep(22000);
 
 
 

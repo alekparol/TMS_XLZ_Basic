@@ -130,6 +130,14 @@ namespace TMS_XLZ_Basic.XLZ.Xliff.TransUnit.TransUnitElements
             }
         }
 
+        public BptEptElement NestedElement
+        {
+            get
+            {
+                return nestedElement;
+            }
+        }
+
 
 
         /* Methods *
@@ -170,10 +178,8 @@ namespace TMS_XLZ_Basic.XLZ.Xliff.TransUnit.TransUnitElements
                         nestedElement = new BptEptElement(matchesNestedBptEpt.Value);
 
                     }
-                }
-                
+                }               
             }
-
         }
     }
 }

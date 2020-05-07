@@ -12,29 +12,47 @@ using System.Xml.Linq;
 using System.Runtime.CompilerServices;
 using System.Text.RegularExpressions;
 
+/*This class will construct all tag elements in the given trans unit content.*/
+
 namespace TMS_XLZ_Basic.XLZ.Xliff.TransUnit.TransUnitElements
 {
-    class TransUnitElementsConstructor
+    public class TransUnitElementsConstructor
     {
 
-        public List<BPT> listOfBPT;
-        public List<string> listOfEPT;
-        public List<string> listOfPH;
+        public List<BptEptElement> listOfBptEptElements;
+        //public List<PhElement> listOfPhElements;
+        //public List<ItElement> listOfItElements;
+
+        public List<BPT> listOfBpt = new List<BPT>();
+        public List<EPT> listOfEpt = new List<EPT>(); 
+
 
         public TransUnitElementsConstructor(string transUnitText)
         {
+            Regex bptTag = new Regex("<bpt.*?id=\"\\d+\"?>.*?</bpt>");
+            Regex eptTag = new Regex("<ept.*?id=\"\\d+\"?>.*?</ept>");
 
-            Regex regexBPT = new Regex("(<bpt.*?>.*</?bpt.*?>)");
-            MatchCollection matchesBPT = regexBPT.Matches(transUnitText);
+            MatchCollection bptMatchList = bptTag.Matches(transUnitText);
+            var listOfBptStrings = bptMatchList.Cast<Match>().Select(match => match.Value).ToList();
 
-            BPT auxillaryBPT;
+            MatchCollection eptMatchList = eptTag.Matches(transUnitText);
+            var listOfEptStrings = eptMatchList.Cast<Match>().Select(match => match.Value).ToList();
 
-            foreach (Match en in matchesBPT)
+            BPT auxiliaryBpt;
+            EPT auxiliaryEpt;
+
+            foreach(string bpt in listOfBptStrings)
             {
-                auxillaryBPT = new BPT(en.Value);
-                listOfBPT.Add(auxillaryBPT);
+                auxiliaryBpt = new BPT(bpt);
+                listOfBpt.Add(auxiliaryBpt);
             }
-        }
 
+            foreach (string ept in listOfEptStrings)
+            {
+                auxiliaryEpt = new EPT(ept);
+                listOfEpt.Add(auxiliaryEpt);
+            }
+
+        }
     }
 }

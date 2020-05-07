@@ -53,6 +53,7 @@
     <Compile Include="EPT_Tests.cs" />
     <Compile Include="BPT_Tests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TransUnitElementsConstructor_Tests.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

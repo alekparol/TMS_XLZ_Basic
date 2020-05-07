@@ -52,7 +52,8 @@
     <Compile Include="XLZ\Xliff\TransUnit\TransUnitElements\BPT.cs" />
     <Compile Include="XLZ\Xliff\TransUnit\TransUnitElements\BptEptElement.cs" />
     <Compile Include="XLZ\Xliff\TransUnit\TransUnitElements\EPT.cs" />
-    <Compile Include="XLZ\Xliff\TransUnit\TransUnitElements\PH.cs" />
+    <Compile Include="XLZ\Xliff\TransUnit\TransUnitElements\ItElement.cs" />
+    <Compile Include="XLZ\Xliff\TransUnit\TransUnitElements\PhElement.cs" />
     <Compile Include="XLZ\Skeleton\Skeleton.cs" />
     <Compile Include="XLZ\Xliff\TransUnit\TransUnitElements\TransUnitElementsConstructor.cs" />
     <Compile Include="XLZ\Xliff\Xliff.cs" />

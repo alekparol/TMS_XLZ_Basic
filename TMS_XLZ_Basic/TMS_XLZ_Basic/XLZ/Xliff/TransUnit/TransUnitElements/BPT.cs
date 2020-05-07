@@ -35,6 +35,9 @@ namespace TMS_XLZ_Basic
         private string bptContent;
         private int bptID;
 
+        private int firstIndex;
+        private int lastIndex;
+
         private bool parsingSuccess = false; 
 
         /* Properties */
@@ -52,6 +55,22 @@ namespace TMS_XLZ_Basic
             get
             {
                 return bptID;
+            }
+        }
+
+        public int FirstIndex
+        {
+            get
+            {
+                return firstIndex;
+            }
+        }
+
+        public int LastIndex
+        {
+            get
+            {
+                return lastIndex
             }
         }
 
@@ -90,6 +109,9 @@ namespace TMS_XLZ_Basic
             {
 
                 parsingSuccess = true;
+
+                firstIndex = matchesBPT.Value.IndexOf("<");
+                lastIndex = matchesBPT.Value.LastIndexOf(">");
 
                 /* Initializing value of bptID with the valuse of the third group in the regex pattern and converting to int32.*/
 

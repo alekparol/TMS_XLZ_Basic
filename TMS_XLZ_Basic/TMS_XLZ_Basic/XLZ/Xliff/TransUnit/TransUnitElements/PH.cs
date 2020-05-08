@@ -7,34 +7,31 @@ using System.Dynamic;
 
 namespace TMS_XLZ_Basic
 {
-    public class ItElement
+    public class PH
     {
 
         /* Fields */
 
-        private string itContent;
-        private int itID;
-
-        /*private int firstIndex;
-        private int lastIndex;*/
+        private string content;
+        private int iD;
 
         private bool parsingSuccess = false;
 
         /* Properties */
 
-        public string ItContent
+        public string Content
         {
             get
             {
-                return itContent;
+                return content;
             }
         }
 
-        public int ItID
+        public int ID
         {
             get
             {
-                return itID;
+                return iD;
             }
         }
 
@@ -49,31 +46,31 @@ namespace TMS_XLZ_Basic
         /* Methods */
 
         /* Constructors */
-        public ItElement(string matchIT)
+        public PH(string phString)
         {
 
-            Regex regexIT = new Regex("(<it.*?(id=\"(\\d+)\")?>(.*?)</it>)");
-            Match matchesIT = regexIT.Match(matchIT);
+            Regex regex = new Regex("(<ph.*?(id=\"(\\d+)\")?>(.*?)</ph>)");
+            Match match = regex.Match(phString);
 
-            if (matchesIT.Value != string.Empty)
+            if (match.Value != string.Empty)
             {
 
                 parsingSuccess = true;
 
                 /* Initializing value of bptID with the valuse of the third group in the regex pattern and converting to int32.*/
 
-                bool success = Int32.TryParse(matchesIT.Groups[3].Value, out int transUnitID);
+                bool success = Int32.TryParse(match.Groups[3].Value, out int transUnitID);
 
                 if (success)
                 {
-                    itID = transUnitID;
+                    iD = transUnitID;
                 }
                 else
                 {
-                    itID = -1;
+                    iD = -1;
                 }
 
-                itContent = matchesIT.Groups[4].Value;
+                content = match.Groups[4].Value;
             }
 
         }

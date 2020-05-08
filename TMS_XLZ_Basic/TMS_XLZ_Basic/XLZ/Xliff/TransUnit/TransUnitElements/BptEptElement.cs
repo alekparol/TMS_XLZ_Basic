@@ -162,10 +162,10 @@ namespace TMS_XLZ_Basic.XLZ.Xliff.TransUnit.TransUnitElements
                 bptElement = new BPT(bptElementRaw);
                 eptElement = new EPT(eptElementRaw);
 
-                if (bptElement.BptID == eptElement.EptID)
+                if (bptElement.ID == eptElement.ID)
                 {
                     isPaired = true;
-                    elementID = bptElement.BptID;
+                    elementID = bptElement.ID;
 
                     textBetween = matchesBptEpt.Groups[4].Value;
 

@@ -12,47 +12,28 @@ namespace TMS_XLZ_Basic
 
         /* Fields */
 
-        private string eptContent;
-        private int eptID;
-
-        /*private int firstIndex;
-        private int lastIndex;*/
+        private string content;
+        private int iD;
 
         private bool parsingSuccess = false;
 
         /* Properties */
 
-        public string EptContent
+        public string Content
         {
             get
             {
-                return eptContent;
+                return content;
             }
         }
 
-        public int EptID
+        public int ID
         {
             get
             {
-                return eptID;
+                return iD;
             }
         }
-
-        /*public int FirstIndex
-        {
-            get
-            {
-                return firstIndex;
-            }
-        }
-
-        public int LastIndex
-        {
-            get
-            {
-                return lastIndex;
-            }
-        }*/
 
         public bool ParsingSuccess
         {
@@ -65,34 +46,31 @@ namespace TMS_XLZ_Basic
         /* Methods */
 
         /* Constructors */
-        public EPT(string matchEPT)
+        public EPT(string eptString)
         {
 
-            Regex regexEPT = new Regex("(<ept.*?(id=\"(\\d+)\")?>(.*?)</ept>)");
-            Match matchesEPT = regexEPT.Match(matchEPT);
+            Regex regex = new Regex("(<ept.*?(id=\"(\\d+)\")?>(.*?)</ept>)");
+            Match match = regex.Match(eptString);
 
-            if (matchesEPT.Value != string.Empty)
+            if (match.Value != string.Empty)
             {
 
                 parsingSuccess = true;
 
-                /*firstIndex = matchesEPT.Value.IndexOf("<");
-                lastIndex = matchesEPT.Value.LastIndexOf(">");*/
-
                 /* Initializing value of bptID with the valuse of the third group in the regex pattern and converting to int32.*/
 
-                bool success = Int32.TryParse(matchesEPT.Groups[3].Value, out int transUnitID);
+                bool success = Int32.TryParse(match.Groups[3].Value, out int transUnitID);
 
                 if (success)
                 {
-                    eptID = transUnitID;
+                    iD = transUnitID;
                 }
                 else
                 {
-                    eptID = -1;
+                    iD = -1;
                 }
 
-                eptContent = matchesEPT.Groups[4].Value;
+                content = match.Groups[4].Value;
             }
 
         }

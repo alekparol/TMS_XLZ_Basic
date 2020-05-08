@@ -4,6 +4,7 @@ using System.Collections.Specialized;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Dynamic;
+using System.Collections.Generic;
 
 /* BPT class is used to model all the information from <bpt></bpt> tags in trans-unit nodes. Usually the form of the <bpt> node is 
  * as below:
@@ -12,13 +13,33 @@ using System.Dynamic;
  * attr_1,...,attr_i are denoting some specifical attribute, 
  * a_1,...,a_i are denoting some specifical value of the attribute. 
  * 
+ * All <bpt> tags have corresponding <ept> tags - correspondence is denoted by the same Id attribute's value. 
+ * But it is worth to mention that those pairs doesn't have to be places within the boundries of one trans-unit node. 
+ * We can find a lot of examples where whole content of a one trans-unit node is between <bpt> tags or <ept> tags. 
+ * In those cases, mostly those trans-unit nodes are not translatable. But there also some examples where <bpt> appears in the end of
+ * the trans-unit node and there is no corresponding <ept> tag within the same trans-unit node. But few segments after, we can find 
+ * <ept> tag with the same ID. such case might exists when two sentences splitted into two translation segments, have the same formatting
+ * so the formatting tag <bpt> starts before the beginning of the first segment and ends after the end of the second segment.
  * 
- * Notes: 
- * - bptID 
+ * Example from content.xlf file is like below:
+ * <trans-unit translate="yes" id="23">
+ *      <source><bpt id="1">&lt;cf cstyle="CharacterStyle/$ID/[No character style]" color="Color/C=0 M=0 Y=0 K=100" style="Regular" size="9" leading="unit:11" font="string:Diodrum"&gt;</bpt>Without compromising performance, the new DuPont™ Delrin® 300CPE adds:</source><target logoport:matchpercent="0" state="translated"><bpt id="1">&lt;cf cstyle="CharacterStyle/$ID/[No character style]" color="Color/C=0 M=0 Y=0 K=100" style="Regular" size="9" leading="unit:11" font="string:Diodrum"&gt;</bpt>Ohne Abstriche in der Leistung zu machen, bietet Ihnen das neue DuPont™ Delrin® 300CPE zusätzlich:</target>
+ * </trans-unit>
+ * <trans-unit translate="no" id="24">
+ *      <source> </source>
+ * </trans-unit>
+ * <trans-unit translate="no" id="25">
+ *      <source><ept id="1">&lt;/cf&gt;</ept></source>
+ * </trans-unit>
+ * 
  * 
  * Further development: This class could be improved by adding fields corresponding to more document attributes, which could be 
  * covered by the BPT class. For example <bpt> tags contains information:
  * - font="Arial",
+ * - style="Medium",
+ * - cstyle="CharacterStyle/$ID/[No character style]",
+ * - color="Color/C=0 M=0 Y=0 K=100"
+ * - leading="unit:10"
  * - asiantextfont="Arial",
  * - complexscriptsbold="on",
  * - bold="on",
@@ -32,47 +53,28 @@ namespace TMS_XLZ_Basic
 
         /* Fields */
 
-        private string bptContent;
-        private int bptID;
-
-        /*private int firstIndex;
-        private int lastIndex;*/
+        private string content;
+        private int iD;
 
         private bool parsingSuccess = false; 
 
         /* Properties */
 
-        public string BptContent
+        public string Content
         {
             get
             {
-                return bptContent;
+                return content;
             }
         }
 
-        public int BptID
+        public int ID
         {
             get
             {
-                return bptID;
+                return iD;
             }
         }
-
-        /*public int FirstIndex
-        {
-            get
-            {
-                return firstIndex;
-            }
-        }
-
-        public int LastIndex
-        {
-            get
-            {
-                return lastIndex;
-            }
-        }*/
 
         public bool ParsingSuccess
         {
@@ -88,7 +90,7 @@ namespace TMS_XLZ_Basic
 
         public bool IsYellowHighlight()
         {
-            if (bptContent.Contains("highlight=\"yellow\""))
+            if (content.Contains("highlight=\"yellow\""))
             {
                 return true;
             }
@@ -99,34 +101,31 @@ namespace TMS_XLZ_Basic
         }
 
         /* Constructors */
-        public BPT(string matchBPT)
+        public BPT(string bptString)
         {
                            
-            Regex regexBPT = new Regex("(<bpt.*?(id=\"(\\d+)\")?>(.*?)</bpt>)");
-            Match matchesBPT = regexBPT.Match(matchBPT);
+            Regex regex = new Regex("(<bpt.*?(id=\"(\\d+)\")?>(.*?)</bpt>)");
+            Match match = regex.Match(bptString);
 
-            if(matchesBPT.Value != string.Empty)
+            if(match.Value != string.Empty)
             {
 
                 parsingSuccess = true;
 
-                /*firstIndex = matchesBPT.Value.IndexOf("<");
-                lastIndex = matchesBPT.Value.LastIndexOf(">");*/
-
                 /* Initializing value of bptID with the valuse of the third group in the regex pattern and converting to int32.*/
 
-                bool success = Int32.TryParse(matchesBPT.Groups[3].Value, out int transUnitID);
+                bool success = Int32.TryParse(match.Groups[3].Value, out int transUnitID);
 
                 if (success)
                 {
-                    bptID = transUnitID;
+                    iD = transUnitID;
                 }
                 else
                 {
-                    bptID = -1;
+                    iD = -1;
                 }
 
-                bptContent = matchesBPT.Groups[4].Value;
+                content = match.Groups[4].Value;
             }
 
         }

@@ -22,8 +22,9 @@ namespace TMS_XLZ_Basic.XLZ.Xliff.TransUnit.TransUnitElements
         /*Fields*/
 
         public List<BptEptElement> listOfBptEptElements = new List<BptEptElement>();
-        public List<PhElement> listOfPhElements = new List<PhElement>();
-        public List<ItElement> listOfItElements = new List<ItElement>();
+      
+        public List<PH> listOfPhElements = new List<PH>();
+        public List<IT> listOfItElements = new List<IT>();
 
         public List<BPT> listOfBpt = new List<BPT>();
         public List<EPT> listOfEpt = new List<EPT>();
@@ -58,6 +59,36 @@ namespace TMS_XLZ_Basic.XLZ.Xliff.TransUnit.TransUnitElements
 
         }
 
+        public BPT GetBptByID(int id)
+        {
+            if(listOfBpt.Exists(x => x.ID == id))
+            {
+                return listOfBpt.Find(x => x.ID == id);
+            }
+
+            return null;
+        }
+
+        public EPT GetEptByID(int id)
+        {
+            if (listOfEpt.Exists(x => x.ID == id))
+            {
+                return listOfEpt.Find(x => x.ID == id);
+            }
+
+            return null;
+        }
+
+        public PH GetPhByID(int id)
+        {
+            if (listOfPhElements.Exists(x => x.ID == id))
+            {
+                return listOfPhElements.Find(x => x.ID == id);
+            }
+
+            return null;
+        }
+
         /*Constructors*/
 
 
@@ -88,8 +119,8 @@ namespace TMS_XLZ_Basic.XLZ.Xliff.TransUnit.TransUnitElements
             BPT auxiliaryBpt;
             EPT auxiliaryEpt;
 
-            ItElement auxiliaryIt;
-            PhElement auxiliaryPh;
+            IT auxiliaryIt;
+            PH auxiliaryPh;
 
             BptEptElement auxiliaryBptEptElement;
 
@@ -113,13 +144,13 @@ namespace TMS_XLZ_Basic.XLZ.Xliff.TransUnit.TransUnitElements
 
             foreach (string ph in listOfPhStrings)
             {
-                auxiliaryPh = new PhElement(ph);
+                auxiliaryPh = new PH(ph);
                 listOfPhElements.Add(auxiliaryPh);
             }
 
             foreach (string it in listOfItStrings)
             {
-                auxiliaryIt = new ItElement(it);
+                auxiliaryIt = new IT(it);
                 listOfItElements.Add(auxiliaryIt);
             }
 
@@ -135,13 +166,13 @@ namespace TMS_XLZ_Basic.XLZ.Xliff.TransUnit.TransUnitElements
             {
                 foreach (EPT ept in listOfEpt)
                 {
-                    if (listOfBpt.Exists(x => x.BptID == ept.EptID))
+                    if (listOfBpt.Exists(x => x.ID == ept.ID))
                     {
 
-                        auxiliaryIndex = listOfBpt.FindIndex(x => x.BptID == ept.EptID);
+                        auxiliaryIndex = listOfBpt.FindIndex(x => x.ID == ept.ID);
                         bptMatch = bptMatchList[auxiliaryIndex];
 
-                        auxiliaryIndex = listOfEpt.FindIndex(x => x.EptID == ept.EptID);
+                        auxiliaryIndex = listOfEpt.FindIndex(x => x.ID == ept.ID);
                         eptMatch = eptMatchList[auxiliaryIndex];
 
                         auxiliaryBptEptElement = new BptEptElement(transUnitText.Substring(bptMatch.Index,
@@ -152,7 +183,7 @@ namespace TMS_XLZ_Basic.XLZ.Xliff.TransUnit.TransUnitElements
                     }
                     else
                     {
-                        listEptNotPairedIDs.Add(ept.EptID);
+                        listEptNotPairedIDs.Add(ept.ID);
                     }
                 }
             }
@@ -160,7 +191,7 @@ namespace TMS_XLZ_Basic.XLZ.Xliff.TransUnit.TransUnitElements
             {
                 foreach(BPT bpt in listOfBpt)
                 {
-                    listBptNotPairedIDs.Add(bpt.BptID);
+                    listBptNotPairedIDs.Add(bpt.ID);
                 }
             }
 

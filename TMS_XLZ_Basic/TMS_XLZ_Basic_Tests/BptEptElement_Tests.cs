@@ -73,9 +73,9 @@ namespace TMS_XLZ_Basic_Tests
             Assert.IsTrue(parsedBptEpt.ParsingSuccess);
 
             Assert.IsTrue(parsedBptEpt.BptElement.ParsingSuccess);
-            Assert.AreEqual(1, parsedBptEpt.BptElement.BptID);
+            Assert.AreEqual(1, parsedBptEpt.BptElement.ID);
 
-            Assert.AreEqual("&lt;", parsedBptEpt.BptElement.BptContent);
+            Assert.AreEqual("&lt;", parsedBptEpt.BptElement.Content);
         }
 
         [TestMethod]
@@ -87,9 +87,9 @@ namespace TMS_XLZ_Basic_Tests
             Assert.IsTrue(parsedBptEpt.ParsingSuccess);
 
             Assert.IsTrue(parsedBptEpt.BptElement.ParsingSuccess);
-            Assert.AreEqual(1, parsedBptEpt.BptElement.BptID);
+            Assert.AreEqual(1, parsedBptEpt.BptElement.ID);
 
-            Assert.AreEqual("&lt;", parsedBptEpt.BptElement.BptContent);
+            Assert.AreEqual("&lt;", parsedBptEpt.BptElement.Content);
         }
 
         [TestMethod]
@@ -101,9 +101,9 @@ namespace TMS_XLZ_Basic_Tests
             Assert.IsTrue(parsedBptEpt.ParsingSuccess);
 
             Assert.IsTrue(parsedBptEpt.BptElement.ParsingSuccess);
-            Assert.AreEqual(1, parsedBptEpt.BptElement.BptID);
+            Assert.AreEqual(1, parsedBptEpt.BptElement.ID);
 
-            Assert.AreEqual("&lt;", parsedBptEpt.BptElement.BptContent);
+            Assert.AreEqual("&lt;", parsedBptEpt.BptElement.Content);
         }
 
         /*Checking EPT element creation - using: 1) paired, 2) non-paired and 3) nested string. */
@@ -117,9 +117,9 @@ namespace TMS_XLZ_Basic_Tests
             Assert.IsTrue(parsedBptEpt.ParsingSuccess);
 
             Assert.IsTrue(parsedBptEpt.EptElement.ParsingSuccess);
-            Assert.AreEqual(1, parsedBptEpt.EptElement.EptID);
+            Assert.AreEqual(1, parsedBptEpt.EptElement.ID);
 
-            Assert.AreEqual("&lt;/cf&gt;", parsedBptEpt.EptElement.EptContent);
+            Assert.AreEqual("&lt;/cf&gt;", parsedBptEpt.EptElement.Content);
 
         }
 
@@ -132,9 +132,9 @@ namespace TMS_XLZ_Basic_Tests
             Assert.IsTrue(parsedBptEpt.ParsingSuccess);
 
             Assert.IsTrue(parsedBptEpt.EptElement.ParsingSuccess);
-            Assert.AreEqual(2, parsedBptEpt.EptElement.EptID);
+            Assert.AreEqual(2, parsedBptEpt.EptElement.ID);
 
-            Assert.AreEqual("&lt;/cf&gt;", parsedBptEpt.EptElement.EptContent);
+            Assert.AreEqual("&lt;/cf&gt;", parsedBptEpt.EptElement.Content);
         }
 
         [TestMethod]
@@ -146,9 +146,9 @@ namespace TMS_XLZ_Basic_Tests
             Assert.IsTrue(parsedBptEpt.ParsingSuccess);
 
             Assert.IsTrue(parsedBptEpt.EptElement.ParsingSuccess);
-            Assert.AreEqual(1, parsedBptEpt.EptElement.EptID);
+            Assert.AreEqual(1, parsedBptEpt.EptElement.ID);
 
-            Assert.AreEqual("&lt;/cf&gt;", parsedBptEpt.EptElement.EptContent);
+            Assert.AreEqual("&lt;/cf&gt;", parsedBptEpt.EptElement.Content);
         }
 
         /*Checking pairing*/
@@ -159,8 +159,8 @@ namespace TMS_XLZ_Basic_Tests
             string testBptEptRaw = testString001;
             BptEptElement parsedBptEpt = new BptEptElement(testBptEptRaw);
 
-            Assert.AreEqual(1, parsedBptEpt.BptElement.BptID);
-            Assert.AreEqual(2, parsedBptEpt.EptElement.EptID);
+            Assert.AreEqual(1, parsedBptEpt.BptElement.ID);
+            Assert.AreEqual(2, parsedBptEpt.EptElement.ID);
 
             Assert.IsFalse(parsedBptEpt.IsPaired);
 
@@ -172,8 +172,8 @@ namespace TMS_XLZ_Basic_Tests
             string testBptEptRaw = testString0;
             BptEptElement parsedBptEpt = new BptEptElement(testBptEptRaw);
 
-            Assert.AreEqual(1, parsedBptEpt.BptElement.BptID);
-            Assert.AreEqual(1, parsedBptEpt.EptElement.EptID);
+            Assert.AreEqual(1, parsedBptEpt.BptElement.ID);
+            Assert.AreEqual(1, parsedBptEpt.EptElement.ID);
 
             Assert.IsTrue(parsedBptEpt.IsPaired);
 
@@ -187,8 +187,8 @@ namespace TMS_XLZ_Basic_Tests
             string testBptEptRaw = testString001;
             BptEptElement parsedBptEpt = new BptEptElement(testBptEptRaw);
 
-            Assert.AreEqual(1, parsedBptEpt.BptElement.BptID);
-            Assert.AreEqual(2, parsedBptEpt.EptElement.EptID);
+            Assert.AreEqual(1, parsedBptEpt.BptElement.ID);
+            Assert.AreEqual(2, parsedBptEpt.EptElement.ID);
 
             Assert.IsFalse(parsedBptEpt.IsPaired);
             Assert.AreEqual(0,parsedBptEpt.ElementID);
@@ -201,8 +201,8 @@ namespace TMS_XLZ_Basic_Tests
             string testBptEptRaw = testString0;
             BptEptElement parsedBptEpt = new BptEptElement(testBptEptRaw);
 
-            Assert.AreEqual(1, parsedBptEpt.BptElement.BptID);
-            Assert.AreEqual(1, parsedBptEpt.EptElement.EptID);
+            Assert.AreEqual(1, parsedBptEpt.BptElement.ID);
+            Assert.AreEqual(1, parsedBptEpt.EptElement.ID);
 
             Assert.IsTrue(parsedBptEpt.IsPaired);
             Assert.AreEqual(1, parsedBptEpt.ElementID);
@@ -215,8 +215,8 @@ namespace TMS_XLZ_Basic_Tests
             string testBptEptRaw = testString01;
             BptEptElement parsedBptEpt = new BptEptElement(testBptEptRaw);
 
-            Assert.AreEqual(1, parsedBptEpt.BptElement.BptID);
-            Assert.AreEqual(1, parsedBptEpt.EptElement.EptID);
+            Assert.AreEqual(1, parsedBptEpt.BptElement.ID);
+            Assert.AreEqual(1, parsedBptEpt.EptElement.ID);
 
             Assert.IsTrue(parsedBptEpt.IsPaired);
             Assert.AreEqual(1, parsedBptEpt.ElementID);
@@ -234,8 +234,8 @@ namespace TMS_XLZ_Basic_Tests
             string testBptEptRaw = testString001;
             BptEptElement parsedBptEpt = new BptEptElement(testBptEptRaw);
 
-            Assert.AreEqual(1, parsedBptEpt.BptElement.BptID);
-            Assert.AreEqual(2, parsedBptEpt.EptElement.EptID);
+            Assert.AreEqual(1, parsedBptEpt.BptElement.ID);
+            Assert.AreEqual(2, parsedBptEpt.EptElement.ID);
 
             Assert.IsFalse(parsedBptEpt.IsPaired);
             Assert.AreEqual(0, parsedBptEpt.ElementID);
@@ -248,8 +248,8 @@ namespace TMS_XLZ_Basic_Tests
             string testBptEptRaw = testString0;
             BptEptElement parsedBptEpt = new BptEptElement(testBptEptRaw);
 
-            Assert.AreEqual(1, parsedBptEpt.BptElement.BptID);
-            Assert.AreEqual(1, parsedBptEpt.EptElement.EptID);
+            Assert.AreEqual(1, parsedBptEpt.BptElement.ID);
+            Assert.AreEqual(1, parsedBptEpt.EptElement.ID);
 
             Assert.IsTrue(parsedBptEpt.IsPaired);
             Assert.AreEqual(1, parsedBptEpt.ElementID);
@@ -262,8 +262,8 @@ namespace TMS_XLZ_Basic_Tests
             string testBptEptRaw = testString01;
             BptEptElement parsedBptEpt = new BptEptElement(testBptEptRaw);
 
-            Assert.AreEqual(1, parsedBptEpt.BptElement.BptID);
-            Assert.AreEqual(1, parsedBptEpt.EptElement.EptID);
+            Assert.AreEqual(1, parsedBptEpt.BptElement.ID);
+            Assert.AreEqual(1, parsedBptEpt.EptElement.ID);
 
             Assert.IsTrue(parsedBptEpt.IsPaired);
             Assert.AreEqual(1, parsedBptEpt.ElementID);

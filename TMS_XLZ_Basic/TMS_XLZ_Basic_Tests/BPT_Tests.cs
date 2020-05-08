@@ -82,6 +82,18 @@ namespace TMS_XLZ_Basic_Tests
 
         }
 
+        /*[TestMethod]
+        public void BPT_Indexes_Test_1()
+        {
+            string testBPTRaw = "<bpt id=\"1\"></bpt>";
+
+            BPT parsedBPT = new BPT(testBPTRaw);
+
+            Assert.AreEqual(0, parsedBPT.FirstIndex);
+            Assert.AreEqual(17, parsedBPT.LastIndex);
+
+        }*/
+
         /* Tests for assessing if the IsYellowHighlight() methods works correctly. */
 
         [TestMethod]

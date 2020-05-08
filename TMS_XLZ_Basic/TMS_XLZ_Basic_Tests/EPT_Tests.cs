@@ -81,5 +81,17 @@ namespace TMS_XLZ_Basic_Tests
             Assert.AreEqual(innerText, parsedEPT.EptContent);
 
         }
+
+        /*[TestMethod]
+        public void EPT_Indexes_Test_1()
+        {
+            string testEPTRaw = "<ept id=\"1\"></ept>";
+
+            EPT parsedEPT = new EPT(testEPTRaw);
+
+            Assert.AreEqual(0, parsedEPT.FirstIndex);
+            Assert.AreEqual(17, parsedEPT.LastIndex);
+
+        }*/
     }
 }

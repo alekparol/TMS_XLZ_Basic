@@ -21,6 +21,8 @@ namespace TMS_XLZ_Basic_Tests
             Assert.AreEqual(1, tr.listOfBpt.Count);
             Assert.AreEqual(1, tr.listOfEpt.Count);
 
+            Assert.AreEqual(1, tr.listOfBptEptElements.Count);
+            Assert.AreEqual("Otis Proprietary &amp; Confidential – for internal distribution only", tr.listOfBptEptElements[0].TextBetween);
         }
 
     }

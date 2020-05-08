@@ -19,12 +19,47 @@ namespace TMS_XLZ_Basic.XLZ.Xliff.TransUnit.TransUnitElements
     public class TransUnitElementsConstructor
     {
 
-        public List<BptEptElement> listOfBptEptElements;
-        //public List<PhElement> listOfPhElements;
-        //public List<ItElement> listOfItElements;
+        /*Fields*/
+
+        public List<BptEptElement> listOfBptEptElements = new List<BptEptElement>();
+        public List<PhElement> listOfPhElements = new List<PhElement>();
+        public List<ItElement> listOfItElements = new List<ItElement>();
 
         public List<BPT> listOfBpt = new List<BPT>();
-        public List<EPT> listOfEpt = new List<EPT>(); 
+        public List<EPT> listOfEpt = new List<EPT>();
+
+        public List<int> listBptNotPairedIDs;
+        public List<int> listEptNotPairedIDs;
+
+        /*Properties*/
+
+
+        /*Methods*/
+
+        public bool IsBptNotPaired()
+        {
+            if(listBptNotPairedIDs.Count != 0)
+            {
+                return true;
+            }
+
+            return false;
+
+        }
+
+        public bool IsEptNotPaired()
+        {
+            if (listEptNotPairedIDs.Count != 0)
+            {
+                return true;
+            }
+
+            return false;
+
+        }
+
+        /*Constructors*/
+
 
 
         public TransUnitElementsConstructor(string transUnitText)
@@ -32,25 +67,101 @@ namespace TMS_XLZ_Basic.XLZ.Xliff.TransUnit.TransUnitElements
             Regex bptTag = new Regex("<bpt.*?id=\"\\d+\"?>.*?</bpt>");
             Regex eptTag = new Regex("<ept.*?id=\"\\d+\"?>.*?</ept>");
 
+            Regex itTag = new Regex("<it.*?id=\"\\d+\"?>.*?</it>");
+            Regex phTag = new Regex("<ph.*?id=\"\\d+\"?>.*?</ph>");
+
             MatchCollection bptMatchList = bptTag.Matches(transUnitText);
             var listOfBptStrings = bptMatchList.Cast<Match>().Select(match => match.Value).ToList();
 
             MatchCollection eptMatchList = eptTag.Matches(transUnitText);
             var listOfEptStrings = eptMatchList.Cast<Match>().Select(match => match.Value).ToList();
 
+            MatchCollection itMatchList = itTag.Matches(transUnitText);
+            var listOfItStrings = itMatchList.Cast<Match>().Select(match => match.Value).ToList();
+
+            MatchCollection phMatchList = phTag.Matches(transUnitText);
+            var listOfPhStrings = phMatchList.Cast<Match>().Select(match => match.Value).ToList();
+
+            /*I think that here there should be validation added to check if all corresponding elements in the list string 
+             have the same index as matcheslist. */
+
             BPT auxiliaryBpt;
             EPT auxiliaryEpt;
 
-            foreach(string bpt in listOfBptStrings)
+            ItElement auxiliaryIt;
+            PhElement auxiliaryPh;
+
+            BptEptElement auxiliaryBptEptElement;
+
+            int auxiliaryIndex;
+            Match bptMatch;
+            Match eptMatch;
+
+            /*Initializing list of BPT, EPT, PH and IT objects.*/
+
+            foreach (string bpt in listOfBptStrings)
             {
                 auxiliaryBpt = new BPT(bpt);
                 listOfBpt.Add(auxiliaryBpt);
             }
 
             foreach (string ept in listOfEptStrings)
-            {
+            {              
                 auxiliaryEpt = new EPT(ept);
                 listOfEpt.Add(auxiliaryEpt);
+            }
+
+            foreach (string ph in listOfPhStrings)
+            {
+                auxiliaryPh = new PhElement(ph);
+                listOfPhElements.Add(auxiliaryPh);
+            }
+
+            foreach (string it in listOfItStrings)
+            {
+                auxiliaryIt = new ItElement(it);
+                listOfItElements.Add(auxiliaryIt);
+            }
+
+            /*All all bpt tag has to have ept tag but not otherwise, so that's why I search through ept list and initialize 
+              BptEpt objects. 
+              1 Case - Ept tag list is not empty. We want all pairs bpt-ept in this case.
+              2 Case - Some Ept doesn't have a paired Bpt tag - so corresponding Bpt tag should be places in some previous 
+              trans-unit note. We should be able to save this information.
+              3 Case - Some Bpt tag doesn't have paired Ept tag so this information should be stored and used in the Case 2. 
+              And in case of 2 and 3 we want to create a EptBpt object on the level of Xliff document. */
+
+            if (listOfEpt.Count != 0)
+            {
+                foreach (EPT ept in listOfEpt)
+                {
+                    if (listOfBpt.Exists(x => x.BptID == ept.EptID))
+                    {
+
+                        auxiliaryIndex = listOfBpt.FindIndex(x => x.BptID == ept.EptID);
+                        bptMatch = bptMatchList[auxiliaryIndex];
+
+                        auxiliaryIndex = listOfEpt.FindIndex(x => x.EptID == ept.EptID);
+                        eptMatch = eptMatchList[auxiliaryIndex];
+
+                        auxiliaryBptEptElement = new BptEptElement(transUnitText.Substring(bptMatch.Index,
+                                                        eptMatch.Index + eptMatch.Length - bptMatch.Index));
+
+                        listOfBptEptElements.Add(auxiliaryBptEptElement);
+
+                    }
+                    else
+                    {
+                        listEptNotPairedIDs.Add(ept.EptID);
+                    }
+                }
+            }
+            else if(listOfBpt.Count != 0)
+            {
+                foreach(BPT bpt in listOfBpt)
+                {
+                    listBptNotPairedIDs.Add(bpt.BptID);
+                }
             }
 
         }

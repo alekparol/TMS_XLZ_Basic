@@ -51,8 +51,8 @@ namespace TMS_XLZ_Basic_Tests
 
             BPT parsedBPT = new BPT(testBPTRaw);
 
-            Assert.AreEqual(1, parsedBPT.BptID);
-            Assert.AreEqual(innerText, parsedBPT.BptContent);
+            Assert.AreEqual(1, parsedBPT.ID);
+            Assert.AreEqual(innerText, parsedBPT.Content);
 
         }
 
@@ -64,8 +64,8 @@ namespace TMS_XLZ_Basic_Tests
 
             BPT parsedBPT = new BPT(testBPTRaw);
 
-            Assert.AreEqual(1, parsedBPT.BptID);
-            Assert.AreEqual(innerText, parsedBPT.BptContent);
+            Assert.AreEqual(1, parsedBPT.ID);
+            Assert.AreEqual(innerText, parsedBPT.Content);
 
         }
 
@@ -77,22 +77,10 @@ namespace TMS_XLZ_Basic_Tests
 
             BPT parsedBPT = new BPT(testBPTRaw);
 
-            Assert.AreEqual(-1, parsedBPT.BptID);
-            Assert.AreEqual(innerText, parsedBPT.BptContent);
+            Assert.AreEqual(-1, parsedBPT.ID);
+            Assert.AreEqual(innerText, parsedBPT.Content);
 
         }
-
-        /*[TestMethod]
-        public void BPT_Indexes_Test_1()
-        {
-            string testBPTRaw = "<bpt id=\"1\"></bpt>";
-
-            BPT parsedBPT = new BPT(testBPTRaw);
-
-            Assert.AreEqual(0, parsedBPT.FirstIndex);
-            Assert.AreEqual(17, parsedBPT.LastIndex);
-
-        }*/
 
         /* Tests for assessing if the IsYellowHighlight() methods works correctly. */
 

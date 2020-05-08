@@ -51,8 +51,8 @@ namespace TMS_XLZ_Basic_Tests
 
             EPT parsedEPT = new EPT(testEPTRaw);
 
-            Assert.AreEqual(1, parsedEPT.EptID);
-            Assert.AreEqual(innerText, parsedEPT.EptContent);
+            Assert.AreEqual(1, parsedEPT.ID);
+            Assert.AreEqual(innerText, parsedEPT.Content);
 
         }
 
@@ -64,8 +64,8 @@ namespace TMS_XLZ_Basic_Tests
 
             EPT parsedEPT = new EPT(testEPTRaw);
 
-            Assert.AreEqual(1, parsedEPT.EptID);
-            Assert.AreEqual(innerText, parsedEPT.EptContent);
+            Assert.AreEqual(1, parsedEPT.ID);
+            Assert.AreEqual(innerText, parsedEPT.Content);
 
         }
 
@@ -77,8 +77,8 @@ namespace TMS_XLZ_Basic_Tests
 
             EPT parsedEPT = new EPT(testEPTRaw);
 
-            Assert.AreEqual(-1, parsedEPT.EptID);
-            Assert.AreEqual(innerText, parsedEPT.EptContent);
+            Assert.AreEqual(-1, parsedEPT.ID);
+            Assert.AreEqual(innerText, parsedEPT.Content);
 
         }
 

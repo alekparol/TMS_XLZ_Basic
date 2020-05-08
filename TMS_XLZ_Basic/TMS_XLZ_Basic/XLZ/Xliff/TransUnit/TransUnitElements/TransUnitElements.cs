@@ -16,7 +16,7 @@ using System.Text.RegularExpressions;
 
 namespace TMS_XLZ_Basic.XLZ.Xliff.TransUnit.TransUnitElements
 {
-    public class TransUnitElementsConstructor
+    public class TransUnitElements
     {
 
         /*Fields*/
@@ -29,8 +29,8 @@ namespace TMS_XLZ_Basic.XLZ.Xliff.TransUnit.TransUnitElements
         public List<BPT> listOfBpt = new List<BPT>();
         public List<EPT> listOfEpt = new List<EPT>();
 
-        public List<int> listBptNotPairedIDs;
-        public List<int> listEptNotPairedIDs;
+        public List<int> listBptNotPairedIDs = new List<int>();
+        public List<int> listEptNotPairedIDs = new List<int>();
 
         /*Properties*/
 
@@ -58,6 +58,8 @@ namespace TMS_XLZ_Basic.XLZ.Xliff.TransUnit.TransUnitElements
             return false;
 
         }
+
+        /*Get Elements by ID*/
 
         public BPT GetBptByID(int id)
         {
@@ -93,7 +95,7 @@ namespace TMS_XLZ_Basic.XLZ.Xliff.TransUnit.TransUnitElements
 
 
 
-        public TransUnitElementsConstructor(string transUnitText)
+        public TransUnitElements(string transUnitText)
         {
             Regex bptTag = new Regex("<bpt.*?id=\"\\d+\"?>.*?</bpt>");
             Regex eptTag = new Regex("<ept.*?id=\"\\d+\"?>.*?</ept>");

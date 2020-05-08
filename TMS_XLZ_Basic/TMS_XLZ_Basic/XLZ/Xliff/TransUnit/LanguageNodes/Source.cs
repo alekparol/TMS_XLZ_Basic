@@ -13,54 +13,29 @@ using System.Runtime.CompilerServices;
 using System.Text.RegularExpressions;
 using TMS_XLZ_Basic.XLZ.Xliff.TransUnit.TransUnitElements;
 
-/* In the Xliff file we can change mostly everything, but if there will be any change in the source or target text,
-           the same change should be applied to the corresponding node in the .skl file. 
-           For example:
-           1. Merging segments.
-           2. Deleting segments.
-           3. Adding segments.*/
-
-/* Method that adds some attribute, like maxwidth="1000" size="char" and so on. */
-/* Method that will copy source to target. */
-/* Method that change the segment to be not translatable. */
-
-/* Function for checking if all fields have been initialized and returning the information in form of integer:
- * - 2 for both target and source
- * - 0 for source
- * - -1 for target 
- * - -3 for nothing.
- * Note: Of course all other fields have to be initialized. */
-
-/*TODO: Extending this class according to the http://docs.oasis-open.org/xliff/v1.2/os/xliff-core.html */
-
 namespace TMS_XLZ_Basic
 {
-    class TransUnit
+    class Source
     {
 
         /* Fields */
 
+        private XmlNode sourceNode;
+        private XmlNode targetNode;
+
+        private TransUnitElements transUnitElements;
+
         public string outerXml;
         public string innerXml;
 
-        public XmlNode transUnitNode;
-
-        public XmlNode previousTranslatableNode;
-        public XmlNode previousUntranslatableNode;
-
-        public XmlNode sourceNode;
-        public XmlNode targetNode;
-
-        public TransUnitElements transUnitElements;
-
-        public bool translatable;
         public int ID;
+        public bool translatable;
 
         public int validationResult;
 
         /*Properties*/
 
-        
+
 
         /* Methods */
 
@@ -220,12 +195,11 @@ namespace TMS_XLZ_Basic
 
         /* Constructors */
 
-        public TransUnit(XmlNode transUnitNode)
+        public Source(XmlNode transUnitNode)
         {
 
             /* Initializing transUnitNode field. */
 
-            this.transUnitNode = transUnitNode;
 
             /* Initializing previous syblings fields. */
 
@@ -278,9 +252,6 @@ namespace TMS_XLZ_Basic
 
             outerXml = transUnitNode.OuterXml;
             innerXml = transUnitNode.InnerXml;
-
-
         }
-
     }
 }

@@ -49,11 +49,11 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="XLZ\Skeleton\SkeletonUnit.cs" />
     <Compile Include="XLZ\Xliff\TransUnit\TransUnit.cs" />
-    <Compile Include="XLZ\Xliff\TransUnit\TransUnitElements\BPT.cs" />
+    <Compile Include="XLZ\Xliff\TransUnit\TransUnitElements\Elements\BPT.cs" />
     <Compile Include="XLZ\Xliff\TransUnit\TransUnitElements\BptEptElement.cs" />
-    <Compile Include="XLZ\Xliff\TransUnit\TransUnitElements\EPT.cs" />
-    <Compile Include="XLZ\Xliff\TransUnit\TransUnitElements\ItElement.cs" />
-    <Compile Include="XLZ\Xliff\TransUnit\TransUnitElements\PhElement.cs" />
+    <Compile Include="XLZ\Xliff\TransUnit\TransUnitElements\Elements\EPT.cs" />
+    <Compile Include="XLZ\Xliff\TransUnit\TransUnitElements\Elements\IT.cs" />
+    <Compile Include="XLZ\Xliff\TransUnit\TransUnitElements\Elements\PH.cs" />
     <Compile Include="XLZ\Skeleton\Skeleton.cs" />
     <Compile Include="XLZ\Xliff\TransUnit\TransUnitElements\TransUnitElementsConstructor.cs" />
     <Compile Include="XLZ\Xliff\Xliff.cs" />

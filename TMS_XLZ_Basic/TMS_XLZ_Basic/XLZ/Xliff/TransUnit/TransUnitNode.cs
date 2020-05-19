@@ -16,7 +16,7 @@ using TMS_XLZ_Basic.XLZ.Xliff.TransUnit.TransUnitElements;
 
 namespace TMS_XLZ_Basic
 {
-    class TransUnitNode
+    public class TransUnitNode
     {
 
         /* Fields */
@@ -28,19 +28,51 @@ namespace TMS_XLZ_Basic
 
         /*Properties*/
 
+        public TransUnitData Data
+        {
+            get
+            {
+                return data; 
+            }
+        }
+
+        public TransUnitNode NextSibling
+        {
+            get
+            {
+                return nextSibling;
+            }
+            set
+            {
+                nextSibling = value;
+            }
+        }
+
+        public TransUnitNode PreviousSibling
+        {
+            get
+            {
+                return previousSibling;
+            }
+            set
+            {
+                previousSibling = value;
+            }
+        }
 
 
         /* Methods */
 
+
         /* Constructors */
 
-        public TransUnitNode(XmlNode transUnitNode)
+        public TransUnitNode(TransUnitData transUnitData)
         {
 
-            data = new TransUnitData(transUnitNode);
+            data = transUnitData;
 
-            nextSibling = new TransUnitNode(transUnitNode.NextSibling);
-            previousSibling = new TransUnitNode(transUnitNode.PreviousSibling);
+            nextSibling = null;
+            previousSibling = null;
 
         }
 

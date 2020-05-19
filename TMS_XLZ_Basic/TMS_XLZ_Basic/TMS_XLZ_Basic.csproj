@@ -48,14 +48,19 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="XLZ\Skeleton\SkeletonUnit.cs" />
+    <Compile Include="XLZ\Xliff\TransUnit\DoublyLinkedList.cs" />
+    <Compile Include="XLZ\Xliff\TransUnit\LanguageNodes\Source.cs" />
+    <Compile Include="XLZ\Xliff\TransUnit\LanguageNodes\Target.cs" />
     <Compile Include="XLZ\Xliff\TransUnit\TransUnit.cs" />
+    <Compile Include="XLZ\Xliff\TransUnit\TransUnitData.cs" />
     <Compile Include="XLZ\Xliff\TransUnit\TransUnitElements\Elements\BPT.cs" />
     <Compile Include="XLZ\Xliff\TransUnit\TransUnitElements\BptEptElement.cs" />
     <Compile Include="XLZ\Xliff\TransUnit\TransUnitElements\Elements\EPT.cs" />
     <Compile Include="XLZ\Xliff\TransUnit\TransUnitElements\Elements\IT.cs" />
     <Compile Include="XLZ\Xliff\TransUnit\TransUnitElements\Elements\PH.cs" />
     <Compile Include="XLZ\Skeleton\Skeleton.cs" />
-    <Compile Include="XLZ\Xliff\TransUnit\TransUnitElements\TransUnitElementsConstructor.cs" />
+    <Compile Include="XLZ\Xliff\TransUnit\TransUnitElements\TransUnitElements.cs" />
+    <Compile Include="XLZ\Xliff\TransUnit\TransUnitNode.cs" />
     <Compile Include="XLZ\Xliff\Xliff.cs" />
     <Compile Include="XLZ_Opener.cs" />
   </ItemGroup>

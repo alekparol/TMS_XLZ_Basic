@@ -47,15 +47,30 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Xml.XPath, Version=4.0.2.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Xml.XPath.4.3.0\lib\net46\System.Xml.XPath.dll</HintPath>
+      <Private>True</Private>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Xml.XPath.XDocument, Version=4.0.2.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Xml.XPath.XDocument.4.3.0\lib\net46\System.Xml.XPath.XDocument.dll</HintPath>
+      <Private>True</Private>
+      <Private>True</Private>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="XLZ_Tests\Xliff_Tests\TransUnit_Tests\LanguageNodes_Tests\Source_Tests.cs" />
+    <Compile Include="XLZ_Tests\Xliff_Tests\TransUnit_Tests\LanguageNodes_Tests\Target_Tests.cs" />
     <Compile Include="XLZ_Tests\Xliff_Tests\TransUnit_Tests\TransUnitElements_Tests\BptEptElement_Tests.cs" />
     <Compile Include="XLZ_Tests\Xliff_Tests\TransUnit_Tests\TransUnitElements_Tests\Elements_Tests\EPT_Tests.cs" />
     <Compile Include="XLZ_Tests\Xliff_Tests\TransUnit_Tests\TransUnitElements_Tests\Elements_Tests\BPT_Tests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="XLZ_Tests\Xliff_Tests\TransUnit_Tests\TransUnitElements_Tests\Elements_Tests\IT_Tests.cs" />
     <Compile Include="XLZ_Tests\Xliff_Tests\TransUnit_Tests\TransUnitElements_Tests\Elements_Tests\PH_Tests.cs" />
-    <Compile Include="XLZ_Tests\Xliff_Tests\TransUnit_Tests\TransUnitElements_Tests\TransUnitElementsConstructor_Tests.cs" />
+    <Compile Include="XLZ_Tests\Xliff_Tests\TransUnit_Tests\TransUnitElements_Tests\TransUnitElements_Tests.cs" />
+    <Compile Include="XLZ_Tests\Xliff_Tests\TransUnit_Tests\TransUnit_Tests.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

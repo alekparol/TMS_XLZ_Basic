@@ -21,10 +21,10 @@ namespace TMS_XLZ_Basic.XLZ.Xliff.TransUnit.TransUnitElements
 
         /*Fields*/
 
-        public List<BptEptElement> listOfBptEptElements = new List<BptEptElement>();
+        public List<BptEptElement> listOfBptEpt = new List<BptEptElement>();
       
-        public List<PH> listOfPhElements = new List<PH>();
-        public List<IT> listOfItElements = new List<IT>();
+        public List<PH> listOfPh = new List<PH>();
+        public List<IT> listOfIt = new List<IT>();
 
         public List<BPT> listOfBpt = new List<BPT>();
         public List<EPT> listOfEpt = new List<EPT>();
@@ -83,9 +83,9 @@ namespace TMS_XLZ_Basic.XLZ.Xliff.TransUnit.TransUnitElements
 
         public PH GetPhByID(int id)
         {
-            if (listOfPhElements.Exists(x => x.ID == id))
+            if (listOfPh.Exists(x => x.ID == id))
             {
-                return listOfPhElements.Find(x => x.ID == id);
+                return listOfPh.Find(x => x.ID == id);
             }
 
             return null;
@@ -100,8 +100,8 @@ namespace TMS_XLZ_Basic.XLZ.Xliff.TransUnit.TransUnitElements
             Regex bptTag = new Regex("<bpt.*?id=\"\\d+\"?>.*?</bpt>");
             Regex eptTag = new Regex("<ept.*?id=\"\\d+\"?>.*?</ept>");
 
-            Regex itTag = new Regex("<it.*?id=\"\\d+\"?>.*?</it>");
-            Regex phTag = new Regex("<ph.*?id=\"\\d+\"?>.*?</ph>");
+            Regex itTag = new Regex("<it.*?(id=\"(\\d+)\")?>.*?</it>");
+            Regex phTag = new Regex("<ph.*?(id=\"(\\d+)\")?>.*?</ph>");
 
             MatchCollection bptMatchList = bptTag.Matches(transUnitText);
             var listOfBptStrings = bptMatchList.Cast<Match>().Select(match => match.Value).ToList();
@@ -147,13 +147,13 @@ namespace TMS_XLZ_Basic.XLZ.Xliff.TransUnit.TransUnitElements
             foreach (string ph in listOfPhStrings)
             {
                 auxiliaryPh = new PH(ph);
-                listOfPhElements.Add(auxiliaryPh);
+                listOfPh.Add(auxiliaryPh);
             }
 
             foreach (string it in listOfItStrings)
             {
                 auxiliaryIt = new IT(it);
-                listOfItElements.Add(auxiliaryIt);
+                listOfIt.Add(auxiliaryIt);
             }
 
             /*All all bpt tag has to have ept tag but not otherwise, so that's why I search through ept list and initialize 
@@ -180,7 +180,7 @@ namespace TMS_XLZ_Basic.XLZ.Xliff.TransUnit.TransUnitElements
                         auxiliaryBptEptElement = new BptEptElement(transUnitText.Substring(bptMatch.Index,
                                                         eptMatch.Index + eptMatch.Length - bptMatch.Index));
 
-                        listOfBptEptElements.Add(auxiliaryBptEptElement);
+                        listOfBptEpt.Add(auxiliaryBptEptElement);
 
                     }
                     else

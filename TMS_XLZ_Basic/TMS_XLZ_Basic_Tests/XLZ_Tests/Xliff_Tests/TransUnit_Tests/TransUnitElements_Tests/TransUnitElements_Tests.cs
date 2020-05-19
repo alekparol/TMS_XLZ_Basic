@@ -26,8 +26,8 @@ namespace TMS_XLZ_Basic_Tests
             Assert.AreEqual(1, tr.listOfBpt.Count);
             Assert.AreEqual(1, tr.listOfEpt.Count);
 
-            Assert.AreEqual(1, tr.listOfBptEptElements.Count);
-            Assert.AreEqual("Otis Proprietary &amp; Confidential – for internal distribution only", tr.listOfBptEptElements[0].TextBetween);
+            Assert.AreEqual(1, tr.listOfBptEpt.Count);
+            Assert.AreEqual("Otis Proprietary &amp; Confidential – for internal distribution only", tr.listOfBptEpt[0].TextBetween);
         }
 
         [TestMethod]
@@ -36,16 +36,16 @@ namespace TMS_XLZ_Basic_Tests
             
             TransUnitElements elementConstructor = new TransUnitElements(TestString1);
 
-            Assert.AreEqual(1, elementConstructor.listOfBptEptElements.Count);
-            Assert.AreEqual(0, elementConstructor.listOfItElements.Count);
-            Assert.AreEqual(0, elementConstructor.listOfPhElements.Count);
+            Assert.AreEqual(1, elementConstructor.listOfBptEpt.Count);
+            Assert.AreEqual(0, elementConstructor.listOfIt.Count);
+            Assert.AreEqual(0, elementConstructor.listOfPh.Count);
 
             Assert.AreEqual(0, elementConstructor.listBptNotPairedIDs.Count);
             Assert.AreEqual(0, elementConstructor.listEptNotPairedIDs.Count);
 
-            Assert.AreEqual("Otis Proprietary &amp; Confidential – for internal distribution only", elementConstructor.listOfBptEptElements[0].TextBetween);
-            Assert.AreEqual("&lt;cf font=\"Arial\" asiantextfont=\"Arial\" complexscriptsfont=\"Arial\" size=\"9\" complexscriptssize=\"9\"&gt;", elementConstructor.listOfBptEptElements[0].BptElement.Content);
-            Assert.AreEqual("&lt;/cf&gt;", elementConstructor.listOfBptEptElements[0].EptElement.Content);
+            Assert.AreEqual("Otis Proprietary &amp; Confidential – for internal distribution only", elementConstructor.listOfBptEpt[0].TextBetween);
+            Assert.AreEqual("&lt;cf font=\"Arial\" asiantextfont=\"Arial\" complexscriptsfont=\"Arial\" size=\"9\" complexscriptssize=\"9\"&gt;", elementConstructor.listOfBptEpt[0].BptElement.Content);
+            Assert.AreEqual("&lt;/cf&gt;", elementConstructor.listOfBptEpt[0].EptElement.Content);
 
         }
 
@@ -55,9 +55,9 @@ namespace TMS_XLZ_Basic_Tests
 
             TransUnitElements elementConstructor = new TransUnitElements(TestString0);
 
-            Assert.AreEqual(0, elementConstructor.listOfBptEptElements.Count);
-            Assert.AreEqual(0, elementConstructor.listOfItElements.Count);
-            Assert.AreEqual(0, elementConstructor.listOfPhElements.Count);
+            Assert.AreEqual(0, elementConstructor.listOfBptEpt.Count);
+            Assert.AreEqual(0, elementConstructor.listOfIt.Count);
+            Assert.AreEqual(0, elementConstructor.listOfPh.Count);
 
             Assert.AreEqual(0, elementConstructor.listBptNotPairedIDs.Count);
             Assert.AreEqual(0, elementConstructor.listEptNotPairedIDs.Count);

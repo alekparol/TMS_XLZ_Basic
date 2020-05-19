@@ -13,6 +13,10 @@ using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Text.RegularExpressions;
 using System.Net;
+using System;
+using System.IO;
+using System.IO.Compression;
+using System.Dynamic;
 
 /* When the document is XML with CDATA, nodes don't have "ID" fields filled by number but it is "cdata x.x". */
 
@@ -229,7 +233,7 @@ namespace TMS_XLZ_Basic
             File.WriteAllText(@"C:\Users\Aleksander.Parol\Desktop\GLT_Engineering\Outlook\2020.04.27\HR Bulk Translations, aspx files ( ENG)\Process\Decodin - Encoded.aspx", encoded);*/
 
 
-            string aspxFileForEncoding = File.ReadAllText(@"C:\Users\Aleksander.Parol\Desktop\GLT_Engineering\Outlook\2020.05.04\HR Bulk Translations, aspx files ( ENG)\Files which cause problems\Annual-Year-End-Review-Guide.aspx");
+            /*string aspxFileForEncoding = File.ReadAllText(@"C:\Users\Aleksander.Parol\Desktop\GLT_Engineering\Outlook\2020.05.04\HR Bulk Translations, aspx files ( ENG)\Files which cause problems\Annual-Year-End-Review-Guide.aspx");
             Regex rx = new Regex("<mso:.*?>([\\S\\W]*)</mso:.*?>");
 
             aspxFileForEncoding = aspxFileForEncoding.Trim();
@@ -272,6 +276,58 @@ namespace TMS_XLZ_Basic
             }
 
             File.WriteAllText(@"C:\Users\Aleksander.Parol\Desktop\GLT_Engineering\Outlook\2020.05.04\HR Bulk Translations, aspx files ( ENG)\Files which cause problems\new.aspx", aspxFileForEncoding);
+            */
+
+            string xlsxPath = @"C:\Users\Aleksander.Parol\Desktop\GLT_Engineering\Documentation\Script\Breaking protection C#\GuiTextLanguagesCatalog.xlsx";
+            string xlsxFolder = @"C:\Users\Aleksander.Parol\Desktop\GLT_Engineering\Documentation\Script";
+
+            Regex xmlSheetRegex = new Regex("sheet\\d*\\.xml");
+            Regex passwordProtectionRegex = new Regex("<sheetProtection.*?>");
+
+            string readXmlFile;
+            string entryName;
+
+            List<string> fileEntries = new List<string>(Directory.GetFiles(xlsxFolder).Where(x => x.ToLowerInvariant().EndsWith("xlsx")));
+
+            foreach (var file in fileEntries)
+            {
+                using (ZipArchive zipArchive = ZipFile.Open(xlsxPath, ZipArchiveMode.Update))
+                {
+                    foreach (ZipArchiveEntry entry in zipArchive.Entries)
+                    {
+                        if (xmlSheetRegex.Match(entry.Name).Value != String.Empty)
+                        {
+                            entryName = entry.FullName;
+
+                            Stream entryStream = entry.Open();
+                            StreamReader reader = new StreamReader(entryStream);
+
+
+                            readXmlFile = reader.ReadToEnd();
+                            readXmlFile = passwordProtectionRegex.Replace(readXmlFile, string.Empty);
+
+                            entryStream.Close();
+
+                            using (Stream overwrite = entry.Open())
+                            {
+                                StreamWriter writer = new StreamWriter(overwrite);
+                                overwrite.SetLength(0);
+
+                                writer.WriteLine(readXmlFile);
+                                Console.WriteLine(readXmlFile);
+                                writer.Flush();
+                            }
+
+
+                        }
+
+                    }
+                }
+            }
+
+            
+
+
 
             Thread.Sleep(22000);
 

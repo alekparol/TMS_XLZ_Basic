@@ -15,7 +15,7 @@ using TMS_XLZ_Basic.XLZ.Xliff.TransUnit.TransUnitElements;
 
 namespace TMS_XLZ_Basic
 {
-    class Target
+    public class Target
     {
 
         /* Fields */
@@ -99,16 +99,17 @@ namespace TMS_XLZ_Basic
             {
                 parsingSuccess = true;
                 xmlNode = xmlNodeContainingTarget.SelectSingleNode("./target");
-            }
 
-            outerXml = xmlNode.OuterXml;
-            innerXml = xmlNode.InnerXml;
-            innerText = xmlNode.InnerText;
+                outerXml = xmlNode.OuterXml;
+                innerXml = xmlNode.InnerXml;
+                innerText = xmlNode.InnerText;
 
-            if (innerXml.Length != 0)
-            {
-                targetElements = new TransUnitElements(innerXml);
-            }
+                if (innerXml.Length != 0)
+                {
+                    targetElements = new TransUnitElements(innerXml);
+                }
+
+            }            
 
         }
     }

@@ -15,7 +15,7 @@ using TMS_XLZ_Basic.XLZ.Xliff.TransUnit.TransUnitElements;
 
 namespace TMS_XLZ_Basic
 {
-    class Source
+    public class Source
     {
 
         /* Fields */
@@ -82,34 +82,28 @@ namespace TMS_XLZ_Basic
 
         /* Methods */
 
-        public string GetSourceOuterXmlWithoutText()
-        {
-            string sourceText = xmlNode.InnerText;
-            string xmlWithoutText = xmlNode.OuterXml.Replace(sourceText, "");
-
-            return xmlWithoutText;
-        }
-
         /* Constructors */
 
         public Source(XmlNode xmlNodeContainingSource)
         {
-
-            if (xmlNodeContainingSource.SelectSingleNode("./source") != null)
+            if(xmlNodeContainingSource.InnerXml.Contains("<source>") && xmlNodeContainingSource.InnerXml.Contains("</source>"))
             {
-                parsingSuccess = true;
-                xmlNode = xmlNodeContainingSource.SelectSingleNode("./source");
-            }
+                if (xmlNodeContainingSource.SelectSingleNode("./source") != null)
+                {
+                    parsingSuccess = true;
+                    xmlNode = xmlNodeContainingSource.SelectSingleNode("./source");
 
-            outerXml = xmlNode.OuterXml;
-            innerXml = xmlNode.InnerXml;
-            innerText = xmlNode.InnerText;
+                    outerXml = xmlNode.OuterXml;
+                    innerXml = xmlNode.InnerXml;
+                    innerText = xmlNode.InnerText;
 
-            if(innerXml.Length != 0)
-            {
-                sourceElements = new TransUnitElements(innerXml);
-            }
+                    if (innerXml.Length != 0)
+                    {
+                        sourceElements = new TransUnitElements(innerXml);
+                    }
 
+                }
+            }           
         }
     }
 }

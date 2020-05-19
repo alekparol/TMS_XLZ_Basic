@@ -63,6 +63,7 @@
   <ItemGroup>
     <Compile Include="XLZ_Tests\Xliff_Tests\TransUnit_Tests\LanguageNodes_Tests\Source_Tests.cs" />
     <Compile Include="XLZ_Tests\Xliff_Tests\TransUnit_Tests\LanguageNodes_Tests\Target_Tests.cs" />
+    <Compile Include="XLZ_Tests\Xliff_Tests\TransUnit_Tests\TransUnitData_Tests.cs" />
     <Compile Include="XLZ_Tests\Xliff_Tests\TransUnit_Tests\TransUnitElements_Tests\BptEptElement_Tests.cs" />
     <Compile Include="XLZ_Tests\Xliff_Tests\TransUnit_Tests\TransUnitElements_Tests\Elements_Tests\EPT_Tests.cs" />
     <Compile Include="XLZ_Tests\Xliff_Tests\TransUnit_Tests\TransUnitElements_Tests\Elements_Tests\BPT_Tests.cs" />
@@ -70,7 +71,8 @@
     <Compile Include="XLZ_Tests\Xliff_Tests\TransUnit_Tests\TransUnitElements_Tests\Elements_Tests\IT_Tests.cs" />
     <Compile Include="XLZ_Tests\Xliff_Tests\TransUnit_Tests\TransUnitElements_Tests\Elements_Tests\PH_Tests.cs" />
     <Compile Include="XLZ_Tests\Xliff_Tests\TransUnit_Tests\TransUnitElements_Tests\TransUnitElements_Tests.cs" />
-    <Compile Include="XLZ_Tests\Xliff_Tests\TransUnit_Tests\TransUnit_Tests.cs" />
+    <Compile Include="XLZ_Tests\Xliff_Tests\TransUnit_Tests\TransUnitDL_Tests.cs" />
+    <Compile Include="XLZ_Tests\Xliff_Tests\TransUnit_Tests\TransUnitNode_Tests.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

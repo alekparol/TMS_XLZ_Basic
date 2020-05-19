@@ -34,6 +34,10 @@ namespace TMS_XLZ_Basic
             {
                 return data; 
             }
+            set
+            {
+                data = value;
+            }
         }
 
         public TransUnitNode NextSibling
@@ -73,6 +77,17 @@ namespace TMS_XLZ_Basic
 
             nextSibling = null;
             previousSibling = null;
+
+        }
+
+        public TransUnitNode(TransUnitData transUnitData, TransUnitNode previousNode)
+        {
+            data = transUnitData;
+
+            nextSibling = null;
+            previousSibling = previousNode;
+
+            previousNode.NextSibling = this;
 
         }
 

@@ -14,6 +14,9 @@ using System.Text.RegularExpressions;
 using TMS_XLZ_Basic.XLZ.Xliff.TransUnit.TransUnitElements;
 
 
+/*Note: Decide what should be done when a node has null data - we should allow this or not?
+ *Note: Decide what should be done when a node is created with a previous node which already have next node - replacement? Breaking the chain?*/
+
 namespace TMS_XLZ_Basic
 {
     public class TransUnitNode
@@ -67,8 +70,27 @@ namespace TMS_XLZ_Basic
 
         /* Methods */
 
+        public void Clear()
+        {
+
+            this.data = null;
+
+            this.nextSibling = null;
+            this.previousSibling = null; 
+
+        }
+
 
         /* Constructors */
+
+        public TransUnitNode()
+        {
+            data = null;
+
+            nextSibling = null;
+            previousSibling = null;
+
+        }
 
         public TransUnitNode(TransUnitData transUnitData)
         {
@@ -82,12 +104,33 @@ namespace TMS_XLZ_Basic
 
         public TransUnitNode(TransUnitData transUnitData, TransUnitNode previousNode)
         {
+
+            if (previousNode.NextSibling != null)
+            {
+                previousNode.NextSibling.previousSibling = null;
+                previousNode.NextSibling = null;
+
+            }
+
             data = transUnitData;
 
             nextSibling = null;
             previousSibling = previousNode;
 
             previousNode.NextSibling = this;
+
+        }
+
+        public TransUnitNode(TransUnitData transUnitData, TransUnitNode previousNode, TransUnitNode nextNode)
+        {
+
+            data = transUnitData;
+
+            nextSibling = nextNode;
+            previousSibling = previousNode;
+
+            previousNode.NextSibling = this;
+            nextNode.PreviousSibling = this; 
 
         }
 

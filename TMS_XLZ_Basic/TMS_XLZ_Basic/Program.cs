@@ -233,13 +233,18 @@ namespace TMS_XLZ_Basic
             File.WriteAllText(@"C:\Users\Aleksander.Parol\Desktop\GLT_Engineering\Outlook\2020.04.27\HR Bulk Translations, aspx files ( ENG)\Process\Decodin - Encoded.aspx", encoded);*/
 
 
-            /*string aspxFileForEncoding = File.ReadAllText(@"C:\Users\Aleksander.Parol\Desktop\GLT_Engineering\Outlook\2020.05.04\HR Bulk Translations, aspx files ( ENG)\Files which cause problems\Annual-Year-End-Review-Guide.aspx");
-            Regex rx = new Regex("<mso:.*?>([\\S\\W]*)</mso:.*?>");
+            string aspxFileForEncoding = File.ReadAllText(@"C:\Users\Aleksander.Parol\Desktop\GLT_Engineering\TMS\2020.05.20\Corteva - G_2376630 - Corteva  - Manager_Pages  Part 2 - Eng_PostProcess_Check_H\Job-Change-Checklist.aspx");
+            Regex mainRegex = new Regex("<mso:CustomDocumentProperties>([\\S\\W]*)</mso:.*?>");          
+            Regex rx = new Regex("<mso:.*?>([\\S\\W]*?)</mso:.*?>");
 
             aspxFileForEncoding = aspxFileForEncoding.Trim();
             string newAspxFile = aspxFileForEncoding;
 
-            MatchCollection msoContent = rx.Matches(aspxFileForEncoding);
+            Match msoCustomContent = mainRegex.Match(aspxFileForEncoding);
+
+            MatchCollection msoContent = rx.Matches(msoCustomContent.Groups[1].Value);
+            //MatchCollection msoContent = rx.Matches(aspxFileForEncoding);
+
             List<string> listOfInnerStrings = new List<string>();
 
             string a;
@@ -248,6 +253,7 @@ namespace TMS_XLZ_Basic
             {
                 a = en.Groups[1].Value;
                 listOfInnerStrings.Add(a);
+                Console.WriteLine(a);
             }
 
 
@@ -256,29 +262,29 @@ namespace TMS_XLZ_Basic
 
 
                 Console.WriteLine(innerText);
-                Console.WriteLine(WebUtility.HtmlDecode(innerText));
+                Console.WriteLine(WebUtility.HtmlEncode(innerText));
 
                 if (innerText.Length != 0)
                 {
-                    a = WebUtility.HtmlDecode(innerText);
+                    a = WebUtility.HtmlEncode(innerText);
                     aspxFileForEncoding = aspxFileForEncoding.Replace(innerText, a);
                 }
 
             }
 
-            Regex nr = new Regex("<mso:PublishingPageContent.*?>(.*?)</mso:PublishingPageContent.*?>");
-            MatchCollection msoContent2 = nr.Matches(aspxFileForEncoding);
+            //Regex nr = new Regex("<mso:PublishingPageContent.*?>(.*?)</mso:PublishingPageContent.*?>");
+            //MatchCollection msoContent2 = nr.Matches(aspxFileForEncoding);
 
-            foreach (Match en in msoContent2)
-            {
-                a = en.Groups[1].Value;
-                Console.WriteLine(a);
-            }
+            //foreach (Match en in msoContent2)
+            //{
+            //    a = en.Groups[1].Value;
+            //    Console.WriteLine(a);
+            //}
 
             File.WriteAllText(@"C:\Users\Aleksander.Parol\Desktop\GLT_Engineering\Outlook\2020.05.04\HR Bulk Translations, aspx files ( ENG)\Files which cause problems\new.aspx", aspxFileForEncoding);
-            */
+            
 
-            string xlsxPath = @"C:\Users\Aleksander.Parol\Desktop\GLT_Engineering\Documentation\Script\Breaking protection C#\GuiTextLanguagesCatalog.xlsx";
+            /*string xlsxPath = @"C:\Users\Aleksander.Parol\Desktop\GLT_Engineering\Documentation\Script\Breaking protection C#\GuiTextLanguagesCatalog.xlsx";
             string xlsxFolder = @"C:\Users\Aleksander.Parol\Desktop\GLT_Engineering\Documentation\Script";
 
             Regex xmlSheetRegex = new Regex("sheet\\d*\\.xml");
@@ -323,7 +329,7 @@ namespace TMS_XLZ_Basic
 
                     }
                 }
-            }
+            }*/
 
             
 

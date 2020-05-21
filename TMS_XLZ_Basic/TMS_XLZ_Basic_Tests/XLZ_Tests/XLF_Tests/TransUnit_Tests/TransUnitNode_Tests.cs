@@ -90,6 +90,73 @@ namespace TMS_XLZ_Basic_Tests
         }
 
         /*
+         * Case: Clearing the node created by a constructor with TransUnitData object. 
+         * Expected Result: TransUnitNode object after this operations should have all fields set as null. 
+         * Actual Result: As expected. 
+         */
+
+        [TestMethod]
+        public void TransUnitData_Clear_Test_1()
+        {
+            // Initialization. 
+            XmlDocument doc = new XmlDocument();
+            doc.Load(xliffPath);
+
+            XmlNodeList transUnitList = doc.GetElementsByTagName("trans-unit");
+
+            TransUnitData testData = new TransUnitData(transUnitList[0]);
+            TransUnitNode testNode = new TransUnitNode(testData);
+
+            testNode.Clear();
+
+            // Assertions set. 
+            Assert.IsNull(testNode.Data);
+            Assert.IsNull(testNode.PreviousSibling);
+            Assert.IsNull(testNode.NextSibling);
+
+        }
+
+        /*
+         * Case: Clearing the node created by a constructor with TransUnitData object and set PreviousSibling and NextSibling. 
+         * Expected Result: TransUnitNode object after this operations should have all fields set as null. 
+         * Actual Result: As expected. 
+         */
+
+        [TestMethod]
+        public void TransUnitData_Clear_Test_2()
+        {
+            // Initialization. 
+            XmlDocument doc = new XmlDocument();
+            doc.Load(xliffPath);
+
+            XmlNodeList transUnitList = doc.GetElementsByTagName("trans-unit");
+
+            TransUnitData firstTestData = new TransUnitData(transUnitList[0]);
+            TransUnitData secondTestData = new TransUnitData(transUnitList[1]);
+            TransUnitData thirdTestData = new TransUnitData(transUnitList[2]);
+
+            TransUnitNode firstTestNode = new TransUnitNode(firstTestData);
+            TransUnitNode secondTestNode = new TransUnitNode(secondTestData);
+            TransUnitNode thirdTestNode = new TransUnitNode(thirdTestData);
+
+            // Setting Relations Between Nodes.
+            firstTestNode.NextSibling = secondTestNode;
+
+            secondTestNode.PreviousSibling = firstTestNode;
+            secondTestNode.NextSibling = thirdTestNode;
+
+            thirdTestNode.PreviousSibling = secondTestNode;
+
+            secondTestNode.Clear();
+
+            // Assertions set. 
+            Assert.IsNull(secondTestNode.Data);
+            Assert.IsNull(secondTestNode.PreviousSibling);
+            Assert.IsNull(secondTestNode.NextSibling);
+
+        }
+
+        /*
          * Case: Constructor with TransUnitData object and TransUnidNode previousNode is invoked. Previous node is equal to some nonempty node created 
          * using the first constructor and some not null TransUnitData object. 
          * Expected Result: TransUnitNode object with data equal to the TransUnitData object is created and the previous node will be set to the node 
@@ -274,7 +341,8 @@ namespace TMS_XLZ_Basic_Tests
 
         /*
          * Case: Constructor with TransUnitData object and TransUnidNode previousNode and TransUnitNode nextNode is invoked.
-         * Expected Result: TransUnitNode object with data equal to the TransUnitData 
+         * Expected Result: TransUnitNode object with data equal to the TransUnitData and PreviousSibling equal to the previousNode and NextSibling 
+         * equal to the nextNode is created.
          * Actual Result: As expected. 
          *
          */
@@ -292,6 +360,7 @@ namespace TMS_XLZ_Basic_Tests
             TransUnitData secondTestData = new TransUnitData(transUnitList[1]);
             TransUnitData thirdTestData = new TransUnitData(transUnitList[2]);
 
+            // Setting Relations Between Nodes.
             TransUnitNode firstTestNode = new TransUnitNode(firstTestData);
             TransUnitNode secondTestNode = new TransUnitNode(secondTestData);
             TransUnitNode thirdTestNode = new TransUnitNode(thirdTestData, firstTestNode, secondTestNode);
@@ -311,10 +380,19 @@ namespace TMS_XLZ_Basic_Tests
 
         }
 
+        /*
+         * Case: Constructor with TransUnitData object and TransUnidNode previousNode and TransUnitNode nextNode is invoked whereas previousNode and 
+         * nextNode are euqal to null.
+         * Expected Result: TransUnitNode object with data equal to the TransUnitData and PreviousSibling equal to the previousNode and NextSibling 
+         * equal to the nextNode is created.
+         * Actual Result: Not as expected. 
+         *
+         */
+
         [TestMethod]
         public void TransUnitData_Creation_WithPreviousNext_Test_2()
         {
-
+            // Initialization. 
             XmlDocument doc = new XmlDocument();
             doc.Load(xliffPath);
 
@@ -322,17 +400,26 @@ namespace TMS_XLZ_Basic_Tests
 
             TransUnitData thirdTestData = new TransUnitData(transUnitList[2]);
 
+            // Assertions set.
             TransUnitNode firstTestNode = null;
             TransUnitNode secondTestNode = null;
             TransUnitNode thirdTestNode = new TransUnitNode(thirdTestData, firstTestNode, secondTestNode);
 
-
         }
+
+        /*
+         * Case: Constructor with TransUnitData object and TransUnidNode previousNode and TransUnitNode nextNode is invoked whereas previousNode and 
+         * nextNode are created as empty nodes.
+         * Expected Result: TransUnitNode object with data equal to the TransUnitData and PreviousSibling equal to the previousNode and NextSibling 
+         * equal to the nextNode is created.
+         * Actual Result: As expected. 
+         *
+         */
 
         [TestMethod]
         public void TransUnitData_Creation_WithPreviousNext_Test_3()
         {
-
+            // Initialization. 
             XmlDocument doc = new XmlDocument();
             doc.Load(xliffPath);
 
@@ -344,6 +431,7 @@ namespace TMS_XLZ_Basic_Tests
             TransUnitNode secondTestNode = new TransUnitNode();
             TransUnitNode thirdTestNode = new TransUnitNode(thirdTestData, firstTestNode, secondTestNode);
 
+            // Assertions set.
             Assert.AreEqual(thirdTestData, thirdTestNode.Data);
             Assert.AreEqual(firstTestNode, thirdTestNode.PreviousSibling);
             Assert.AreEqual(secondTestNode, thirdTestNode.NextSibling);
@@ -356,13 +444,21 @@ namespace TMS_XLZ_Basic_Tests
             Assert.AreEqual(thirdTestNode, secondTestNode.PreviousSibling);
             Assert.IsNull(secondTestNode.NextSibling);
 
-
         }
+
+        /*
+         * Case: Constructor with TransUnitData object and TransUnidNode previousNode and TransUnitNode nextNode is invoked whereas previousNode is 
+         * created in a standard way and nextNode is created using TransUnitData and previousNode.
+         * Expected Result: TransUnitNode object with data equal to the TransUnitData and PreviousSibling equal to the previousNode and NextSibling 
+         * equal to the nextNode is created.
+         * Actual Result: As expected. 
+         *
+         */
 
         [TestMethod]
         public void TransUnitData_Creation_WithPreviousNext_Test_4()
         {
-
+            // Initialization. 
             XmlDocument doc = new XmlDocument();
             doc.Load(xliffPath);
 
@@ -372,10 +468,12 @@ namespace TMS_XLZ_Basic_Tests
             TransUnitData secondTestData = new TransUnitData(transUnitList[1]);
             TransUnitData thirdTestData = new TransUnitData(transUnitList[2]);
 
+            // Setting Relations Between Nodes.
             TransUnitNode firstTestNode = new TransUnitNode(firstTestData);
             TransUnitNode secondTestNode = new TransUnitNode(secondTestData, firstTestNode);
             TransUnitNode thirdTestNode = new TransUnitNode(thirdTestData, firstTestNode, secondTestNode);
 
+            // Assertions set.
             Assert.AreEqual(thirdTestData, thirdTestNode.Data);
             Assert.AreEqual(firstTestNode, thirdTestNode.PreviousSibling);
             Assert.AreEqual(secondTestNode, thirdTestNode.NextSibling);
@@ -390,10 +488,19 @@ namespace TMS_XLZ_Basic_Tests
 
         }
 
+        /*
+         * Case: Constructor with TransUnitData object and TransUnidNode previousNode and TransUnitNode nextNode is invoked whereas previousNode and 
+         * nextNode have not null PreviousSibling and NextSibling fields.
+         * Expected Result: TransUnitNode object with data equal to the TransUnitData and PreviousSibling equal to the previousNode and NextSibling 
+         * equal to the nextNode is created.
+         * Actual Result: As expected. 
+         *
+         */
+
         [TestMethod]
         public void TransUnitData_Creation_WithPreviousNext_Test_5()
         {
-
+            // Initialization. 
             XmlDocument doc = new XmlDocument();
             doc.Load(xliffPath);
 
@@ -405,12 +512,14 @@ namespace TMS_XLZ_Basic_Tests
             TransUnitData fourthTestData = new TransUnitData(transUnitList[3]);
             TransUnitData fifthTestData = new TransUnitData(transUnitList[4]);
 
+            // Setting Relations Between Nodes.
             TransUnitNode firstTestNode = new TransUnitNode(firstTestData);
             TransUnitNode secondTestNode = new TransUnitNode(secondTestData, firstTestNode);
             TransUnitNode thirdTestNode = new TransUnitNode(thirdTestData, firstTestNode, secondTestNode);
             TransUnitNode fourthTestNode = new TransUnitNode(fourthTestData, thirdTestNode, secondTestNode);
             TransUnitNode fifthTestNode = new TransUnitNode(fifthTestData, fourthTestNode, secondTestNode);
 
+            // Assertions set.
             Assert.AreEqual(firstTestData, firstTestNode.Data);
             Assert.IsNull(firstTestNode.PreviousSibling);
             Assert.AreEqual(thirdTestNode, firstTestNode.NextSibling);
@@ -433,10 +542,24 @@ namespace TMS_XLZ_Basic_Tests
 
         }
 
+        /*
+         * Case: Constructor with TransUnitData object and TransUnidNode previousNode and TransUnitNode nextNode is invoked whereas previousNode is the
+         * second node in the count and NextNode is the first node in the count, so the constructor is invoked with reversed values.
+         * Expected Result: TransUnitNode object with data equal to the TransUnitData and PreviousSibling and NextSibling reversed. Consider the case in
+         * the test:
+         * 1. previousNode is the secondTransUnitNode which PreviousSibling is firstTransUnitNode and NextSibling is null.
+         * 2. nextNode is the fristTransUnitNode which PreviousSibling is null and NextSibling is secondTransUnitNode. 
+         * 3. previousNode should have PreviousSibling equal to the nextNode PreviousSibling and NextSibling equal to created node.
+         * 4. nextNode should have PreviousSibling equal to the created node and NextSibling equal to the previousNode's NextSibling.
+         * THIS IS TO BE IMPLEMENTED
+         * Actual Result: Not as expected. 
+         *
+         */
+
         [TestMethod]
         public void TransUnitData_Creation_WithPreviousNext_Test_6()
         {
-
+            // Initialization. 
             XmlDocument doc = new XmlDocument();
             doc.Load(xliffPath);
 
@@ -446,10 +569,12 @@ namespace TMS_XLZ_Basic_Tests
             TransUnitData secondTestData = new TransUnitData(transUnitList[1]);
             TransUnitData thirdTestData = new TransUnitData(transUnitList[2]);
 
+            // Setting Relations Between Nodes.
             TransUnitNode firstTestNode = new TransUnitNode(firstTestData);
             TransUnitNode secondTestNode = new TransUnitNode(secondTestData, firstTestNode);
             TransUnitNode thirdTestNode = new TransUnitNode(thirdTestData, secondTestNode, firstTestNode);
 
+            // Assertions set.
             Assert.AreEqual(firstTestData, firstTestNode.Data);
             Assert.AreEqual(thirdTestNode, firstTestNode.PreviousSibling);
             Assert.AreEqual(secondTestNode, firstTestNode.NextSibling);

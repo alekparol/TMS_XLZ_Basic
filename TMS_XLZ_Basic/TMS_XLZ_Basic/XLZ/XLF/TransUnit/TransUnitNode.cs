@@ -14,7 +14,8 @@ using System.Text.RegularExpressions;
 using TMS_XLZ_Basic.XLZ.Xliff.TransUnit.TransUnitElements;
 
 
-/*Note: Decide what should be done when a node has null data - we should allow this or not?
+/*TODO: Create a new constructor which would take TransUnitData and nextNode argument, to simplify InsertPrevious method. 
+ * Note: Decide what should be done when a node has null data - we should allow this or not?
  *Note: Decide what should be done when a node is created with a previous node which already have next node - replacement? Breaking the chain?*/
 
 namespace TMS_XLZ_Basic

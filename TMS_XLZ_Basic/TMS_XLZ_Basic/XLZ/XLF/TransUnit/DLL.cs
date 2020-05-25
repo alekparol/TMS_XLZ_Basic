@@ -95,14 +95,29 @@ namespace TMS_XLZ_Basic.XLZ.Xliff
         public TransUnitNode InsertNext(TransUnitData newNodeData)
         {
 
-            TransUnitNode newNode = new TransUnitNode(newNodeData, head);
+            TransUnitNode newNode;
 
-            if(tail == null)
+            if (head != null)
+            {
+                newNode = new TransUnitNode(newNodeData, head);
+
+                if(head.NextSibling == null)
+                {
+                    head = newNode;
+                }
+
+            }
+            else
+            {
+                newNode = new TransUnitNode(newNodeData);
+                head = newNode;
+            }            
+
+            if (tail == null)
             {
                 tail = newNode;
             }
 
-            head = newNode;
             count++;
 
             return newNode;

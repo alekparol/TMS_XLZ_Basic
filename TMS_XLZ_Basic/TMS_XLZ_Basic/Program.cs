@@ -235,7 +235,7 @@ namespace TMS_XLZ_Basic
 
             string aspxFileForEncoding = File.ReadAllText(@"C:\Users\Aleksander.Parol\Desktop\GLT_Engineering\TMS\2020.05.20\Corteva - G_2376630 - Corteva  - Manager_Pages  Part 2 - Eng_PostProcess_Check_H\Job-Change-Checklist.aspx");
             Regex mainRegex = new Regex("<mso:CustomDocumentProperties>([\\S\\W]*)</mso:.*?>");          
-            Regex rx = new Regex("<mso:.*?>([\\S\\W]*?)</mso:.*?>");
+            Regex rx = new Regex("<mso:(PublishingPageContent|Keywords|ShortDescription).*?>([\\S\\W]*?)</mso:.*?>");
 
             aspxFileForEncoding = aspxFileForEncoding.Trim();
             string newAspxFile = aspxFileForEncoding;

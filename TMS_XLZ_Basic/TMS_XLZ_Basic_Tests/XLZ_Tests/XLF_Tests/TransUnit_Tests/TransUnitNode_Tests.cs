@@ -275,13 +275,13 @@ namespace TMS_XLZ_Basic_Tests
             TransUnitNode secondTestNode = new TransUnitNode(secondTestData, firstTestNode);
 
             // Assertions set.
-            Assert.AreEqual(secondTestNode, firstTestNode.NextSibling);
             Assert.AreEqual(firstTestData, firstTestNode.Data);
             Assert.IsNull(firstTestNode.PreviousSibling);
+            Assert.AreEqual(secondTestNode, firstTestNode.NextSibling);
 
+            Assert.IsNull(secondTestNode.Data);
             Assert.AreEqual(firstTestNode, secondTestNode.PreviousSibling);
             Assert.IsNull(secondTestNode.NextSibling);
-            Assert.IsNull(secondTestNode.Data);
 
         }
 
@@ -329,13 +329,21 @@ namespace TMS_XLZ_Basic_Tests
             TransUnitNode fourthTestNode = new TransUnitNode(fourthTestData, secondTestNode);
 
             // Assertions set.
+            Assert.AreEqual(firstTestData, firstTestNode.Data);
+            Assert.IsNull(firstTestNode.PreviousSibling);
             Assert.AreEqual(secondTestNode, firstTestNode.NextSibling);
+
+            Assert.AreEqual(secondTestData, secondTestNode.Data);
             Assert.AreEqual(firstTestNode, secondTestNode.PreviousSibling);
-
             Assert.AreEqual(fourthTestNode, secondTestNode.NextSibling);
-            Assert.AreEqual(secondTestNode, fourthTestNode.PreviousSibling);
 
+            Assert.AreEqual(thirdTestData, thirdTestNode.Data);
             Assert.IsNull(thirdTestNode.PreviousSibling);
+            Assert.IsNull(thirdTestNode.NextSibling);
+
+            Assert.AreEqual(fourthTestData, fourthTestNode.Data);
+            Assert.AreEqual(secondTestNode, fourthTestNode.PreviousSibling);
+            Assert.IsNull(fourthTestNode.NextSibling);
 
         }
 

@@ -44,16 +44,41 @@ namespace TMS_XLZ_Basic_Tests
 
 
             DLL newDLL = new DLL();
+            TransUnitNode firstNode = newDLL.InsertPrevious(testData);
+            TransUnitNode secondNode = newDLL.InsertPrevious(testData);
+            TransUnitNode thirdNode = newDLL.InsertPrevious(testData);
+            TransUnitNode fourthNode = newDLL.InsertPrevious(testData);
+
+            // Assertions set.
+            Assert.AreEqual(4, newDLL.Count);
+            Assert.AreEqual(testData, newDLL.Tail.Data);
+            Assert.AreEqual(testData, newDLL.Head.Data);
+
+        }
+
+        [TestMethod]
+        public void DLL_Test_2()
+        {
+            // Initialization. 
+            XmlDocument doc = new XmlDocument();
+            doc.Load(xliffPath);
+
+            XmlNodeList transUnitList = doc.GetElementsByTagName("trans-unit");
+            TransUnitData testData = new TransUnitData(transUnitList[0]);
+
+
+            DLL newDLL = new DLL();
             TransUnitNode firstNode = newDLL.InsertNext(testData);
             TransUnitNode secondNode = newDLL.InsertNext(testData);
             TransUnitNode thirdNode = newDLL.InsertNext(testData);
             TransUnitNode fourthNode = newDLL.InsertNext(testData);
+
             // Assertions set.
             Assert.AreEqual(4, newDLL.Count);
-            Assert.AreEqual(testData, newDLL.Tail);
-            Assert.AreEqual(testData, newDLL.Head);
+            Assert.AreEqual(testData, newDLL.Tail.Data);
+            Assert.AreEqual(testData, newDLL.Head.Data);
 
         }
-       
+
     }
 }

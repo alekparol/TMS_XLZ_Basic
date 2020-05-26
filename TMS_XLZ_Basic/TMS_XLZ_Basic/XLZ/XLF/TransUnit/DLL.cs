@@ -140,7 +140,7 @@ namespace TMS_XLZ_Basic.XLZ.Xliff
             {
                 if (head.PreviousSibling != null)
                 {
-                    newNode = new TransUnitNode(newNodeData, head.PreviousSibling);
+                    newNode = new TransUnitNode(newNodeData, head.PreviousSibling, head);
                 }
                 else
                 {
@@ -167,11 +167,35 @@ namespace TMS_XLZ_Basic.XLZ.Xliff
 
         }
 
+        /* Returns first occurance of the search data */
+        public int GetIndexOf(TransUnitData searchData)
+        {
+            int index = 0;
+            TransUnitNode searchNode = tail;
+
+            for(int i = 0; i < count; i++)
+            {
+                if(searchNode.Data == searchData)
+                {
+                    return index;
+                }
+
+                searchNode = searchNode.NextSibling;
+                index++;
+
+            }
+
+            return -1;
+
+        }
+
 
         public void Clear()
         {
+
             this.head = null;
             this.tail = null;
+
             this.count = 0;
         }
 

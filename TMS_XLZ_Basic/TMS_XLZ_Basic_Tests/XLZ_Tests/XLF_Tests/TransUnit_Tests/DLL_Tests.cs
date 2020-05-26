@@ -113,7 +113,7 @@ namespace TMS_XLZ_Basic_Tests
 
 
             DLL doublyLinkedList = new DLL();
-            doublyLinkedList.InsertNext(testData);
+            doublyLinkedList.InsertPrevious(testData);
 
             // Assertions set.
             Assert.AreEqual(1, doublyLinkedList.Count);
@@ -135,13 +135,13 @@ namespace TMS_XLZ_Basic_Tests
 
 
             DLL doublyLinkedList = new DLL();
-            doublyLinkedList.InsertNext(firstTestData);
-            doublyLinkedList.InsertNext(secondTestData);
+            doublyLinkedList.InsertPrevious(firstTestData);
+            doublyLinkedList.InsertPrevious(secondTestData);
 
             // Assertions set.
             Assert.AreEqual(2, doublyLinkedList.Count);
-            Assert.AreEqual(secondTestData, doublyLinkedList.Head.Data);
-            Assert.AreEqual(firstTestData, doublyLinkedList.Tail.Data);
+            Assert.AreEqual(firstTestData, doublyLinkedList.Head.Data);
+            Assert.AreEqual(secondTestData, doublyLinkedList.Tail.Data);
 
         }
 
@@ -159,7 +159,57 @@ namespace TMS_XLZ_Basic_Tests
 
 
             DLL doublyLinkedList = new DLL();
+            doublyLinkedList.InsertPrevious(firstTestData);
+            doublyLinkedList.InsertPrevious(secondTestData);
+            doublyLinkedList.InsertPrevious(thirdTestData);
+
+            // Assertions set.
+            Assert.AreEqual(3, doublyLinkedList.Count);
+            Assert.AreEqual(firstTestData, doublyLinkedList.Head.Data);
+            Assert.AreEqual(secondTestData, doublyLinkedList.Tail.Data);
+
+        }
+
+        [TestMethod]
+        public void DLL_InsertNextPrevious_Test_1()
+        {
+            // Initialization. 
+            XmlDocument doc = new XmlDocument();
+            doc.Load(xliffPath);
+
+            XmlNodeList transUnitList = doc.GetElementsByTagName("trans-unit");
+            TransUnitData firstTestData = new TransUnitData(transUnitList[0]);
+            TransUnitData secondTestData = new TransUnitData(transUnitList[1]);
+            TransUnitData thirdTestData = new TransUnitData(transUnitList[2]);
+
+
+            DLL doublyLinkedList = new DLL();
             doublyLinkedList.InsertNext(firstTestData);
+            doublyLinkedList.InsertNext(secondTestData);
+            doublyLinkedList.InsertPrevious(thirdTestData);
+
+            // Assertions set.
+            Assert.AreEqual(3, doublyLinkedList.Count);
+            Assert.AreEqual(secondTestData, doublyLinkedList.Head.Data);
+            Assert.AreEqual(firstTestData, doublyLinkedList.Tail.Data);
+
+        }
+
+        [TestMethod]
+        public void DLL_InsertNextPrevious_Test_2()
+        {
+            // Initialization. 
+            XmlDocument doc = new XmlDocument();
+            doc.Load(xliffPath);
+
+            XmlNodeList transUnitList = doc.GetElementsByTagName("trans-unit");
+            TransUnitData firstTestData = new TransUnitData(transUnitList[0]);
+            TransUnitData secondTestData = new TransUnitData(transUnitList[1]);
+            TransUnitData thirdTestData = new TransUnitData(transUnitList[2]);
+
+
+            DLL doublyLinkedList = new DLL();
+            doublyLinkedList.InsertPrevious(firstTestData);
             doublyLinkedList.InsertNext(secondTestData);
             doublyLinkedList.InsertNext(thirdTestData);
 
@@ -171,50 +221,166 @@ namespace TMS_XLZ_Basic_Tests
         }
 
         [TestMethod]
-        public void DLL_Test_1()
+        public void DLL_InsertNextPrevious_Test_3()
         {
             // Initialization. 
             XmlDocument doc = new XmlDocument();
             doc.Load(xliffPath);
 
             XmlNodeList transUnitList = doc.GetElementsByTagName("trans-unit");
-            TransUnitData testData = new TransUnitData(transUnitList[0]);
+            TransUnitData firstTestData = new TransUnitData(transUnitList[0]);
+            TransUnitData secondTestData = new TransUnitData(transUnitList[1]);
+            TransUnitData thirdTestData = new TransUnitData(transUnitList[2]);
 
 
-            DLL newDLL = new DLL();
-            TransUnitNode firstNode = newDLL.InsertPrevious(testData);
-            TransUnitNode secondNode = newDLL.InsertPrevious(testData);
-            TransUnitNode thirdNode = newDLL.InsertPrevious(testData);
-            TransUnitNode fourthNode = newDLL.InsertPrevious(testData);
+            DLL doublyLinkedList = new DLL();
+            doublyLinkedList.InsertNext(firstTestData);
+            doublyLinkedList.InsertPrevious(secondTestData);
+            doublyLinkedList.InsertNext(thirdTestData);
 
             // Assertions set.
-            Assert.AreEqual(4, newDLL.Count);
-            Assert.AreEqual(testData, newDLL.Tail.Data);
-            Assert.AreEqual(testData, newDLL.Head.Data);
+            Assert.AreEqual(3, doublyLinkedList.Count);
+            Assert.AreEqual(thirdTestData, doublyLinkedList.Head.Data);
+            Assert.AreEqual(secondTestData, doublyLinkedList.Tail.Data);
+
+        }
+
+
+        [TestMethod]
+        public void DLL_InsertNextPrevious_Test_4()
+        {
+            // Initialization. 
+            XmlDocument doc = new XmlDocument();
+            doc.Load(xliffPath);
+
+            XmlNodeList transUnitList = doc.GetElementsByTagName("trans-unit");
+            TransUnitData firstTestData = new TransUnitData(transUnitList[0]);
+            TransUnitData secondTestData = new TransUnitData(transUnitList[1]);
+            TransUnitData thirdTestData = new TransUnitData(transUnitList[2]);
+
+
+            DLL doublyLinkedList = new DLL();
+            doublyLinkedList.InsertPrevious(firstTestData);
+            doublyLinkedList.InsertPrevious(secondTestData);
+            doublyLinkedList.InsertNext(thirdTestData);
+
+            // Assertions set.
+            Assert.AreEqual(3, doublyLinkedList.Count);
+            Assert.AreEqual(thirdTestData, doublyLinkedList.Head.Data);
+            Assert.AreEqual(secondTestData, doublyLinkedList.Tail.Data);
+
+        }
+
+
+        [TestMethod]
+        public void DLL_InsertNextPrevious_Test_5()
+        {
+            // Initialization. 
+            XmlDocument doc = new XmlDocument();
+            doc.Load(xliffPath);
+
+            XmlNodeList transUnitList = doc.GetElementsByTagName("trans-unit");
+            TransUnitData firstTestData = new TransUnitData(transUnitList[0]);
+            TransUnitData secondTestData = new TransUnitData(transUnitList[1]);
+            TransUnitData thirdTestData = new TransUnitData(transUnitList[2]);
+
+
+            DLL doublyLinkedList = new DLL();
+            doublyLinkedList.InsertNext(firstTestData);
+            doublyLinkedList.InsertPrevious(secondTestData);
+            doublyLinkedList.InsertPrevious(thirdTestData);
+
+            // Assertions set.
+            Assert.AreEqual(3, doublyLinkedList.Count);
+            Assert.AreEqual(firstTestData, doublyLinkedList.Head.Data);
+            Assert.AreEqual(secondTestData, doublyLinkedList.Tail.Data);
+
+        }
+
+
+        [TestMethod]
+        public void DLL_InsertNextPrevious_Test_6()
+        {
+            // Initialization. 
+            XmlDocument doc = new XmlDocument();
+            doc.Load(xliffPath);
+
+            XmlNodeList transUnitList = doc.GetElementsByTagName("trans-unit");
+            TransUnitData firstTestData = new TransUnitData(transUnitList[0]);
+            TransUnitData secondTestData = new TransUnitData(transUnitList[1]);
+            TransUnitData thirdTestData = new TransUnitData(transUnitList[2]);
+
+
+            DLL doublyLinkedList = new DLL();
+            doublyLinkedList.InsertPrevious(firstTestData);
+            doublyLinkedList.InsertNext(secondTestData);
+            doublyLinkedList.InsertPrevious(thirdTestData);
+
+            // Assertions set.
+            Assert.AreEqual(3, doublyLinkedList.Count);
+            Assert.AreEqual(secondTestData, doublyLinkedList.Head.Data);
+            Assert.AreEqual(firstTestData, doublyLinkedList.Tail.Data);
 
         }
 
         [TestMethod]
-        public void DLL_Test_2()
+        public void DLL_GetIndexOf_Test_1()
         {
             // Initialization. 
             XmlDocument doc = new XmlDocument();
             doc.Load(xliffPath);
 
             XmlNodeList transUnitList = doc.GetElementsByTagName("trans-unit");
-            TransUnitData testData = new TransUnitData(transUnitList[0]);
+            TransUnitData firstTestData = new TransUnitData(transUnitList[0]);
 
 
-            DLL newDLL = new DLL();
-            TransUnitNode firstNode = newDLL.InsertNext(testData);
-            TransUnitNode secondNode = newDLL.InsertNext(testData);
-            TransUnitNode thirdNode = newDLL.InsertNext(testData);
-            TransUnitNode fourthNode = newDLL.InsertNext(testData);
+            DLL doublyLinkedList = new DLL();
+            doublyLinkedList.InsertNext(firstTestData);
 
             // Assertions set.
-            Assert.AreEqual(4, newDLL.Count);
-            Assert.AreEqual(testData, newDLL.Tail.Data);
-            Assert.AreEqual(testData, newDLL.Head.Data);
+            Assert.AreEqual(0, doublyLinkedList.GetIndexOf(firstTestData));
+
+        }
+
+        [TestMethod]
+        public void DLL_GetIndexOf_Test_2()
+        {
+            // Initialization. 
+            XmlDocument doc = new XmlDocument();
+            doc.Load(xliffPath);
+
+            XmlNodeList transUnitList = doc.GetElementsByTagName("trans-unit");
+            TransUnitData firstTestData = new TransUnitData(transUnitList[0]);
+            TransUnitData secondTestData = new TransUnitData(transUnitList[1]);
+
+
+            DLL doublyLinkedList = new DLL();
+            doublyLinkedList.InsertNext(firstTestData);
+
+            // Assertions set.
+            Assert.AreEqual(-1, doublyLinkedList.GetIndexOf(secondTestData));
+
+        }
+
+        [TestMethod]
+        public void DLL_GetIndexOf_Test_3()
+        {
+            // Initialization. 
+            XmlDocument doc = new XmlDocument();
+            doc.Load(xliffPath);
+
+            XmlNodeList transUnitList = doc.GetElementsByTagName("trans-unit");
+            TransUnitData firstTestData = new TransUnitData(transUnitList[0]);
+            TransUnitData secondTestData = new TransUnitData(transUnitList[1]);
+
+
+            DLL doublyLinkedList = new DLL();
+            doublyLinkedList.InsertNext(secondTestData);
+            doublyLinkedList.InsertNext(firstTestData);
+            doublyLinkedList.InsertNext(firstTestData);
+
+            // Assertions set.
+            Assert.AreEqual(1, doublyLinkedList.GetIndexOf(firstTestData));
 
         }
 

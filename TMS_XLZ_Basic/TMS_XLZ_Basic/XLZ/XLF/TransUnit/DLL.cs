@@ -99,13 +99,20 @@ namespace TMS_XLZ_Basic.XLZ.Xliff
 
             if (head != null)
             {
-                newNode = new TransUnitNode(newNodeData, head);
 
-                if(head.NextSibling == null)
+                if (head.NextSibling == null)
                 {
+                    newNode = new TransUnitNode(newNodeData, head);
                     head = newNode;
                 }
-
+                else
+                {
+                    newNode = new TransUnitNode(newNodeData, head, head.NextSibling);
+                    while(head.NextSibling != null)
+                    {
+                        head = head.NextSibling;
+                    }
+                }               
             }
             else
             {

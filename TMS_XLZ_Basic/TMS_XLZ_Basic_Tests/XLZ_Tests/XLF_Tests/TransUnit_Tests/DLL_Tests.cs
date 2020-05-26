@@ -415,5 +415,27 @@ namespace TMS_XLZ_Basic_Tests
 
         }
 
+        [TestMethod]
+        public void DLL_InsertAtIndex_Test_1()
+        {
+            // Initialization. 
+            XmlDocument doc = new XmlDocument();
+            doc.Load(xliffPath);
+
+            XmlNodeList transUnitList = doc.GetElementsByTagName("trans-unit");
+            TransUnitData firstTestData = new TransUnitData(transUnitList[0]);
+            TransUnitData secondTestData = new TransUnitData(transUnitList[1]);
+            TransUnitData thirdTestData = new TransUnitData(transUnitList[2]);
+
+            DLL doublyLinkedList = new DLL();
+            doublyLinkedList.InsertNext(firstTestData);
+            doublyLinkedList.InsertNext(secondTestData);
+            doublyLinkedList.InsertAtIndex(thirdTestData, 1);
+
+            // Assertions set.
+            Assert.AreEqual(1, doublyLinkedList.GetIndexOf(thirdTestData));
+
+        }
+
     }
 }

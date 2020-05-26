@@ -194,7 +194,22 @@ namespace TMS_XLZ_Basic.XLZ.Xliff
             return GetIndexOf(searchNode.Data);
         }
 
+        public void InsertAtIndex(TransUnitData newItemData, int index)
+        {
 
+            TransUnitNode temporaryHead = head;
+
+            if (index >= count || index < 0)
+            {
+                throw new ArgumentOutOfRangeException("Out of range exception.");
+            }
+
+            this.head = this[index].PreviousSibling;
+            this.InsertNext(newItemData);
+
+            head = temporaryHead;
+
+        }
 
         public void Clear()
         {

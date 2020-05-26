@@ -384,5 +384,36 @@ namespace TMS_XLZ_Basic_Tests
 
         }
 
+        [TestMethod]
+        public void DLL_GetIndexOf_Test_4()
+        {
+            // Initialization. 
+            XmlDocument doc = new XmlDocument();
+            doc.Load(xliffPath);
+
+            XmlNodeList transUnitList = doc.GetElementsByTagName("trans-unit");
+            TransUnitData firstTestData = new TransUnitData(transUnitList[0]);
+            TransUnitData secondTestData = new TransUnitData(transUnitList[1]);
+            TransUnitData thirdTestData = new TransUnitData(transUnitList[2]);
+            TransUnitData fourthTestData = new TransUnitData(transUnitList[3]);
+            TransUnitData fifthTestData = new TransUnitData(transUnitList[4]);
+
+
+            DLL doublyLinkedList = new DLL();
+            doublyLinkedList.InsertNext(firstTestData);
+            doublyLinkedList.InsertNext(secondTestData);
+            doublyLinkedList.InsertPrevious(thirdTestData);
+            doublyLinkedList.InsertNext(fourthTestData);
+            doublyLinkedList.InsertPrevious(fifthTestData);
+
+            // Assertions set.
+            Assert.AreEqual(0, doublyLinkedList.GetIndexOf(firstTestData));
+            Assert.AreEqual(2, doublyLinkedList.GetIndexOf(secondTestData));
+            Assert.AreEqual(1, doublyLinkedList.GetIndexOf(thirdTestData));
+            Assert.AreEqual(3, doublyLinkedList.GetIndexOf(fifthTestData));
+            Assert.AreEqual(4, doublyLinkedList.GetIndexOf(fourthTestData));
+
+        }
+
     }
 }

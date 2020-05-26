@@ -189,6 +189,12 @@ namespace TMS_XLZ_Basic.XLZ.Xliff
 
         }
 
+        public int GetIndexOf(TransUnitNode searchNode)
+        {
+            return GetIndexOf(searchNode.Data);
+        }
+
+
 
         public void Clear()
         {

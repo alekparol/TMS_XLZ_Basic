@@ -13,7 +13,8 @@ using System.Runtime.CompilerServices;
 using System.Text.RegularExpressions;
 using TMS_XLZ_Basic.XLZ.Xliff.TransUnit.TransUnitElements;
 
-/*TODO: Make this doubly linked list to be that universal to work with Xliff as well as with Skl and XLZ. */
+/*TODO: Make this doubly linked list to be that universal to work with Xliff as well as with Skl and XLZ.
+ *TODO: Change InsertNext(), InsertPrevious() etc. to return TransUnitNode, not to be void methods.*/
 
 /*Note: Thinking if the head node should be rechanged after any operation to it's initial state.*/
 
@@ -58,7 +59,7 @@ namespace TMS_XLZ_Basic.XLZ.Xliff
         {
             get
             {
-                if (index >= count || index < 0)
+                if ((index >= count || index < 0) && index != 0)
                 {
                     throw new ArgumentOutOfRangeException("Out of range exception.");
                 }
@@ -199,16 +200,36 @@ namespace TMS_XLZ_Basic.XLZ.Xliff
 
             TransUnitNode temporaryHead = head;
 
-            if (index >= count || index < 0)
+            if (index > count || index < 0)
             {
                 throw new ArgumentOutOfRangeException("Out of range exception.");
             }
+            
+            if (this[index] != null)
+            {
+                if (this[index].PreviousSibling != null)
+                {
+                    this.head = this[index].PreviousSibling;
+                    this.InsertNext(newItemData);
 
-            this.head = this[index].PreviousSibling;
-            this.InsertNext(newItemData);
+                    head = temporaryHead;
+                }
+                else
+                {
+                    this.head = this[index];
+                    this.InsertPrevious(newItemData);
 
-            head = temporaryHead;
-
+                    head = temporaryHead;
+                }
+            }
+            else
+            {
+                if (this.head == null && this.tail == null)
+                {
+                    this.InsertNext(newItemData);
+                }
+            }
+           
         }
 
         public void Clear()

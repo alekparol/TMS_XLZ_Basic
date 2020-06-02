@@ -2,6 +2,7 @@
 using System.Xml;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using TMS_XLZ_Basic.XLZ.Xliff;
+using System;
 
 
 /*TODO: Add tests for: 
@@ -434,6 +435,47 @@ namespace TMS_XLZ_Basic_Tests
 
             // Assertions set.
             Assert.AreEqual(1, doublyLinkedList.GetIndexOf(thirdTestData));
+            Assert.AreEqual(firstTestData, doublyLinkedList[1].PreviousSibling.Data);
+            Assert.AreEqual(secondTestData, doublyLinkedList[1].NextSibling.Data);
+
+        }
+
+        [TestMethod]
+        public void DLL_InsertAtIndex_Test_2()
+        {
+            // Initialization. 
+            XmlDocument doc = new XmlDocument();
+            doc.Load(xliffPath);
+
+            XmlNodeList transUnitList = doc.GetElementsByTagName("trans-unit");
+            TransUnitData firstTestData = new TransUnitData(transUnitList[0]);
+            TransUnitData secondTestData = new TransUnitData(transUnitList[1]);
+
+            DLL doublyLinkedList = new DLL();
+            doublyLinkedList.InsertNext(firstTestData);
+
+            // Assertions set.
+            Assert.ThrowsException<ArgumentOutOfRangeException>(() => doublyLinkedList.InsertAtIndex(secondTestData, 3));
+
+        }
+
+        [TestMethod]
+        public void DLL_InsertAtIndex_Test_3()
+        {
+            // Initialization. 
+            XmlDocument doc = new XmlDocument();
+            doc.Load(xliffPath);
+
+            XmlNodeList transUnitList = doc.GetElementsByTagName("trans-unit");
+            TransUnitData firstTestData = new TransUnitData(transUnitList[0]);
+
+            DLL doublyLinkedList = new DLL();
+            doublyLinkedList.InsertAtIndex(firstTestData, 0);
+
+            // Assertions set.
+            Assert.AreEqual(1, doublyLinkedList.Count);
+            Assert.AreEqual(firstTestData, doublyLinkedList.Head.Data);
+            Assert.AreEqual(firstTestData, doublyLinkedList.Tail.Data);
 
         }
 

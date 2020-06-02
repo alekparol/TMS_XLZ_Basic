@@ -14,7 +14,10 @@ using System.Text.RegularExpressions;
 using TMS_XLZ_Basic.XLZ.Xliff.TransUnit.TransUnitElements;
 
 /*TODO: Make this doubly linked list to be that universal to work with Xliff as well as with Skl and XLZ.
- *TODO: Change InsertNext(), InsertPrevious() etc. to return TransUnitNode, not to be void methods.*/
+ *TODO: Change InsertNext(), InsertPrevious() etc. to return TransUnitNode, not to be void methods.
+ *TODO: InsertAtIndex should return TransUnitNode as InsertNext and InsertPrevious do. 
+ *TODO: Methods like GetPreviousTranslatableNode or so, should be created within XLF class for DLL to be most universal and for us to reuse it in 
+ *SKL and in XLZ classes. */
 
 /*Note: Thinking if the head node should be rechanged after any operation to it's initial state.*/
 
@@ -59,7 +62,7 @@ namespace TMS_XLZ_Basic.XLZ.Xliff
         {
             get
             {
-                if ((index >= count || index < 0) && index != 0)
+                if (index > count || index < 0)
                 {
                     throw new ArgumentOutOfRangeException("Out of range exception.");
                 }
@@ -75,7 +78,7 @@ namespace TMS_XLZ_Basic.XLZ.Xliff
             }
             set
             {
-                if (index >= count || index < 0)
+                if (index > count || index < 0)
                 {
                     throw new ArgumentOutOfRangeException("Out of range exception.");
                 }
@@ -224,13 +227,11 @@ namespace TMS_XLZ_Basic.XLZ.Xliff
             }
             else
             {
-                if (this.head == null && this.tail == null)
-                {
-                    this.InsertNext(newItemData);
-                }
-            }
-           
+                this.InsertNext(newItemData);
+            }          
         }
+
+        //public TransUnitNode
 
         public void Clear()
         {

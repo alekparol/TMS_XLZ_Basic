@@ -3,6 +3,7 @@ using System.Xml;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using TMS_XLZ_Basic.XLZ.Xliff;
 using System;
+using System.IO;
 
 
 /*TODO: Add tests for: 
@@ -476,6 +477,30 @@ namespace TMS_XLZ_Basic_Tests
             Assert.AreEqual(1, doublyLinkedList.Count);
             Assert.AreEqual(firstTestData, doublyLinkedList.Head.Data);
             Assert.AreEqual(firstTestData, doublyLinkedList.Tail.Data);
+
+        }
+
+        [TestMethod]
+        public void DLL_InsertAtIndex_Test_4()
+        {
+            // Initialization. 
+            XmlDocument doc = new XmlDocument();
+            doc.Load(xliffPath);
+
+            XmlNodeList transUnitList = doc.GetElementsByTagName("trans-unit");
+            TransUnitData firstTestData = new TransUnitData(transUnitList[0]);
+            TransUnitData secondTestData = new TransUnitData(transUnitList[1]);
+
+            DLL doublyLinkedList = new DLL();
+            doublyLinkedList.InsertNext(firstTestData);
+            doublyLinkedList.InsertAtIndex(secondTestData, 1);
+
+            // Assertions set.
+            Assert.AreEqual(2, doublyLinkedList.Count);
+            Assert.AreEqual(secondTestData, doublyLinkedList[1].Data);
+            Assert.AreEqual(secondTestData, doublyLinkedList.Head.Data);
+            Assert.AreEqual(firstTestData, doublyLinkedList.Head.PreviousSibling.Data);
+            Assert.AreEqual(null, doublyLinkedList.Head.NextSibling);
 
         }
 

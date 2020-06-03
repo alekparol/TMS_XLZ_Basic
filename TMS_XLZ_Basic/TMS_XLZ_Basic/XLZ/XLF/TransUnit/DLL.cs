@@ -17,7 +17,8 @@ using TMS_XLZ_Basic.XLZ.Xliff.TransUnit.TransUnitElements;
  *TODO: Change InsertNext(), InsertPrevious() etc. to return TransUnitNode, not to be void methods.
  *TODO: InsertAtIndex should return TransUnitNode as InsertNext and InsertPrevious do. 
  *TODO: Methods like GetPreviousTranslatableNode or so, should be created within XLF class for DLL to be most universal and for us to reuse it in 
- *SKL and in XLZ classes. */
+ *SKL and in XLZ classes. 
+ *TODO: Use this[index] set in cases when it can shorten the code.*/
 
 /*Note: Thinking if the head node should be rechanged after any operation to it's initial state.*/
 
@@ -179,14 +180,16 @@ namespace TMS_XLZ_Basic.XLZ.Xliff
 
             for(int i = 0; i < count; i++)
             {
-                if(searchNode.Data == searchData)
+                if(searchNode != null)
                 {
-                    return index;
+                    if (searchNode.Data == searchData)
+                    {
+                        return index;
+                    }
+
+                    searchNode = searchNode.NextSibling;
+                    index++;
                 }
-
-                searchNode = searchNode.NextSibling;
-                index++;
-
             }
 
             return -1;
@@ -231,7 +234,48 @@ namespace TMS_XLZ_Basic.XLZ.Xliff
             }          
         }
 
-        //public TransUnitNode
+        public TransUnitNode Remove()
+        {
+
+            TransUnitNode transUnitNode = head;
+
+            if (head != null)
+            {
+                
+                if (head.PreviousSibling != null)
+                {
+
+                    head = head.PreviousSibling;
+                    head.NextSibling = transUnitNode;
+
+                }
+
+            }
+
+            return transUnitNode;
+        }
+
+        public TransUnitNode RemoveAtIndex(int index)
+        {
+
+            TransUnitNode transUnitNode;
+
+            if (this[index] != null)
+            {
+                transUnitNode = this[index];
+
+                this[index].NextSibling.PreviousSibling = transUnitNode.PreviousSibling;
+                this[index].PreviousSibling.NextSibling = transUnitNode.NextSibling;
+
+                return transUnitNode;
+
+            }
+            else
+            {
+                return null;
+            }
+
+        }
 
         public void Clear()
         {

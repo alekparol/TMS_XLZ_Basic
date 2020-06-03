@@ -10,6 +10,7 @@ using System.Xml.Xsl;
 using System.Xml.XPath;
 using System.Xml.Linq;
 using System.Runtime.CompilerServices;
+using TMS_XLZ_Basic.XLZ.Xliff;
 
 namespace TMS_XLZ_Basic
 {
@@ -18,18 +19,15 @@ namespace TMS_XLZ_Basic
 
 		/* Fields */
 
-		public XmlDocument baseDocument;
+		private XmlDocument baseDocument;
 
-		public XmlNodeList transUnitList;
-		public List<TransUnit> listOfTransUnitObjects;
-
-		public List<TransUnit> transUnitTranslationYesList;
-		public List<TransUnit> transUnitTranslationNoList;
+		private XmlNodeList transUnitList;
+		private DLL doublyLinkedList; 
 
 
 		/* Methods */
 
-		public XmlNode GetNodeByID(int transUnitID)
+		/*public XmlNode GetNodeByID(int transUnitID)
 		{
 			foreach(XmlNode ent in transUnitList)
 			{
@@ -40,9 +38,9 @@ namespace TMS_XLZ_Basic
 			}
 
 			return null;
-		}
+		}*/
 
-		public TransUnit GetTransUnitByID(int transUnitID)
+		/*public TransUnit GetTransUnitByID(int transUnitID)
 		{
 			foreach (TransUnit ent in listOfTransUnitObjects)
 			{
@@ -53,21 +51,21 @@ namespace TMS_XLZ_Basic
 			}
 
 			return null;
-		}
+		}*/
 
 
 		/* This method will return the source node of the given trans-unit node. */
 
-		private XmlNode GetSourceNode(XmlNode transUnitNode)
+		/*private XmlNode GetSourceNode(XmlNode transUnitNode)
 		{
 
 			return transUnitNode.SelectSingleNode("./source");
 
-		}
+		}*/
 
 		/* This method will return the target node of the given trans-unit node. */
 
-		private XmlNode GetTargetNode(XmlNode transUnitNode)
+		/*private XmlNode GetTargetNode(XmlNode transUnitNode)
 		{
 
 			return transUnitNode.SelectSingleNode("/target");
@@ -79,7 +77,7 @@ namespace TMS_XLZ_Basic
 
 		public Xliff(XmlDocument inputFile)
 		{
-			baseDocument = inputFile;
+			/*baseDocument = inputFile;
 
 			transUnitList = inputFile.GetElementsByTagName("trans-unit");
 
@@ -106,7 +104,7 @@ namespace TMS_XLZ_Basic
 				{
 					transUnitTranslationNoList.Add(en);
 				}
-			}
+			}*/
 										 
 		}
 

@@ -242,11 +242,50 @@ namespace TMS_XLZ_Basic.XLZ.Xliff
             if (head != null)
             {
                 
-                if (head.PreviousSibling != null)
+                if (head.PreviousSibling != null && head.NextSibling != null)
                 {
 
+                    head.NextSibling.PreviousSibling = head.PreviousSibling;
+                    head.PreviousSibling.NextSibling = head.NextSibling;
+
+                    while(head.NextSibling != null)
+                    {
+                        head = head.NextSibling;
+                    }
+                    
+                    count--;
+
+                }
+                else if (head.PreviousSibling != null && head.NextSibling == null)
+                {
+
+                    head.PreviousSibling.NextSibling = head.NextSibling;
                     head = head.PreviousSibling;
-                    head.NextSibling = transUnitNode;
+
+                    count--;
+
+                }
+                else if (head.PreviousSibling == null && head.NextSibling != null)
+                {
+
+                    head.NextSibling.PreviousSibling = head.PreviousSibling;
+                    tail = head;
+
+                    while (head.NextSibling != null)
+                    {
+                        head = head.NextSibling;
+                    }
+
+                    count--;
+
+                }
+                else
+                {
+
+                    head = null;
+                    tail = null;
+
+                    count--;
 
                 }
 

@@ -543,9 +543,38 @@ namespace TMS_XLZ_Basic_Tests
             doublyLinkedList.Remove();
 
             // Assertions set.
+            Assert.AreEqual(2, doublyLinkedList.Count);
             Assert.AreEqual(secondTestData, doublyLinkedList.Head.Data);
             Assert.AreEqual(null, doublyLinkedList.Head.NextSibling);
             Assert.AreEqual(-1, doublyLinkedList.GetIndexOf(thirdTestData));
+
+        }
+
+        [TestMethod]
+        public void DLL_Remove_Test_2()
+        {
+            // Initialization. 
+            XmlDocument doc = new XmlDocument();
+            doc.Load(xliffPath);
+
+            XmlNodeList transUnitList = doc.GetElementsByTagName("trans-unit");
+            TransUnitData firstTestData = new TransUnitData(transUnitList[0]);
+            TransUnitData secondTestData = new TransUnitData(transUnitList[1]);
+            TransUnitData thirdTestData = new TransUnitData(transUnitList[2]);
+
+            DLL doublyLinkedList = new DLL();
+            doublyLinkedList.InsertNext(firstTestData);
+            doublyLinkedList.InsertNext(secondTestData);
+            doublyLinkedList.InsertNext(thirdTestData);
+
+            doublyLinkedList.Remove();
+            doublyLinkedList.Remove();
+            doublyLinkedList.Remove();
+
+            // Assertions set.
+            Assert.AreEqual(0, doublyLinkedList.Count);
+            Assert.IsNull(doublyLinkedList.Head);
+            Assert.IsNull(doublyLinkedList.Tail);
 
         }
 

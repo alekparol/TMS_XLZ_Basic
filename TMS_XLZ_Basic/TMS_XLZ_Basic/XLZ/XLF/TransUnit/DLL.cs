@@ -234,6 +234,23 @@ namespace TMS_XLZ_Basic.XLZ.Xliff
             }          
         }
 
+        /*public TransUnitNode Remove()
+        {
+
+            TransUnitNode temp = head;
+
+            if (head != null)
+            {
+                head.PreviousSibling.NextSibling = head.NextSibling;
+                head = temp.PreviousSibling;
+
+                count--;
+            }
+
+            return temp;
+
+        }*/
+
         public TransUnitNode Remove()
         {
 
@@ -298,15 +315,24 @@ namespace TMS_XLZ_Basic.XLZ.Xliff
         {
 
             TransUnitNode transUnitNode;
+            TransUnitNode temp = head;
 
             if (this[index] != null)
             {
-                transUnitNode = this[index];
+                if (this[index] != head)
+                {
+                    head = this[index];
+                    transUnitNode = this.Remove();
 
-                this[index].NextSibling.PreviousSibling = transUnitNode.PreviousSibling;
-                this[index].PreviousSibling.NextSibling = transUnitNode.NextSibling;
+                    head = temp;
+                    return transUnitNode;
+                }
+                else
+                {
+                    transUnitNode = this.Remove();
+                    return transUnitNode;
 
-                return transUnitNode;
+                }
 
             }
             else

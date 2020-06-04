@@ -544,9 +544,17 @@ namespace TMS_XLZ_Basic_Tests
 
             // Assertions set.
             Assert.AreEqual(2, doublyLinkedList.Count);
-            Assert.AreEqual(secondTestData, doublyLinkedList.Head.Data);
-            Assert.AreEqual(null, doublyLinkedList.Head.NextSibling);
             Assert.AreEqual(-1, doublyLinkedList.GetIndexOf(thirdTestData));
+            Assert.AreEqual(0, doublyLinkedList.GetIndexOf(firstTestData));
+            Assert.AreEqual(1, doublyLinkedList.GetIndexOf(secondTestData));
+
+            Assert.AreEqual(secondTestData, doublyLinkedList.Head.Data);
+            Assert.AreEqual(firstTestData, doublyLinkedList.Head.PreviousSibling.Data);
+            Assert.IsNull(doublyLinkedList.Head.NextSibling);
+
+            Assert.AreEqual(firstTestData, doublyLinkedList.Tail.Data);
+            Assert.IsNull(doublyLinkedList.Tail.PreviousSibling);
+            Assert.AreEqual(secondTestData, doublyLinkedList.Tail.NextSibling.Data);
 
         }
 
@@ -575,6 +583,130 @@ namespace TMS_XLZ_Basic_Tests
             Assert.AreEqual(0, doublyLinkedList.Count);
             Assert.IsNull(doublyLinkedList.Head);
             Assert.IsNull(doublyLinkedList.Tail);
+
+            Assert.AreEqual(-1, doublyLinkedList.GetIndexOf(firstTestData));
+            Assert.AreEqual(-1, doublyLinkedList.GetIndexOf(secondTestData));
+            Assert.AreEqual(-1, doublyLinkedList.GetIndexOf(thirdTestData));
+
+        }
+
+        [TestMethod]
+        public void DLL_Remove_Test_3()
+        {
+            // Initialization. 
+            DLL doublyLinkedList = new DLL();
+
+            // Assertions set.
+            Assert.IsNull(doublyLinkedList.Remove());
+
+        }
+
+        [TestMethod]
+        public void DLL_RemoveAtIndex_Test_1()
+        {
+            // Initialization. 
+            XmlDocument doc = new XmlDocument();
+            doc.Load(xliffPath);
+
+            XmlNodeList transUnitList = doc.GetElementsByTagName("trans-unit");
+            TransUnitData firstTestData = new TransUnitData(transUnitList[0]);
+            TransUnitData secondTestData = new TransUnitData(transUnitList[1]);
+            TransUnitData thirdTestData = new TransUnitData(transUnitList[2]);
+
+            DLL doublyLinkedList = new DLL();
+            doublyLinkedList.InsertNext(firstTestData);
+            doublyLinkedList.InsertNext(secondTestData);
+            doublyLinkedList.InsertNext(thirdTestData);
+
+            TransUnitNode removedNode = doublyLinkedList.RemoveAtIndex(1);
+
+            // Assertions set.
+            Assert.AreEqual(2, doublyLinkedList.Count);
+            Assert.AreEqual(secondTestData, removedNode.Data);
+            Assert.AreEqual(-1, doublyLinkedList.GetIndexOf(secondTestData));
+
+            Assert.AreEqual(thirdTestData, doublyLinkedList.Head.Data);
+            Assert.AreEqual(firstTestData, doublyLinkedList.Head.PreviousSibling.Data);
+            Assert.IsNull(doublyLinkedList.Head.NextSibling);
+
+            Assert.AreEqual(firstTestData, doublyLinkedList.Tail.Data);
+            Assert.IsNull(doublyLinkedList.Tail.PreviousSibling);
+            Assert.AreEqual(thirdTestData, doublyLinkedList.Tail.NextSibling.Data);
+            
+        }
+
+        [TestMethod]
+        public void DLL_RemoveAtIndex_Test_2()
+        {
+            // Initialization. 
+            XmlDocument doc = new XmlDocument();
+            doc.Load(xliffPath);
+
+            XmlNodeList transUnitList = doc.GetElementsByTagName("trans-unit");
+            TransUnitData firstTestData = new TransUnitData(transUnitList[0]);
+            TransUnitData secondTestData = new TransUnitData(transUnitList[1]);
+            TransUnitData thirdTestData = new TransUnitData(transUnitList[2]);
+
+            DLL doublyLinkedList = new DLL();
+            doublyLinkedList.InsertNext(firstTestData);
+            doublyLinkedList.InsertNext(secondTestData);
+            doublyLinkedList.InsertNext(thirdTestData);
+
+            TransUnitNode removedNode = doublyLinkedList.RemoveAtIndex(2);
+
+            // Assertions set.
+            Assert.AreEqual(2, doublyLinkedList.Count);
+            Assert.AreEqual(thirdTestData, removedNode.Data);
+            Assert.AreEqual(-1, doublyLinkedList.GetIndexOf(thirdTestData));
+
+            Assert.AreEqual(secondTestData, doublyLinkedList.Head.Data);
+            Assert.AreEqual(firstTestData, doublyLinkedList.Head.PreviousSibling.Data);
+            Assert.IsNull(doublyLinkedList.Head.NextSibling);
+
+            Assert.AreEqual(firstTestData, doublyLinkedList.Tail.Data);
+            Assert.IsNull(doublyLinkedList.Tail.PreviousSibling);
+            Assert.AreEqual(secondTestData, doublyLinkedList.Tail.NextSibling.Data);
+
+        }
+
+        [TestMethod]
+        public void DLL_RemoveAtIndex_Test_3()
+        {
+            // Initialization. 
+            XmlDocument doc = new XmlDocument();
+            doc.Load(xliffPath);
+
+            XmlNodeList transUnitList = doc.GetElementsByTagName("trans-unit");
+            TransUnitData firstTestData = new TransUnitData(transUnitList[0]);
+            TransUnitData secondTestData = new TransUnitData(transUnitList[1]);
+            TransUnitData thirdTestData = new TransUnitData(transUnitList[2]);
+
+            DLL doublyLinkedList = new DLL();
+            doublyLinkedList.InsertNext(firstTestData);
+            doublyLinkedList.InsertNext(secondTestData);
+            doublyLinkedList.InsertNext(thirdTestData);
+
+            TransUnitNode removedNode = doublyLinkedList.RemoveAtIndex(1);
+            Assert.AreEqual(1, doublyLinkedList.GetIndexOf(thirdTestData));
+
+            TransUnitNode removedNode2 = doublyLinkedList.RemoveAtIndex(1);
+
+            // Assertions set.
+            Assert.AreEqual(1, doublyLinkedList.Count);
+            Assert.AreEqual(secondTestData, removedNode.Data);
+            Assert.AreEqual(thirdTestData, removedNode2.Data);
+
+            Assert.AreEqual(0, doublyLinkedList.GetIndexOf(firstTestData));
+            Assert.AreEqual(-1, doublyLinkedList.GetIndexOf(secondTestData));
+            Assert.AreEqual(-1, doublyLinkedList.GetIndexOf(thirdTestData));
+
+            Assert.AreEqual(firstTestData, doublyLinkedList.Head.Data);
+            Assert.IsNull(doublyLinkedList.Head.PreviousSibling);
+            Assert.IsNull(doublyLinkedList.Head.NextSibling);
+            
+            Assert.AreEqual(firstTestData, doublyLinkedList.Tail.Data);
+            Assert.IsNull(doublyLinkedList.Tail.PreviousSibling);
+            Assert.IsNull(doublyLinkedList.Tail.NextSibling);
 
         }
 

@@ -23,7 +23,7 @@ using System.IO;
 namespace TMS_XLZ_Basic_Tests
 {
     [TestClass]
-    public class DLL_Tests
+    public class DoublyLinkedList_Tests
     {
 
         public string xliffPath = @"C:\Users\Aleksander.Parol\Desktop\GLT_Engineering\Documentation\Script\C# Script Block all except yellow highlight\Blocked by the existing script\content.xlf";
@@ -35,7 +35,7 @@ namespace TMS_XLZ_Basic_Tests
          */
 
         [TestMethod]
-        public void DLL_InsertNext_Test_1()
+        public void DoublyLinkedList_InsertNext_Test_1()
         {
             // Initialization. 
             XmlDocument doc = new XmlDocument();
@@ -45,7 +45,7 @@ namespace TMS_XLZ_Basic_Tests
             TransUnitData testData = new TransUnitData(transUnitList[0]);
 
 
-            DLL doublyLinkedList = new DLL();
+            DoublyLinkedList doublyLinkedList = new DoublyLinkedList();
             doublyLinkedList.InsertNext(testData);
 
             // Assertions set.
@@ -56,7 +56,7 @@ namespace TMS_XLZ_Basic_Tests
         }
 
         [TestMethod]
-        public void DLL_InsertNext_Test_2()
+        public void DoublyLinkedList_InsertNext_Test_2()
         {
             // Initialization. 
             XmlDocument doc = new XmlDocument();
@@ -67,7 +67,7 @@ namespace TMS_XLZ_Basic_Tests
             TransUnitData secondTestData = new TransUnitData(transUnitList[1]);
 
 
-            DLL doublyLinkedList = new DLL();
+            DoublyLinkedList doublyLinkedList = new DoublyLinkedList();
             doublyLinkedList.InsertNext(firstTestData);
             doublyLinkedList.InsertNext(secondTestData);
 
@@ -79,7 +79,7 @@ namespace TMS_XLZ_Basic_Tests
         }
 
         [TestMethod]
-        public void DLL_InsertNext_Test_3()
+        public void DoublyLinkedList_InsertNext_Test_3()
         {
             // Initialization. 
             XmlDocument doc = new XmlDocument();
@@ -91,7 +91,7 @@ namespace TMS_XLZ_Basic_Tests
             TransUnitData thirdTestData = new TransUnitData(transUnitList[2]);
 
 
-            DLL doublyLinkedList = new DLL();
+            DoublyLinkedList doublyLinkedList = new DoublyLinkedList();
             doublyLinkedList.InsertNext(firstTestData);
             doublyLinkedList.InsertNext(secondTestData);
             doublyLinkedList.InsertNext(thirdTestData);
@@ -104,7 +104,7 @@ namespace TMS_XLZ_Basic_Tests
         }
 
         [TestMethod]
-        public void DLL_InsertPrevioius_Test_1()
+        public void DoublyLinkedList_InsertPrevioius_Test_1()
         {
             // Initialization. 
             XmlDocument doc = new XmlDocument();
@@ -114,7 +114,7 @@ namespace TMS_XLZ_Basic_Tests
             TransUnitData testData = new TransUnitData(transUnitList[0]);
 
 
-            DLL doublyLinkedList = new DLL();
+            DoublyLinkedList doublyLinkedList = new DoublyLinkedList();
             doublyLinkedList.InsertPrevious(testData);
 
             // Assertions set.
@@ -125,7 +125,7 @@ namespace TMS_XLZ_Basic_Tests
         }
 
         [TestMethod]
-        public void DLL_InsertPrevious_Test_2()
+        public void DoublyLinkedList_InsertPrevious_Test_2()
         {
             // Initialization. 
             XmlDocument doc = new XmlDocument();
@@ -136,7 +136,7 @@ namespace TMS_XLZ_Basic_Tests
             TransUnitData secondTestData = new TransUnitData(transUnitList[1]);
 
 
-            DLL doublyLinkedList = new DLL();
+            DoublyLinkedList doublyLinkedList = new DoublyLinkedList();
             doublyLinkedList.InsertPrevious(firstTestData);
             doublyLinkedList.InsertPrevious(secondTestData);
 
@@ -148,7 +148,7 @@ namespace TMS_XLZ_Basic_Tests
         }
 
         [TestMethod]
-        public void DLL_InsertPrevious_Test_3()
+        public void DoublyLinkedList_InsertPrevious_Test_3()
         {
             // Initialization. 
             XmlDocument doc = new XmlDocument();
@@ -160,7 +160,7 @@ namespace TMS_XLZ_Basic_Tests
             TransUnitData thirdTestData = new TransUnitData(transUnitList[2]);
 
 
-            DLL doublyLinkedList = new DLL();
+            DoublyLinkedList doublyLinkedList = new DoublyLinkedList();
             doublyLinkedList.InsertPrevious(firstTestData);
             doublyLinkedList.InsertPrevious(secondTestData);
             doublyLinkedList.InsertPrevious(thirdTestData);
@@ -173,7 +173,7 @@ namespace TMS_XLZ_Basic_Tests
         }
 
         [TestMethod]
-        public void DLL_InsertNextPrevious_Test_1()
+        public void DoublyLinkedList_InsertNextPrevious_Test_1()
         {
             // Initialization. 
             XmlDocument doc = new XmlDocument();
@@ -185,7 +185,7 @@ namespace TMS_XLZ_Basic_Tests
             TransUnitData thirdTestData = new TransUnitData(transUnitList[2]);
 
 
-            DLL doublyLinkedList = new DLL();
+            DoublyLinkedList doublyLinkedList = new DoublyLinkedList();
             doublyLinkedList.InsertNext(firstTestData);
             doublyLinkedList.InsertNext(secondTestData);
             doublyLinkedList.InsertPrevious(thirdTestData);
@@ -198,7 +198,7 @@ namespace TMS_XLZ_Basic_Tests
         }
 
         [TestMethod]
-        public void DLL_InsertNextPrevious_Test_2()
+        public void DoublyLinkedList_InsertNextPrevious_Test_2()
         {
             // Initialization. 
             XmlDocument doc = new XmlDocument();
@@ -210,7 +210,7 @@ namespace TMS_XLZ_Basic_Tests
             TransUnitData thirdTestData = new TransUnitData(transUnitList[2]);
 
 
-            DLL doublyLinkedList = new DLL();
+            DoublyLinkedList doublyLinkedList = new DoublyLinkedList();
             doublyLinkedList.InsertPrevious(firstTestData);
             doublyLinkedList.InsertNext(secondTestData);
             doublyLinkedList.InsertNext(thirdTestData);
@@ -223,7 +223,7 @@ namespace TMS_XLZ_Basic_Tests
         }
 
         [TestMethod]
-        public void DLL_InsertNextPrevious_Test_3()
+        public void DoublyLinkedList_InsertNextPrevious_Test_3()
         {
             // Initialization. 
             XmlDocument doc = new XmlDocument();
@@ -235,7 +235,7 @@ namespace TMS_XLZ_Basic_Tests
             TransUnitData thirdTestData = new TransUnitData(transUnitList[2]);
 
 
-            DLL doublyLinkedList = new DLL();
+            DoublyLinkedList doublyLinkedList = new DoublyLinkedList();
             doublyLinkedList.InsertNext(firstTestData);
             doublyLinkedList.InsertPrevious(secondTestData);
             doublyLinkedList.InsertNext(thirdTestData);
@@ -249,7 +249,7 @@ namespace TMS_XLZ_Basic_Tests
 
 
         [TestMethod]
-        public void DLL_InsertNextPrevious_Test_4()
+        public void DoublyLinkedList_InsertNextPrevious_Test_4()
         {
             // Initialization. 
             XmlDocument doc = new XmlDocument();
@@ -261,7 +261,7 @@ namespace TMS_XLZ_Basic_Tests
             TransUnitData thirdTestData = new TransUnitData(transUnitList[2]);
 
 
-            DLL doublyLinkedList = new DLL();
+            DoublyLinkedList doublyLinkedList = new DoublyLinkedList();
             doublyLinkedList.InsertPrevious(firstTestData);
             doublyLinkedList.InsertPrevious(secondTestData);
             doublyLinkedList.InsertNext(thirdTestData);
@@ -275,7 +275,7 @@ namespace TMS_XLZ_Basic_Tests
 
 
         [TestMethod]
-        public void DLL_InsertNextPrevious_Test_5()
+        public void DoublyLinkedList_InsertNextPrevious_Test_5()
         {
             // Initialization. 
             XmlDocument doc = new XmlDocument();
@@ -287,7 +287,7 @@ namespace TMS_XLZ_Basic_Tests
             TransUnitData thirdTestData = new TransUnitData(transUnitList[2]);
 
 
-            DLL doublyLinkedList = new DLL();
+            DoublyLinkedList doublyLinkedList = new DoublyLinkedList();
             doublyLinkedList.InsertNext(firstTestData);
             doublyLinkedList.InsertPrevious(secondTestData);
             doublyLinkedList.InsertPrevious(thirdTestData);
@@ -301,7 +301,7 @@ namespace TMS_XLZ_Basic_Tests
 
 
         [TestMethod]
-        public void DLL_InsertNextPrevious_Test_6()
+        public void DoublyLinkedList_InsertNextPrevious_Test_6()
         {
             // Initialization. 
             XmlDocument doc = new XmlDocument();
@@ -313,7 +313,7 @@ namespace TMS_XLZ_Basic_Tests
             TransUnitData thirdTestData = new TransUnitData(transUnitList[2]);
 
 
-            DLL doublyLinkedList = new DLL();
+            DoublyLinkedList doublyLinkedList = new DoublyLinkedList();
             doublyLinkedList.InsertPrevious(firstTestData);
             doublyLinkedList.InsertNext(secondTestData);
             doublyLinkedList.InsertPrevious(thirdTestData);
@@ -326,7 +326,7 @@ namespace TMS_XLZ_Basic_Tests
         }
 
         [TestMethod]
-        public void DLL_GetIndexOf_Test_1()
+        public void DoublyLinkedList_GetIndexOf_Test_1()
         {
             // Initialization. 
             XmlDocument doc = new XmlDocument();
@@ -336,7 +336,7 @@ namespace TMS_XLZ_Basic_Tests
             TransUnitData firstTestData = new TransUnitData(transUnitList[0]);
 
 
-            DLL doublyLinkedList = new DLL();
+            DoublyLinkedList doublyLinkedList = new DoublyLinkedList();
             doublyLinkedList.InsertNext(firstTestData);
 
             // Assertions set.
@@ -345,7 +345,7 @@ namespace TMS_XLZ_Basic_Tests
         }
 
         [TestMethod]
-        public void DLL_GetIndexOf_Test_2()
+        public void DoublyLinkedList_GetIndexOf_Test_2()
         {
             // Initialization. 
             XmlDocument doc = new XmlDocument();
@@ -356,7 +356,7 @@ namespace TMS_XLZ_Basic_Tests
             TransUnitData secondTestData = new TransUnitData(transUnitList[1]);
 
 
-            DLL doublyLinkedList = new DLL();
+            DoublyLinkedList doublyLinkedList = new DoublyLinkedList();
             doublyLinkedList.InsertNext(firstTestData);
 
             // Assertions set.
@@ -365,7 +365,7 @@ namespace TMS_XLZ_Basic_Tests
         }
 
         [TestMethod]
-        public void DLL_GetIndexOf_Test_3()
+        public void DoublyLinkedList_GetIndexOf_Test_3()
         {
             // Initialization. 
             XmlDocument doc = new XmlDocument();
@@ -376,7 +376,7 @@ namespace TMS_XLZ_Basic_Tests
             TransUnitData secondTestData = new TransUnitData(transUnitList[1]);
 
 
-            DLL doublyLinkedList = new DLL();
+            DoublyLinkedList doublyLinkedList = new DoublyLinkedList();
             doublyLinkedList.InsertNext(secondTestData);
             doublyLinkedList.InsertNext(firstTestData);
             doublyLinkedList.InsertNext(firstTestData);
@@ -387,7 +387,7 @@ namespace TMS_XLZ_Basic_Tests
         }
 
         [TestMethod]
-        public void DLL_GetIndexOf_Test_4()
+        public void DoublyLinkedList_GetIndexOf_Test_4()
         {
             // Initialization. 
             XmlDocument doc = new XmlDocument();
@@ -401,7 +401,7 @@ namespace TMS_XLZ_Basic_Tests
             TransUnitData fifthTestData = new TransUnitData(transUnitList[4]);
 
 
-            DLL doublyLinkedList = new DLL();
+            DoublyLinkedList doublyLinkedList = new DoublyLinkedList();
             doublyLinkedList.InsertNext(firstTestData);
             doublyLinkedList.InsertNext(secondTestData);
             doublyLinkedList.InsertPrevious(thirdTestData);
@@ -418,7 +418,7 @@ namespace TMS_XLZ_Basic_Tests
         }
 
         [TestMethod]
-        public void DLL_GetIndexOf_Test_5()
+        public void DoublyLinkedList_GetIndexOf_Test_5()
         {
             // Initialization. 
             XmlDocument doc = new XmlDocument();
@@ -428,7 +428,7 @@ namespace TMS_XLZ_Basic_Tests
             TransUnitData firstTestData = new TransUnitData(transUnitList[0]);
             TransUnitData secondTestData = new TransUnitData(transUnitList[1]);
 
-            DLL doublyLinkedList = new DLL();
+            DoublyLinkedList doublyLinkedList = new DoublyLinkedList();
             doublyLinkedList.InsertNext(firstTestData);
 
             // Assertions set.
@@ -437,7 +437,7 @@ namespace TMS_XLZ_Basic_Tests
         }
 
         [TestMethod]
-        public void DLL_InsertAtIndex_Test_1()
+        public void DoublyLinkedList_InsertAtIndex_Test_1()
         {
             // Initialization. 
             XmlDocument doc = new XmlDocument();
@@ -448,7 +448,7 @@ namespace TMS_XLZ_Basic_Tests
             TransUnitData secondTestData = new TransUnitData(transUnitList[1]);
             TransUnitData thirdTestData = new TransUnitData(transUnitList[2]);
 
-            DLL doublyLinkedList = new DLL();
+            DoublyLinkedList doublyLinkedList = new DoublyLinkedList();
             doublyLinkedList.InsertNext(firstTestData);
             doublyLinkedList.InsertNext(secondTestData);
             doublyLinkedList.InsertAtIndex(thirdTestData, 1);
@@ -461,7 +461,7 @@ namespace TMS_XLZ_Basic_Tests
         }
 
         [TestMethod]
-        public void DLL_InsertAtIndex_Test_2()
+        public void DoublyLinkedList_InsertAtIndex_Test_2()
         {
             // Initialization. 
             XmlDocument doc = new XmlDocument();
@@ -471,7 +471,7 @@ namespace TMS_XLZ_Basic_Tests
             TransUnitData firstTestData = new TransUnitData(transUnitList[0]);
             TransUnitData secondTestData = new TransUnitData(transUnitList[1]);
 
-            DLL doublyLinkedList = new DLL();
+            DoublyLinkedList doublyLinkedList = new DoublyLinkedList();
             doublyLinkedList.InsertNext(firstTestData);
 
             // Assertions set.
@@ -480,7 +480,7 @@ namespace TMS_XLZ_Basic_Tests
         }
 
         [TestMethod]
-        public void DLL_InsertAtIndex_Test_3()
+        public void DoublyLinkedList_InsertAtIndex_Test_3()
         {
             // Initialization. 
             XmlDocument doc = new XmlDocument();
@@ -489,7 +489,7 @@ namespace TMS_XLZ_Basic_Tests
             XmlNodeList transUnitList = doc.GetElementsByTagName("trans-unit");
             TransUnitData firstTestData = new TransUnitData(transUnitList[0]);
 
-            DLL doublyLinkedList = new DLL();
+            DoublyLinkedList doublyLinkedList = new DoublyLinkedList();
             doublyLinkedList.InsertAtIndex(firstTestData, 0);
 
             // Assertions set.
@@ -500,7 +500,7 @@ namespace TMS_XLZ_Basic_Tests
         }
 
         [TestMethod]
-        public void DLL_InsertAtIndex_Test_4()
+        public void DoublyLinkedList_InsertAtIndex_Test_4()
         {
             // Initialization. 
             XmlDocument doc = new XmlDocument();
@@ -510,7 +510,7 @@ namespace TMS_XLZ_Basic_Tests
             TransUnitData firstTestData = new TransUnitData(transUnitList[0]);
             TransUnitData secondTestData = new TransUnitData(transUnitList[1]);
 
-            DLL doublyLinkedList = new DLL();
+            DoublyLinkedList doublyLinkedList = new DoublyLinkedList();
             doublyLinkedList.InsertNext(firstTestData);
             doublyLinkedList.InsertAtIndex(secondTestData, 1);
 
@@ -524,7 +524,7 @@ namespace TMS_XLZ_Basic_Tests
         }
 
         [TestMethod]
-        public void DLL_Remove_Test_1()
+        public void DoublyLinkedList_Remove_Test_1()
         {
             // Initialization. 
             XmlDocument doc = new XmlDocument();
@@ -535,7 +535,7 @@ namespace TMS_XLZ_Basic_Tests
             TransUnitData secondTestData = new TransUnitData(transUnitList[1]);
             TransUnitData thirdTestData = new TransUnitData(transUnitList[2]);
 
-            DLL doublyLinkedList = new DLL();
+            DoublyLinkedList doublyLinkedList = new DoublyLinkedList();
             doublyLinkedList.InsertNext(firstTestData);
             doublyLinkedList.InsertNext(secondTestData);
             doublyLinkedList.InsertNext(thirdTestData);
@@ -559,7 +559,7 @@ namespace TMS_XLZ_Basic_Tests
         }
 
         [TestMethod]
-        public void DLL_Remove_Test_2()
+        public void DoublyLinkedList_Remove_Test_2()
         {
             // Initialization. 
             XmlDocument doc = new XmlDocument();
@@ -570,7 +570,7 @@ namespace TMS_XLZ_Basic_Tests
             TransUnitData secondTestData = new TransUnitData(transUnitList[1]);
             TransUnitData thirdTestData = new TransUnitData(transUnitList[2]);
 
-            DLL doublyLinkedList = new DLL();
+            DoublyLinkedList doublyLinkedList = new DoublyLinkedList();
             doublyLinkedList.InsertNext(firstTestData);
             doublyLinkedList.InsertNext(secondTestData);
             doublyLinkedList.InsertNext(thirdTestData);
@@ -591,10 +591,10 @@ namespace TMS_XLZ_Basic_Tests
         }
 
         [TestMethod]
-        public void DLL_Remove_Test_3()
+        public void DoublyLinkedList_Remove_Test_3()
         {
             // Initialization. 
-            DLL doublyLinkedList = new DLL();
+            DoublyLinkedList doublyLinkedList = new DoublyLinkedList();
 
             // Assertions set.
             Assert.IsNull(doublyLinkedList.Remove());
@@ -602,7 +602,7 @@ namespace TMS_XLZ_Basic_Tests
         }
 
         [TestMethod]
-        public void DLL_RemoveAtIndex_Test_1()
+        public void DoublyLinkedList_RemoveAtIndex_Test_1()
         {
             // Initialization. 
             XmlDocument doc = new XmlDocument();
@@ -613,7 +613,7 @@ namespace TMS_XLZ_Basic_Tests
             TransUnitData secondTestData = new TransUnitData(transUnitList[1]);
             TransUnitData thirdTestData = new TransUnitData(transUnitList[2]);
 
-            DLL doublyLinkedList = new DLL();
+            DoublyLinkedList doublyLinkedList = new DoublyLinkedList();
             doublyLinkedList.InsertNext(firstTestData);
             doublyLinkedList.InsertNext(secondTestData);
             doublyLinkedList.InsertNext(thirdTestData);
@@ -636,7 +636,7 @@ namespace TMS_XLZ_Basic_Tests
         }
 
         [TestMethod]
-        public void DLL_RemoveAtIndex_Test_2()
+        public void DoublyLinkedList_RemoveAtIndex_Test_2()
         {
             // Initialization. 
             XmlDocument doc = new XmlDocument();
@@ -647,7 +647,7 @@ namespace TMS_XLZ_Basic_Tests
             TransUnitData secondTestData = new TransUnitData(transUnitList[1]);
             TransUnitData thirdTestData = new TransUnitData(transUnitList[2]);
 
-            DLL doublyLinkedList = new DLL();
+            DoublyLinkedList doublyLinkedList = new DoublyLinkedList();
             doublyLinkedList.InsertNext(firstTestData);
             doublyLinkedList.InsertNext(secondTestData);
             doublyLinkedList.InsertNext(thirdTestData);
@@ -670,7 +670,7 @@ namespace TMS_XLZ_Basic_Tests
         }
 
         [TestMethod]
-        public void DLL_RemoveAtIndex_Test_3()
+        public void DoublyLinkedList_RemoveAtIndex_Test_3()
         {
             // Initialization. 
             XmlDocument doc = new XmlDocument();
@@ -681,7 +681,7 @@ namespace TMS_XLZ_Basic_Tests
             TransUnitData secondTestData = new TransUnitData(transUnitList[1]);
             TransUnitData thirdTestData = new TransUnitData(transUnitList[2]);
 
-            DLL doublyLinkedList = new DLL();
+            DoublyLinkedList doublyLinkedList = new DoublyLinkedList();
             doublyLinkedList.InsertNext(firstTestData);
             doublyLinkedList.InsertNext(secondTestData);
             doublyLinkedList.InsertNext(thirdTestData);

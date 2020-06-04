@@ -48,11 +48,9 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="XLZ\SKL\SkeletonUnit.cs" />
-    <Compile Include="XLZ\XLF\TransUnit\DLL.cs" />
     <Compile Include="XLZ\XLF\TransUnit\DoublyLinkedList.cs" />
     <Compile Include="XLZ\XLF\TransUnit\LanguageNodes\Source.cs" />
     <Compile Include="XLZ\XLF\TransUnit\LanguageNodes\Target.cs" />
-    <Compile Include="XLZ\XLF\TransUnit\TransUnit.cs" />
     <Compile Include="XLZ\XLF\TransUnit\TransUnitData.cs" />
     <Compile Include="XLZ\XLF\TransUnit\TransUnitElements\Elements\BPT.cs" />
     <Compile Include="XLZ\XLF\TransUnit\TransUnitElements\BptEptElement.cs" />
@@ -62,7 +60,7 @@
     <Compile Include="XLZ\SKL\Skeleton.cs" />
     <Compile Include="XLZ\XLF\TransUnit\TransUnitElements\TransUnitElements.cs" />
     <Compile Include="XLZ\XLF\TransUnit\TransUnitNode.cs" />
-    <Compile Include="XLZ\XLF\Xliff.cs" />
+    <Compile Include="XLZ\XLF\XLF.cs" />
     <Compile Include="XLZ_Opener.cs" />
   </ItemGroup>
   <ItemGroup>

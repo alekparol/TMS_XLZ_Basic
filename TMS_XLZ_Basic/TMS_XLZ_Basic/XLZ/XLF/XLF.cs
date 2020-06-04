@@ -14,15 +14,19 @@ using TMS_XLZ_Basic.XLZ.Xliff;
 
 namespace TMS_XLZ_Basic
 {
-    class Xliff
+    public class XLF
     {
 
 		/* Fields */
 
-		private XmlDocument baseDocument;
+		private XmlDocument xlfDocument;
 
 		private XmlNodeList transUnitList;
-		private DLL doublyLinkedList; 
+
+		private List<TransUnitData> transUnitDataList;
+		private DoublyLinkedList doublyLinkedList;
+
+		private bool isParsedCorrectly;
 
 
 		/* Methods */
@@ -74,37 +78,37 @@ namespace TMS_XLZ_Basic
 
 
 		/* Constructors */
-
-		public Xliff(XmlDocument inputFile)
+		/* Validation of the path should be done in the XLZ class. */
+		public XLF(string inputFilePath)
 		{
-			/*baseDocument = inputFile;
 
-			transUnitList = inputFile.GetElementsByTagName("trans-unit");
+			TransUnitData auxiliaryTransUnitData;
 
-			listOfTransUnitObjects = new List<TransUnit>();
-			TransUnit auxillaryTransUnit;
+			doublyLinkedList = new DoublyLinkedList();
+			transUnitDataList = new List<TransUnitData>();
 
-			foreach(XmlNode en in transUnitList)
+			xlfDocument = new XmlDocument();
+			xlfDocument.Load(inputFilePath);
+
+			if (xlfDocument.DocumentType.Value == "xliff")
 			{
-				auxillaryTransUnit = new TransUnit(en);
-				listOfTransUnitObjects.Add(auxillaryTransUnit);
-				auxillaryTransUnit = null;
+
+				transUnitList = xlfDocument.GetElementsByTagName("trans-unit");
+				if (transUnitList.Count > 0) isParsedCorrectly = true;
+
+				foreach(XmlNode transUnit in transUnitList)
+				{
+					auxiliaryTransUnitData = new TransUnitData(transUnit);
+
+					/* TODO: Addd condition for well parsedness. */
+					doublyLinkedList.InsertNext(auxiliaryTransUnitData);
+
+				}
+
+				isParsedCorrectly = true;
+
 			}
-
-			transUnitTranslationYesList = new List<TransUnit>();
-			transUnitTranslationNoList = new List<TransUnit>();
-
-			foreach (TransUnit en in listOfTransUnitObjects)
-			{
-				if(en.IsTranslatable())
-				{
-					transUnitTranslationYesList.Add(en);
-				}
-				else
-				{
-					transUnitTranslationNoList.Add(en);
-				}
-			}*/
+			
 										 
 		}
 

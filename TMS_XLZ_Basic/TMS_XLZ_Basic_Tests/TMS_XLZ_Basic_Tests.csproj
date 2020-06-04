@@ -61,7 +61,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="XLZ_Tests\XLF_Tests\TransUnit_Tests\DLL_Tests.cs" />
+    <Compile Include="XLZ_Tests\XLF_Tests\TransUnit_Tests\DoublyLinkedList_Tests.cs" />
     <Compile Include="XLZ_Tests\XLF_Tests\TransUnit_Tests\LanguageNodes_Tests\Source_Tests.cs" />
     <Compile Include="XLZ_Tests\XLF_Tests\TransUnit_Tests\LanguageNodes_Tests\Target_Tests.cs" />
     <Compile Include="XLZ_Tests\XLF_Tests\TransUnit_Tests\TransUnitData_Tests.cs" />
@@ -72,8 +72,8 @@
     <Compile Include="XLZ_Tests\XLF_Tests\TransUnit_Tests\TransUnitElements_Tests\Elements_Tests\IT_Tests.cs" />
     <Compile Include="XLZ_Tests\XLF_Tests\TransUnit_Tests\TransUnitElements_Tests\Elements_Tests\PH_Tests.cs" />
     <Compile Include="XLZ_Tests\XLF_Tests\TransUnit_Tests\TransUnitElements_Tests\TransUnitElements_Tests.cs" />
-    <Compile Include="XLZ_Tests\XLF_Tests\TransUnit_Tests\TransUnitDL_Tests.cs" />
     <Compile Include="XLZ_Tests\XLF_Tests\TransUnit_Tests\TransUnitNode_Tests.cs" />
+    <Compile Include="XLZ_Tests\XLF_Tests\XLF_Tests.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

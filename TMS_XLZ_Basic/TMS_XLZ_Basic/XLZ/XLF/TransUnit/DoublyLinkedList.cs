@@ -13,7 +13,12 @@ using System.Runtime.CompilerServices;
 using System.Text.RegularExpressions;
 using TMS_XLZ_Basic.XLZ.Xliff.TransUnit.TransUnitElements;
 
-/*TODO: Make this doubly linked list to be that universal to work with Xliff as well as with Skl and XLZ. */
+/*TODO: Make this doubly linked list to be that universal to work with Xliff as well as with Skl and XLZ.
+ *TODO: Change InsertNext(), InsertPrevious() etc. to return TransUnitNode, not to be void methods.
+ *TODO: InsertAtIndex should return TransUnitNode as InsertNext and InsertPrevious do. 
+ *TODO: Methods like GetPreviousTranslatableNode or so, should be created within XLF class for DoublyLinkedList to be most universal and for us to reuse it in 
+ *SKL and in XLZ classes. 
+ *TODO: Use this[index] set in cases when it can shorten the code.*/
 
 /*Note: Thinking if the head node should be rechanged after any operation to it's initial state.*/
 
@@ -26,21 +31,19 @@ namespace TMS_XLZ_Basic.XLZ.Xliff
         private TransUnitNode head;
         private TransUnitNode tail;
 
-        private TransUnitNode firstNode;
-
-        private int count; 
+        private int count;
 
         /* Properties */
 
-        public TransUnitNode FirstNode
+        public TransUnitNode Tail
         {
             get
             {
-                return firstNode;
+                return tail;
             }
         }
 
-        public TransUnitNode GetCurrentNode
+        public TransUnitNode Head
         {
             get
             {
@@ -60,12 +63,12 @@ namespace TMS_XLZ_Basic.XLZ.Xliff
         {
             get
             {
-                if (index >= count || index < 0)
+                if (index > count || index < 0)
                 {
                     throw new ArgumentOutOfRangeException("Out of range exception.");
                 }
 
-                TransUnitNode currentNode = this.firstNode;
+                TransUnitNode currentNode = this.tail;
 
                 for (int i = 0; i < index; i++)
                 {
@@ -76,12 +79,12 @@ namespace TMS_XLZ_Basic.XLZ.Xliff
             }
             set
             {
-                if (index >= count || index < 0)
+                if (index > count || index < 0)
                 {
                     throw new ArgumentOutOfRangeException("Out of range exception.");
                 }
 
-                TransUnitNode currentNode = this.firstNode;
+                TransUnitNode currentNode = this.tail;
 
                 for (int i = 0; i < index; i++)
                 {
@@ -94,94 +97,103 @@ namespace TMS_XLZ_Basic.XLZ.Xliff
 
         /* Methods */
 
-        /*Methods that we need:
-         * - TransUnitNode InsertNext(TransUnitData newData)
-         * - TransUnitNode InsertPrevious(TransUnitData newData)
-         * - TransUnitNode InsertAtIndex(TransUnitData newData, int index)
-         * - TransUnitNode GetNodeByID(int iD)
-         * - 
-         * 
-         **/
-
-        public TransUnitNode InsertNext(TransUnitData newData)
+        public TransUnitNode InsertNext(TransUnitData newNodeData)
         {
 
-            TransUnitNode newTransUnitNode = new TransUnitNode(newData);
+            TransUnitNode newNode;
 
-            newTransUnitNode.PreviousSibling = head;
-            newTransUnitNode.NextSibling = null;
-
-            if(head != null)
+            if (head != null)
             {
-                if(head.NextSibling != null)
+
+                if (head.NextSibling == null)
                 {
-                    newTransUnitNode.NextSibling = head.NextSibling;
+                    newNode = new TransUnitNode(newNodeData, head);
+                    head = newNode;
                 }
-                head.NextSibling = newTransUnitNode;
+                else
+                {
+                    newNode = new TransUnitNode(newNodeData, head, head.NextSibling);
+                    while(head.NextSibling != null)
+                    {
+                        head = head.NextSibling;
+                    }
+                }               
             }
-
-            head = newTransUnitNode;
-
-            if(firstNode == null)
+            else
             {
-                firstNode = newTransUnitNode;
+                newNode = new TransUnitNode(newNodeData);
+                head = newNode;
+            }            
+
+            if (tail == null)
+            {
+                tail = newNode;
             }
 
             count++;
-            return newTransUnitNode;
+
+            return newNode;
 
         }
 
-        public TransUnitNode InsertPrevious(TransUnitData newData)
+        public TransUnitNode InsertPrevious(TransUnitData newNodeData)
         {
 
-            TransUnitNode newTransUnitNode = new TransUnitNode(newData);
+            TransUnitNode newNode;
 
-            if(head != null)
+            if (head != null)
             {
                 if (head.PreviousSibling != null)
                 {
-                    head.PreviousSibling.NextSibling = newTransUnitNode;
-
-                    newTransUnitNode.PreviousSibling = head.PreviousSibling;
-                    newTransUnitNode.NextSibling = head;
-
-                    head.PreviousSibling = newTransUnitNode;
+                    newNode = new TransUnitNode(newNodeData, head.PreviousSibling, head);
                 }
-            }            
-            else
-            {
-                head = newTransUnitNode;
-                if(firstNode == null)
+                else
                 {
-                    firstNode = head;
+                    newNode = new TransUnitNode(newNodeData);
+
+                    newNode.NextSibling = head;
+                    head.PreviousSibling = newNode;
+
+                    tail = newNode;
                 }
             }
-          
+            else
+            {
+                newNode = new TransUnitNode(newNodeData);
+
+                tail = newNode;
+                head = newNode;
+            }
+            
+
             count++;
-            return newTransUnitNode;
+
+            return newNode;
 
         }
 
+        /* Returns first occurance of the search data */
         public int GetIndexOf(TransUnitData searchData)
         {
-
             int index = 0;
-            TransUnitNode counter = this.FirstNode;
+            TransUnitNode searchNode = tail;
 
-            while (counter != null)
+            for(int i = 0; i < count; i++)
             {
-                if (((counter.Data != null) && (searchData == counter.Data)) ||
-                ((counter.Data == null) && (searchData == null)))
+                if(searchNode != null)
                 {
-                    return index;
-                }
+                    if (searchNode.Data == searchData)
+                    {
+                        return index;
+                    }
 
-                index++;
-                counter = counter.NextSibling;
+                    searchNode = searchNode.NextSibling;
+                    index++;
+                }
             }
 
             return -1;
+
         }
 
         public int GetIndexOf(TransUnitNode searchNode)
@@ -189,244 +201,165 @@ namespace TMS_XLZ_Basic.XLZ.Xliff
             return GetIndexOf(searchNode.Data);
         }
 
-        /* Index of the node in the list should be n-1 where n is the ID of the node's data. But for now we should take them separately
-         * and then use this information and both functions to validate the list. 
-         * */
-
-        public TransUnitNode GetNodeByID(int iD)
-        {
-            TransUnitNode counter = firstNode;
-
-            while (counter != null)
-            {
-                if (counter.Data.ID == iD)
-                {
-                    return counter;
-                }
-
-                counter = counter.NextSibling;
-            }
-
-            return null;
-        }
-
-
-
         public void InsertAtIndex(TransUnitData newItemData, int index)
         {
-            
-            if (index >= count || index < 0)
+
+            TransUnitNode temporaryHead = head;
+
+            if (index > count || index < 0)
             {
                 throw new ArgumentOutOfRangeException("Out of range exception.");
             }
-
-            head = this[index].PreviousSibling;
-            InsertNext(newItemData);
-
-        }
-
-        /*public void Remove(object item)
-        {
-            int currentIndex = 0;
-            DoublyLinkedListNode currentItem = this.head;
-            DoublyLinkedListNode prevItem = null;
-            while (currentItem != null)
+            
+            if (this[index] != null)
             {
-                if ((currentItem.Element != null &&
-                currentItem.Element.Equals(item)) ||
-                (currentItem.Element == null) && (item == null))
+                if (this[index].PreviousSibling != null)
                 {
-                    break;
-                }
-                prevItem = currentItem;
-                currentItem = currentItem.Next;
-                currentIndex++;
-            }
-            if (currentItem != null)
-            {
-                count--;
-                if (count == 0)
-                {
-                    this.head = null;
-                }
-                else if (prevItem == null)
-                {
-                    this.head = currentItem.Next;
-                    this.head.Previous = null;
-                }
-                else if (currentItem == tail)
-                {
-                    currentItem.Previous.Next = null;
-                    this.tail = currentItem.Previous;
+                    this.head = this[index].PreviousSibling;
+                    this.InsertNext(newItemData);
+
+                    head = temporaryHead;
                 }
                 else
                 {
-                    currentItem.Previous.Next = currentItem.Next;
-                    currentItem.Next.Previous = currentItem.Previous;
+                    this.head = this[index];
+                    this.InsertPrevious(newItemData);
+
+                    head = temporaryHead;
                 }
             }
-        }*/
+            else
+            {
+                this.InsertNext(newItemData);
+            }          
+        }
 
-        public TransUnitNode Delete()
+        /*public TransUnitNode Remove()
         {
+
             TransUnitNode temp = head;
 
             if (head != null)
             {
-                head = head.PreviousSibling;
-                if (head != null)
-                {
-                    head.NextSibling = temp.NextSibling;
-                }
+                head.PreviousSibling.NextSibling = head.NextSibling;
+                head = temp.PreviousSibling;
+
+                count--;
             }
 
             return temp;
-        }
 
+        }*/
 
-
-        public TransUnitNode GetPreviousTranslatableNode(TransUnitNode referrenceNode)
+        public TransUnitNode Remove()
         {
-            while(referrenceNode.PreviousSibling != null)
+
+            TransUnitNode transUnitNode = head;
+
+            if (head != null)
             {
-                if(referrenceNode.PreviousSibling.Data.IsTranslatable)
+                
+                if (head.PreviousSibling != null && head.NextSibling != null)
                 {
-                    return referrenceNode.PreviousSibling;
+
+                    head.NextSibling.PreviousSibling = head.PreviousSibling;
+                    head.PreviousSibling.NextSibling = head.NextSibling;
+
+                    while(head.NextSibling != null)
+                    {
+                        head = head.NextSibling;
+                    }
+                    
+                    count--;
+
+                }
+                else if (head.PreviousSibling != null && head.NextSibling == null)
+                {
+
+                    head.PreviousSibling.NextSibling = head.NextSibling;
+                    head = head.PreviousSibling;
+
+                    count--;
+
+                }
+                else if (head.PreviousSibling == null && head.NextSibling != null)
+                {
+
+                    head.NextSibling.PreviousSibling = head.PreviousSibling;
+                    tail = head;
+
+                    while (head.NextSibling != null)
+                    {
+                        head = head.NextSibling;
+                    }
+
+                    count--;
+
+                }
+                else
+                {
+
+                    head = null;
+                    tail = null;
+
+                    count--;
+
                 }
 
-                referrenceNode = referrenceNode.PreviousSibling;
             }
-            
-            return null;
+
+            return transUnitNode;
         }
-   
-        public void Add(TransUnitData item)
+
+        public TransUnitNode RemoveAtIndex(int index)
         {
-            if (this.head == null)
+
+            TransUnitNode transUnitNode;
+            TransUnitNode temp = head;
+
+            if (this[index] != null)
             {
-                this.head = new TransUnitNode(item);
-                this.tail = this.head;
+                if (this[index] != head)
+                {
+                    head = this[index];
+                    transUnitNode = this.Remove();
+
+                    head = temp;
+                    return transUnitNode;
+                }
+                else
+                {
+                    transUnitNode = this.Remove();
+                    return transUnitNode;
+
+                }
+
             }
             else
             {
-                TransUnitNode newItem = new TransUnitNode(item, tail);
-
-                /*I think here should be "head" to be consistent with our interpretation of the doubly linked list. */
-                this.head = newItem;
+                return null;
             }
 
-            count++;
         }
 
-
-
-        /*public void Remove(object item)
+        public void Clear()
         {
-            int currentIndex = 0;
-            DoublyLinkedListNode currentItem = this.head;
-            DoublyLinkedListNode prevItem = null;
-            while (currentItem != null)
-            {
-                if ((currentItem.Element != null &&
-                currentItem.Element.Equals(item)) ||
-                (currentItem.Element == null) && (item == null))
-                {
-                    break;
-                }
-                prevItem = currentItem;
-                currentItem = currentItem.Next;
-                currentIndex++;
-            }
-            if (currentItem != null)
-            {
-                count--;
-                if (count == 0)
-                {
-                    this.head = null;
-                }
-                else if (prevItem == null)
-                {
-                    this.head = currentItem.Next;
-                    this.head.Previous = null;
-                }
-                else if (currentItem == tail)
-                {
-                    currentItem.Previous.Next = null;
-                    this.tail = currentItem.Previous;
-                }
-                else
-                {
-                    currentItem.Previous.Next = currentItem.Next;
-                    currentItem.Next.Previous = currentItem.Previous;
-                }
-            }
 
-            public void RemoveAt(int index)
-            {
-                if (index >= this.count || index < 0)
-                {
-                    throw new ArgumentOutOfRangeException("Out of range!");
-                }
+            this.head = null;
+            this.tail = null;
 
-                int currentIndex = 0;
-                DoublyLinkedListNode currentItem = this.head;
-                DoublyLinkedListNode prevItem = null;
-                while (currentIndex < index)
-                {
-                    prevItem = currentItem;
-                    currentItem = currentItem.Next;
-                    currentIndex++;
-                }
-                if (this.count == 0)
-                {
-                    this.head = null;
-                }
-                else if (prevItem == null)
-                {
-                    this.head = currentItem.Next;
-                    this.head.Previous = null;
-                }
-                else if (index == count - 1)
-                {
-                    prevItem.Next = currentItem.Next;
-                    tail = prevItem;
-                    currentItem = null;
-                }
-                else
-                {
-                    prevItem.Next = currentItem.Next;
-                    currentItem.Next.Previous = prevItem;
-                }
-                count--;
-            }
+            this.count = 0;
+        }
 
+        /* Constructors */
 
+        public DoublyLinkedList()
+        {
+            head = null;
+            tail = null;
 
-            public bool Contains(object element)
-            {
-                int index = indexOf(element);
-                bool contains = (index != -1);
-                return contains;
-            }*/
-
-            public void Clear()
-            {
-                this.head = null;
-                this.tail = null;
-                this.count = 0;
-            }
-
-            /* Constructors */
-
-            public DoublyLinkedList()
-             {
-                head = null;
-                tail = null;
-
-                firstNode = null;
-
-                count = 0;
-            }
+            count = 0;
+        }
 
 
 

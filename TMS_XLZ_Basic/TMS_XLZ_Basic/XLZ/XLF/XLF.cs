@@ -24,58 +24,133 @@ namespace TMS_XLZ_Basic
 		private XmlNodeList transUnitList;
 
 		private List<TransUnitData> transUnitDataList;
-		private DoublyLinkedList doublyLinkedList;
+		private DoublyLinkedList transUnitDoublyLinkedList;
 
 		private bool isParsedCorrectly;
 
+		/* Properties */
+
+		public XmlNodeList TransUnitList
+		{
+			get
+			{
+				return transUnitList;
+			}
+		}
+
+		public List<TransUnitData> TransUnitDataList
+		{
+			get
+			{
+				return transUnitDataList;
+			}
+		}
+
+		public DoublyLinkedList TransUnitDoublyLinkedList
+		{
+			get
+			{
+				return transUnitDoublyLinkedList;
+			}
+		}
+
+		public bool IsParsedCorrectly
+		{
+			get
+			{
+				return isParsedCorrectly;
+			}
+		}
 
 		/* Methods */
 
-		/*public XmlNode GetNodeByID(int transUnitID)
+		public TransUnitNode GetTransUnitNode(int index)
 		{
-			foreach(XmlNode ent in transUnitList)
+			return transUnitDoublyLinkedList[index];
+		}
+
+		public TransUnitData GetTransUnitData(int index)
+		{
+			return transUnitDoublyLinkedList[index].Data;
+		}
+
+		public TransUnitNode GetTransUnitNodeByID(int id)
+		{
+
+			TransUnitNode auxiliaryTransUnitNode = transUnitDoublyLinkedList.Tail;
+
+			while(auxiliaryTransUnitNode != null)
 			{
-				if(Int32.Parse(ent.Attributes["id"].Value) == transUnitID)
+				if (auxiliaryTransUnitNode.Data.ID == id)
 				{
-					return ent;
+					return auxiliaryTransUnitNode;
 				}
+
+				auxiliaryTransUnitNode = auxiliaryTransUnitNode.NextSibling;
+
 			}
 
 			return null;
-		}*/
+		}
 
-		/*public TransUnit GetTransUnitByID(int transUnitID)
+		public TransUnitData GetTransUnitDataByID(int id)
 		{
-			foreach (TransUnit ent in listOfTransUnitObjects)
+			return GetTransUnitNodeByID(id).Data;
+		}
+
+
+		public TransUnitNode GetPreviousTranslatableNode(TransUnitData searchedData)
+		{
+			
+			int searchedDataIndex = transUnitDoublyLinkedList.GetIndexOf(searchedData);
+			TransUnitNode searchedNode = transUnitDoublyLinkedList[searchedDataIndex];
+
+			TransUnitNode auxiliaryNode = null;
+
+			if (searchedNode != transUnitDoublyLinkedList.Tail)
 			{
-				if ((ent.GetTransUnitID()) == transUnitID)
+				
+				while (auxiliaryNode != null)
 				{
-					return ent;
+					auxiliaryNode = searchedNode.PreviousSibling;
+
+					if (auxiliaryNode.Data.IsTranslatable)
+					{
+						return auxiliaryNode;
+					}
 				}
 			}
 
-			return null;
-		}*/
-
-
-		/* This method will return the source node of the given trans-unit node. */
-
-		/*private XmlNode GetSourceNode(XmlNode transUnitNode)
-		{
-
-			return transUnitNode.SelectSingleNode("./source");
-
-		}*/
-
-		/* This method will return the target node of the given trans-unit node. */
-
-		/*private XmlNode GetTargetNode(XmlNode transUnitNode)
-		{
-
-			return transUnitNode.SelectSingleNode("/target");
+			return auxiliaryNode;
 
 		}
 
+
+		public TransUnitNode GetNextTranslatableNode(TransUnitData searchedData)
+		{
+
+			int searchedDataIndex = transUnitDoublyLinkedList.GetIndexOf(searchedData);
+			TransUnitNode searchedNode = transUnitDoublyLinkedList[searchedDataIndex];
+
+			TransUnitNode auxiliaryNode = null;
+
+			if (searchedNode != transUnitDoublyLinkedList.Head)
+			{
+
+				while (auxiliaryNode != null)
+				{
+					auxiliaryNode = searchedNode.NextSibling;
+
+					if (auxiliaryNode.Data.IsTranslatable)
+					{
+						return auxiliaryNode;
+					}
+				}
+			}
+
+			return auxiliaryNode;
+
+		}
 
 		/* Constructors */
 		/* Validation of the path should be done in the XLZ class. */
@@ -84,7 +159,7 @@ namespace TMS_XLZ_Basic
 
 			TransUnitData auxiliaryTransUnitData;
 
-			doublyLinkedList = new DoublyLinkedList();
+			transUnitDoublyLinkedList = new DoublyLinkedList();
 			transUnitDataList = new List<TransUnitData>();
 
 			xlfDocument = new XmlDocument();
@@ -101,7 +176,7 @@ namespace TMS_XLZ_Basic
 					auxiliaryTransUnitData = new TransUnitData(transUnit);
 
 					/* TODO: Addd condition for well parsedness. */
-					doublyLinkedList.InsertNext(auxiliaryTransUnitData);
+					transUnitDoublyLinkedList.InsertNext(auxiliaryTransUnitData);
 
 				}
 

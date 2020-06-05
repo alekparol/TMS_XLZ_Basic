@@ -24,8 +24,9 @@ namespace TMS_XLZ_Basic
         private XmlNode xmlNode;
 
         private Source sourceNode;
-        private Target targetNode;       
+        private Target targetNode;
 
+        private string generalID;
         private int iD;
         private bool isTranslatable;
 
@@ -50,6 +51,14 @@ namespace TMS_XLZ_Basic
             }
         }
 
+        public string GeneralID
+        {
+            get
+            {
+                return generalID;
+            }
+        }
+
         public int ID
         {
             get
@@ -71,6 +80,21 @@ namespace TMS_XLZ_Basic
             get
             {
                 return !isNotWellFormed;
+            }
+        }
+
+        public bool DoesHaveNumericalID
+        {
+            get
+            {
+                if (this.iD == -1 && this.generalID != string.Empty)
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
             }
         }
 
@@ -183,6 +207,9 @@ namespace TMS_XLZ_Basic
 
             if (sourceNode != null || targetNode != null)
             {
+
+                if (transUnitNode.Attributes["id"] != null) generalID = transUnitNode.Attributes["id"].Value;
+
                 bool success = Int32.TryParse(transUnitNode.Attributes["id"].Value, out int transUnitID);
                 if (success)
                 {

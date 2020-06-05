@@ -40,7 +40,7 @@ namespace TMS_XLZ_Basic_Tests.XLZ_Tests.XLF_Tests
 
             /* Set of Assertions. */
 
-            Assert.IsFalse(testXLF.IsParsedCorrectly); // As count of trans unit is different that count of doulbyLinkedList and because one of the elements is null. 
+            Assert.IsTrue(testXLF.IsParsedCorrectly); // As count of trans unit is different that count of doulbyLinkedList and because one of the elements is null. 
             Assert.AreEqual(169, testXLF.TransUnitDataList.Count);
             Assert.AreEqual(169, testXLF.TransUnitDoublyLinkedList.Count);
 
@@ -129,13 +129,15 @@ namespace TMS_XLZ_Basic_Tests.XLZ_Tests.XLF_Tests
             XLF testXLF = new XLF(xlfDocument);
 
             int doublyLinkedListCount = testXLF.TransUnitDoublyLinkedList.Count;
-            TransUnitNode auxiliaryTransUnitNode = testXLF.GetTransUnitNodeByID(doublyLinkedListCount);
+            TransUnitNode auxiliaryTransUnitNode = testXLF.GetTransUnitNode(106);
 
             /* Set of Assertions. */
 
-            Assert.IsNotNull(auxiliaryTransUnitNode);
-            Assert.AreEqual(doublyLinkedListCount, auxiliaryTransUnitNode.Data.ID);
-            Assert.AreEqual(testXLF.TransUnitDoublyLinkedList.Head, auxiliaryTransUnitNode);
+            Assert.AreEqual("document.xml.3", auxiliaryTransUnitNode.Data.GeneralID);
+            Assert.AreEqual(-1, auxiliaryTransUnitNode.Data.ID);
+            //Assert.IsNotNull(auxiliaryTransUnitNode);
+            //Assert.AreEqual(doublyLinkedListCount, auxiliaryTransUnitNode.Data.ID);
+            //Assert.AreEqual(testXLF.TransUnitDoublyLinkedList.Head, auxiliaryTransUnitNode);
 
         }
 
@@ -332,8 +334,6 @@ namespace TMS_XLZ_Basic_Tests.XLZ_Tests.XLF_Tests
             }
         }
 
-        /* Testing the GetTransUnitDataByID() is unneccessary as this method takes the previous and return the Data. */
-
         [TestMethod]
         public void XLF_GetPreviousTranslatableNode_Xliff1_Test_1()
         {
@@ -469,6 +469,124 @@ namespace TMS_XLZ_Basic_Tests.XLZ_Tests.XLF_Tests
             Assert.IsNull(previousTranslatableNode);
 
         }
+
+        [TestMethod]
+        public void XLF_GetNextTranslatableNode_Xliff1_Test_1()
+        {
+
+            /* Initialization. */
+
+            XmlDocument xlfDocument = new XmlDocument();
+            xlfDocument.Load(xliffPath);
+            XLF testXLF = new XLF(xlfDocument);
+
+            TransUnitNode auxiliaryTransUnitNode = testXLF.GetTransUnitNodeByID(10);
+            TransUnitNode nextTranslatableNode = testXLF.GetNextTranslatableNode(auxiliaryTransUnitNode);
+
+            /* Set of Assertions. */
+
+            Assert.IsTrue(nextTranslatableNode.Data.IsTranslatable);
+            Assert.AreEqual(12, nextTranslatableNode.Data.ID);
+
+        }
+
+        [TestMethod]
+        public void XLF_GetNextTranslatableNode_Xliff1_Test_2()
+        {
+
+            /* Initialization. */
+
+            XmlDocument xlfDocument = new XmlDocument();
+            xlfDocument.Load(xliffPath);
+            XLF testXLF = new XLF(xlfDocument);
+
+            TransUnitNode auxiliaryTransUnitNode = testXLF.GetTransUnitNodeByID(165);
+            TransUnitNode nextTranslatableNode = testXLF.GetNextTranslatableNode(auxiliaryTransUnitNode);
+
+            /* Set of Assertions. */
+
+            Assert.IsNull(nextTranslatableNode);
+
+        }
+
+        [TestMethod]
+        public void XLF_GetNextTranslatableNode_Xliff2_Test_1()
+        {
+
+            /* Initialization. */
+
+            XmlDocument xlfDocument = new XmlDocument();
+            xlfDocument.Load(xliffPath2);
+            XLF testXLF = new XLF(xlfDocument);
+
+            TransUnitNode auxiliaryTransUnitNode = testXLF.GetTransUnitNodeByID(10);
+            TransUnitNode nextTranslatableNode = testXLF.GetNextTranslatableNode(auxiliaryTransUnitNode);
+
+            /* Set of Assertions. */
+
+            Assert.IsTrue(nextTranslatableNode.Data.IsTranslatable);
+            Assert.AreEqual(12, nextTranslatableNode.Data.ID);
+
+        }
+
+        [TestMethod]
+        public void XLF_GetNextTranslatableNode_Xliff2_Test_2()
+        {
+
+            /* Initialization. */
+
+            XmlDocument xlfDocument = new XmlDocument();
+            xlfDocument.Load(xliffPath2);
+            XLF testXLF = new XLF(xlfDocument);
+
+            TransUnitNode auxiliaryTransUnitNode = testXLF.GetTransUnitNodeByID(165);
+            TransUnitNode nextTranslatableNode = testXLF.GetNextTranslatableNode(auxiliaryTransUnitNode);
+
+            /* Set of Assertions. */
+
+            Assert.IsNull(nextTranslatableNode);
+
+        }
+
+        [TestMethod]
+        public void XLF_GetNextTranslatableNode_Xliff3_Test_1()
+        {
+
+            /* Initialization. */
+
+            XmlDocument xlfDocument = new XmlDocument();
+            xlfDocument.Load(xliffPath3);
+            XLF testXLF = new XLF(xlfDocument);
+
+            TransUnitNode auxiliaryTransUnitNode = testXLF.GetTransUnitNodeByID(1);
+            TransUnitNode nextTranslatableNode = testXLF.GetNextTranslatableNode(auxiliaryTransUnitNode);
+
+            /* Set of Assertions. */
+
+            Assert.IsTrue(nextTranslatableNode.Data.IsTranslatable);
+            Assert.AreEqual(10, nextTranslatableNode.Data.ID);
+
+        }
+
+        [TestMethod]
+        public void XLF_GetNextTranslatableNode_Xliff1_Test_3()
+        {
+
+            /* Initialization. */
+
+            XmlDocument xlfDocument = new XmlDocument();
+            xlfDocument.Load(xliffPath3);
+            XLF testXLF = new XLF(xlfDocument);
+
+            TransUnitNode auxiliaryTransUnitNode = testXLF.GetTransUnitNodeByID(125);
+            TransUnitNode nextTranslatableNode = testXLF.GetNextTranslatableNode(auxiliaryTransUnitNode);
+
+            /* Set of Assertions. */
+
+            Assert.IsNull(nextTranslatableNode);
+
+        }
+
 
     }
 }

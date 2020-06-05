@@ -52,6 +52,22 @@ namespace TMS_XLZ_Basic
 			}
 		}
 
+		public int NonNumericalIDCount
+		{
+			get
+			{
+				return transUnitDataList.Where(x => x.DoesHaveNumericalID == false).Count();
+			}
+		}
+
+		public int MaximalNumericalID
+		{
+			get
+			{
+				return transUnitDataList.Last(x => x.DoesHaveNumericalID == true).ID;
+			}
+		}
+
 		/* Methods */
 
 		public TransUnitNode GetTransUnitNode(int index)
@@ -88,6 +104,32 @@ namespace TMS_XLZ_Basic
 		{
 
 			if (GetTransUnitNodeByID(id) != null) return GetTransUnitNodeByID(id).Data;
+			else return null;
+		}
+
+		public TransUnitNode GetTransUnitNodeByGeneralID(string generalId)
+		{
+
+			TransUnitNode auxiliaryTransUnitNode = transUnitDoublyLinkedList.Tail;
+
+			while (auxiliaryTransUnitNode != null)
+			{
+				if (auxiliaryTransUnitNode.Data.GeneralID == generalId)
+				{
+					return auxiliaryTransUnitNode;
+				}
+
+				auxiliaryTransUnitNode = auxiliaryTransUnitNode.NextSibling;
+
+			}
+
+			return null;
+		}
+
+		public TransUnitData GetTransUnitDataByGeneralID(string generalID)
+		{
+
+			if (GetTransUnitNodeByGeneralID(generalID) != null) return GetTransUnitNodeByGeneralID(generalID).Data;
 			else return null;
 		}
 
@@ -132,7 +174,7 @@ namespace TMS_XLZ_Basic
 			{
 
 				auxiliaryNode = searchedNode.NextSibling;
-				if (searchedNode != transUnitDoublyLinkedList.Tail)
+				if (searchedNode != transUnitDoublyLinkedList.Head)
 				{
 
 					while (auxiliaryNode != null)
@@ -197,7 +239,7 @@ namespace TMS_XLZ_Basic
 				}			
 			}
 
-			if (transUnitList.Count == transUnitDoublyLinkedList.Count)
+			if (transUnitList.Count == transUnitDoublyLinkedList.Count && transUnitDataList.Contains(null) == false)
 			{
 				isParsedCorrectly = true;
 			}

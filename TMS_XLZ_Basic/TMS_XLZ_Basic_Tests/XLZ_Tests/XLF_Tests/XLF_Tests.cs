@@ -18,7 +18,7 @@ namespace TMS_XLZ_Basic_Tests.XLZ_Tests.XLF_Tests
      <trans-unit translate="no" id="13">
 		        <target>gt</target>
 	 </trans-unit>
-     * is also null. */
+     * is also null. EDIT: This was solved by deleting isNotWellFormed and parsingSuccess intiliatization in TransUnitData class.*/
 
     [TestClass]
     public class XLF_Tests
@@ -26,6 +26,8 @@ namespace TMS_XLZ_Basic_Tests.XLZ_Tests.XLF_Tests
 
         public string xliffPath = @"C:\Users\Aleksander.Parol\Desktop\GLT_Engineering\Documentation\Script\C# Script Block all except yellow highlight\Blocked by the existing script\content.xlf";
         public string xliffPath2 = @"C:\Users\Aleksander.Parol\Desktop\GLT_Engineering\Documentation\Script\C# Script Block all except yellow highlight\Blocked by the existing script\Nowy folder\content.xlf";
+        public string xliffPath3 = @"C:\Users\Aleksander.Parol\Desktop\GLT_Engineering\Documentation\Script\C# Script Block all except yellow highlight\Blocked by the existing script\Nowy folder2\content.xlf";
+
         [TestMethod]
         public void XLF_Constructor_Test_1()
         {
@@ -38,14 +40,50 @@ namespace TMS_XLZ_Basic_Tests.XLZ_Tests.XLF_Tests
 
             /* Set of Assertions. */
 
-            Assert.IsTrue(testXLF.IsParsedCorrectly);
-            Assert.AreNotEqual(0, testXLF.TransUnitDataList.Count);
-            Assert.AreNotEqual(0, testXLF.TransUnitDoublyLinkedList.Count);
+            Assert.IsFalse(testXLF.IsParsedCorrectly); // As count of trans unit is different that count of doulbyLinkedList and because one of the elements is null. 
+            Assert.AreEqual(169, testXLF.TransUnitDataList.Count);
+            Assert.AreEqual(169, testXLF.TransUnitDoublyLinkedList.Count);
 
         }
 
         [TestMethod]
-        public void XLF_GetTransUnitNodeByID_Test_1()
+        public void XLF_Constructor_Test_2()
+        {
+
+            /* Initialization. */
+
+            XmlDocument xlfDocument = new XmlDocument();
+            xlfDocument.Load(xliffPath2);
+            XLF testXLF = new XLF(xlfDocument);
+
+            /* Set of Assertions. */
+
+            Assert.IsTrue(testXLF.IsParsedCorrectly);
+            Assert.AreEqual(169, testXLF.TransUnitDataList.Count);
+            Assert.AreEqual(169, testXLF.TransUnitDoublyLinkedList.Count);
+
+        }
+
+        [TestMethod]
+        public void XLF_Constructor_Test_3()
+        {
+
+            /* Initialization. */
+
+            XmlDocument xlfDocument = new XmlDocument();
+            xlfDocument.Load(xliffPath3);
+            XLF testXLF = new XLF(xlfDocument);
+
+            /* Set of Assertions. */
+
+            Assert.IsTrue(testXLF.IsParsedCorrectly);
+            Assert.AreEqual(125, testXLF.TransUnitDataList.Count);
+            Assert.AreEqual(125, testXLF.TransUnitDoublyLinkedList.Count);
+
+        }
+
+        [TestMethod]
+        public void XLF_GetTransUnitNodeByID_Xliff1_Test_1()
         {
 
             /* Initialization. */
@@ -63,7 +101,7 @@ namespace TMS_XLZ_Basic_Tests.XLZ_Tests.XLF_Tests
         }
 
         [TestMethod]
-        public void XLF_GetTransUnitNodeByID_Test_2()
+        public void XLF_GetTransUnitNodeByID_Xliff1_Test_2()
         {
 
             /* Initialization. */
@@ -81,7 +119,29 @@ namespace TMS_XLZ_Basic_Tests.XLZ_Tests.XLF_Tests
         }
 
         [TestMethod]
-        public void XLF_GetTransUnitNodeByID_Test_3()
+        public void XLF_GetTransUnitNodeByID_Xliff1_Test_3()
+        {
+
+            /* Initialization. */
+
+            XmlDocument xlfDocument = new XmlDocument();
+            xlfDocument.Load(xliffPath);
+            XLF testXLF = new XLF(xlfDocument);
+
+            int doublyLinkedListCount = testXLF.TransUnitDoublyLinkedList.Count;
+            TransUnitNode auxiliaryTransUnitNode = testXLF.GetTransUnitNodeByID(doublyLinkedListCount);
+
+            /* Set of Assertions. */
+
+            Assert.IsNotNull(auxiliaryTransUnitNode);
+            Assert.AreEqual(doublyLinkedListCount, auxiliaryTransUnitNode.Data.ID);
+            Assert.AreEqual(testXLF.TransUnitDoublyLinkedList.Head, auxiliaryTransUnitNode);
+
+        }
+
+
+        [TestMethod]
+        public void XLF_GetTransUnitNodeByID_Xliff1_Test_4()
         {
 
             /* Initialization. */
@@ -94,44 +154,77 @@ namespace TMS_XLZ_Basic_Tests.XLZ_Tests.XLF_Tests
 
             /* Set of Assertions. */
 
-            for(int i = 1; i < testXLF.TransUnitDoublyLinkedList.Count; i++)
+            for (int i = 1; i < testXLF.TransUnitDoublyLinkedList.Count; i++)
             {
                 auxiliaryTransUnitNode = testXLF.GetTransUnitNodeByID(i);
 
                 if (auxiliaryTransUnitNode == null)
                 {
-                    Assert.AreEqual(0, i);
+                    Assert.Fail("Trans Unit node of id = {0} is null.", i);
                 }
-
                 Assert.AreEqual(i, auxiliaryTransUnitNode.Data.ID);
-
             }
-
         }
 
         [TestMethod]
-        public void XLF_GetTransUnitNodeByID_Test_3_13()
+        public void XLF_GetTransUnitNodeByID_Xliff2_Test_1()
         {
 
             /* Initialization. */
 
             XmlDocument xlfDocument = new XmlDocument();
-            xlfDocument.Load(xliffPath);
+            xlfDocument.Load(xliffPath2);
             XLF testXLF = new XLF(xlfDocument);
 
-            TransUnitNode auxiliaryTransUnitNode;
+            TransUnitNode auxiliaryTransUnitNode = testXLF.GetTransUnitNodeByID(1);
 
             /* Set of Assertions. */
 
-            //auxiliaryTransUnitNode = testXLF.GetTransUnitNodeByID(13);
-            TransUnitData auxiliaryTransUnitData = testXLF.TransUnitDataList.First(x => x.ID == 13);
-            
-            Assert.AreEqual(13, auxiliaryTransUnitData.ID);
+            Assert.AreEqual(1, auxiliaryTransUnitNode.Data.ID);
 
         }
 
         [TestMethod]
-        public void XLF_GetTransUnitNodeByID_Test_4()
+        public void XLF_GetTransUnitNodeByID_Xliff2_Test_2()
+        {
+
+            /* Initialization. */
+
+            XmlDocument xlfDocument = new XmlDocument();
+            xlfDocument.Load(xliffPath2);
+            XLF testXLF = new XLF(xlfDocument);
+
+            TransUnitNode auxiliaryTransUnitNode = testXLF.GetTransUnitNodeByID(0);
+
+            /* Set of Assertions. */
+
+            Assert.IsNull(auxiliaryTransUnitNode);
+
+        }
+
+        [TestMethod]
+        public void XLF_GetTransUnitNodeByID_Xliff2_Test_3()
+        {
+
+            /* Initialization. */
+
+            XmlDocument xlfDocument = new XmlDocument();
+            xlfDocument.Load(xliffPath2);
+            XLF testXLF = new XLF(xlfDocument);
+
+            int doublyLinkedListCount = testXLF.TransUnitDoublyLinkedList.Count;
+            TransUnitNode auxiliaryTransUnitNode = testXLF.GetTransUnitNodeByID(doublyLinkedListCount);
+
+            /* Set of Assertions. */
+
+            Assert.IsNotNull(auxiliaryTransUnitNode);
+            Assert.AreEqual(doublyLinkedListCount, auxiliaryTransUnitNode.Data.ID);
+            Assert.AreEqual(testXLF.TransUnitDoublyLinkedList.Head, auxiliaryTransUnitNode);
+
+        }
+
+        [TestMethod]
+        public void XLF_GetTransUnitNodeByID_Xliff2_Test_4()
         {
 
             /* Initialization. */
@@ -150,34 +243,93 @@ namespace TMS_XLZ_Basic_Tests.XLZ_Tests.XLF_Tests
 
                 if (auxiliaryTransUnitNode == null)
                 {
-                    Assert.AreEqual(0, i);
+                    Assert.Fail("Trans Unit node of id = {0} is null.", i);
                 }
-
                 Assert.AreEqual(i, auxiliaryTransUnitNode.Data.ID);
-
             }
-
         }
 
         [TestMethod]
-        public void XLF_GetTransUnitNodeByID_Test_5()
+        public void XLF_GetTransUnitNodeByID_Xliff3_Test_1()
         {
 
             /* Initialization. */
 
             XmlDocument xlfDocument = new XmlDocument();
-            xlfDocument.Load(xliffPath);
+            xlfDocument.Load(xliffPath3);
             XLF testXLF = new XLF(xlfDocument);
 
-            int doublyLinnkedListCount = testXLF.TransUnitDataList.Count;
-
-            TransUnitNode auxiliaryTransUnitNode = testXLF.GetTransUnitNodeByID(doublyLinnkedListCount);
+            TransUnitNode auxiliaryTransUnitNode = testXLF.GetTransUnitNodeByID(1);
 
             /* Set of Assertions. */
 
-            //Assert.AreEqual(1, doublyLinnkedListCount);
-            Assert.IsTrue(testXLF.TransUnitDataList.Where(x => x.ID == testXLF.TransUnitDataList.Count).Count() == 1);
+            Assert.AreEqual(1, auxiliaryTransUnitNode.Data.ID);
 
+        }
+
+        [TestMethod]
+        public void XLF_GetTransUnitNodeByID_Xliff3_Test_2()
+        {
+
+            /* Initialization. */
+
+            XmlDocument xlfDocument = new XmlDocument();
+            xlfDocument.Load(xliffPath3);
+            XLF testXLF = new XLF(xlfDocument);
+
+            TransUnitNode auxiliaryTransUnitNode = testXLF.GetTransUnitNodeByID(0);
+
+            /* Set of Assertions. */
+
+            Assert.IsNull(auxiliaryTransUnitNode);
+
+        }
+
+        [TestMethod]
+        public void XLF_GetTransUnitNodeByID_Xliff3_Test_3()
+        {
+
+            /* Initialization. */
+
+            XmlDocument xlfDocument = new XmlDocument();
+            xlfDocument.Load(xliffPath3);
+            XLF testXLF = new XLF(xlfDocument);
+
+            int doublyLinkedListCount = testXLF.TransUnitDoublyLinkedList.Count;
+            TransUnitNode auxiliaryTransUnitNode = testXLF.GetTransUnitNodeByID(doublyLinkedListCount);
+
+            /* Set of Assertions. */
+
+            Assert.IsNotNull(auxiliaryTransUnitNode);
+            Assert.AreEqual(doublyLinkedListCount, auxiliaryTransUnitNode.Data.ID);
+            Assert.AreEqual(testXLF.TransUnitDoublyLinkedList.Head, auxiliaryTransUnitNode);
+
+        }
+
+        [TestMethod]
+        public void XLF_GetTransUnitNodeByID_Xliff3_Test_4()
+        {
+
+            /* Initialization. */
+
+            XmlDocument xlfDocument = new XmlDocument();
+            xlfDocument.Load(xliffPath3);
+            XLF testXLF = new XLF(xlfDocument);
+
+            TransUnitNode auxiliaryTransUnitNode;
+
+            /* Set of Assertions. */
+
+            for (int i = 1; i < testXLF.TransUnitDoublyLinkedList.Count; i++)
+            {
+                auxiliaryTransUnitNode = testXLF.GetTransUnitNodeByID(i);
+
+                if (auxiliaryTransUnitNode == null)
+                {
+                    Assert.Fail("Trans Unit node of id = {0} is null.", i);
+                }
+                Assert.AreEqual(i, auxiliaryTransUnitNode.Data.ID);
+            }
         }
 
         /* Testing the GetTransUnitDataByID() is unneccessary as this method takes the previous and return the Data. */

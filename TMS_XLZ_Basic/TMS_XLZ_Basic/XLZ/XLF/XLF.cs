@@ -61,7 +61,8 @@ namespace TMS_XLZ_Basic
 
 		public TransUnitData GetTransUnitData(int index)
 		{
-			return transUnitDoublyLinkedList[index].Data;
+			if (GetTransUnitNode(index) != null) return transUnitDoublyLinkedList[index].Data;
+			else return null;
 		}
 
 		public TransUnitNode GetTransUnitNodeByID(int id)
@@ -85,30 +86,37 @@ namespace TMS_XLZ_Basic
 
 		public TransUnitData GetTransUnitDataByID(int id)
 		{
-			return GetTransUnitNodeByID(id).Data;
+
+			if (GetTransUnitNodeByID(id) != null) return GetTransUnitNodeByID(id).Data;
+			else return null;
 		}
 
+		/*TODO: Change argument from TransUnitData to TransUnitNode + add validation if it is not null. */
 
-		public TransUnitNode GetPreviousTranslatableNode(TransUnitData searchedData)
+		public TransUnitNode GetPreviousTranslatableNode(TransUnitNode searchedNode)
 		{
-			
-			int searchedDataIndex = transUnitDoublyLinkedList.GetIndexOf(searchedData);
-			TransUnitNode searchedNode = transUnitDoublyLinkedList[searchedDataIndex];
 
 			TransUnitNode auxiliaryNode = null;
-
-			if (searchedNode != transUnitDoublyLinkedList.Tail)
+			if (searchedNode != null)
 			{
-				
-				while (auxiliaryNode != null)
-				{
-					auxiliaryNode = searchedNode.PreviousSibling;
 
-					if (auxiliaryNode.Data.IsTranslatable)
+				auxiliaryNode = searchedNode.PreviousSibling;
+				if (searchedNode != transUnitDoublyLinkedList.Tail)
+				{
+
+					while (auxiliaryNode != null)
 					{
-						return auxiliaryNode;
+						if (auxiliaryNode.Data.IsTranslatable)
+						{
+							return auxiliaryNode;
+						}
+
+						auxiliaryNode = auxiliaryNode.PreviousSibling;
 					}
+
 				}
+
+				return auxiliaryNode;
 			}
 
 			return auxiliaryNode;
@@ -116,26 +124,30 @@ namespace TMS_XLZ_Basic
 		}
 
 
-		public TransUnitNode GetNextTranslatableNode(TransUnitData searchedData)
+		public TransUnitNode GetNextTranslatableNode(TransUnitNode searchedNode)
 		{
 
-			int searchedDataIndex = transUnitDoublyLinkedList.GetIndexOf(searchedData);
-			TransUnitNode searchedNode = transUnitDoublyLinkedList[searchedDataIndex];
-
 			TransUnitNode auxiliaryNode = null;
-
-			if (searchedNode != transUnitDoublyLinkedList.Head)
+			if (searchedNode != null)
 			{
 
-				while (auxiliaryNode != null)
+				auxiliaryNode = searchedNode.NextSibling;
+				if (searchedNode != transUnitDoublyLinkedList.Tail)
 				{
-					auxiliaryNode = searchedNode.NextSibling;
 
-					if (auxiliaryNode.Data.IsTranslatable)
+					while (auxiliaryNode != null)
 					{
-						return auxiliaryNode;
+						if (auxiliaryNode.Data.IsTranslatable)
+						{
+							return auxiliaryNode;
+						}
+
+						auxiliaryNode = auxiliaryNode.NextSibling;
 					}
+
 				}
+
+				return auxiliaryNode;
 			}
 
 			return auxiliaryNode;

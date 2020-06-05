@@ -66,6 +66,14 @@ namespace TMS_XLZ_Basic
             }
         }
 
+        public bool IsWellFormed
+        {
+            get
+            {
+                return !isNotWellFormed;
+            }
+        }
+
         /* Methods */
 
         /*Changing Translatable value*/

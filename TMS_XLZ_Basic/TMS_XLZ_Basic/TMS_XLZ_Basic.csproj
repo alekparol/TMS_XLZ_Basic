@@ -48,6 +48,7 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="XLZ\SKL\SkeletonUnit.cs" />
+    <Compile Include="XLZ\XLF\Meta\Meta.cs" />
     <Compile Include="XLZ\XLF\TransUnit\DoublyLinkedList.cs" />
     <Compile Include="XLZ\XLF\TransUnit\LanguageNodes\Source.cs" />
     <Compile Include="XLZ\XLF\TransUnit\LanguageNodes\Target.cs" />

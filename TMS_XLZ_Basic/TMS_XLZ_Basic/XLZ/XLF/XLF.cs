@@ -21,22 +21,12 @@ namespace TMS_XLZ_Basic
 
 		private XmlDocument xlfDocument;
 
-		private XmlNodeList transUnitList;
-
 		private List<TransUnitData> transUnitDataList;
 		private DoublyLinkedList transUnitDoublyLinkedList;
 
 		private bool isParsedCorrectly;
 
 		/* Properties */
-
-		public XmlNodeList TransUnitList
-		{
-			get
-			{
-				return transUnitList;
-			}
-		}
 
 		public List<TransUnitData> TransUnitDataList
 		{
@@ -153,38 +143,55 @@ namespace TMS_XLZ_Basic
 		}
 
 		/* Constructors */
-		/* Validation of the path should be done in the XLZ class. */
-		public XLF(string inputFilePath)
+
+		public XLF()
 		{
+
+			xlfDocument = null;
+
+			transUnitDataList = new List<TransUnitData>();
+			transUnitDoublyLinkedList = new DoublyLinkedList();
+			isParsedCorrectly = false;
+
+		}
+
+		/* Validation of the path should be done in the XLZ class. */
+		public XLF(XmlDocument inputFile)
+		{
+
+			xlfDocument = inputFile;
 
 			TransUnitData auxiliaryTransUnitData;
 
-			transUnitDoublyLinkedList = new DoublyLinkedList();
 			transUnitDataList = new List<TransUnitData>();
+			transUnitDoublyLinkedList = new DoublyLinkedList();
 
-			xlfDocument = new XmlDocument();
-			xlfDocument.Load(inputFilePath);
+			
+			XmlNodeList transUnitList = inputFile.GetElementsByTagName("trans-unit");
+			if (transUnitList.Count > 0) isParsedCorrectly = true;
 
-			if (xlfDocument.DocumentType.Value == "xliff")
+			foreach (XmlNode transUnit in transUnitList)
 			{
-
-				transUnitList = xlfDocument.GetElementsByTagName("trans-unit");
-				if (transUnitList.Count > 0) isParsedCorrectly = true;
-
-				foreach(XmlNode transUnit in transUnitList)
+				if (transUnit != null)
 				{
+
 					auxiliaryTransUnitData = new TransUnitData(transUnit);
 
-					/* TODO: Addd condition for well parsedness. */
-					transUnitDoublyLinkedList.InsertNext(auxiliaryTransUnitData);
-
-				}
-
-				isParsedCorrectly = true;
-
+					if (auxiliaryTransUnitData.IsWellFormed)
+					{
+						transUnitDataList.Add(auxiliaryTransUnitData);
+						transUnitDoublyLinkedList.InsertNext(auxiliaryTransUnitData);
+					}					
+				}			
 			}
+
+			if (transUnitList.Count == transUnitDoublyLinkedList.Count)
+			{
+				isParsedCorrectly = true;
+			}
+
 			
-										 
+
 		}
 
 	}

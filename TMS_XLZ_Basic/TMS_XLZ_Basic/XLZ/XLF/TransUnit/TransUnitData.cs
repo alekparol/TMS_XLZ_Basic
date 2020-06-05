@@ -181,35 +181,33 @@ namespace TMS_XLZ_Basic
             sourceNode = new Source(transUnitNode);
             targetNode = new Target(transUnitNode);
 
-            bool success = Int32.TryParse(transUnitNode.Attributes["id"].Value, out int transUnitID);
-            if (success)
+            if (sourceNode != null || targetNode != null)
             {
-                iD = transUnitID;
-            }
-            else
-            {
-                iD = -1;
-            }
+                bool success = Int32.TryParse(transUnitNode.Attributes["id"].Value, out int transUnitID);
+                if (success)
+                {
+                    iD = transUnitID;
+                }
+                else
+                {
+                    iD = -1;
+                }
 
 
-            if (transUnitNode.Attributes["translate"].Value == "no")
-            {
-                isTranslatable = false;
-            }
-            else if (transUnitNode.Attributes["translate"].Value == "yes")
-            {
-                isTranslatable = true;
-            }
-            else
-            {
-                isNotWellFormed = true;
-            }
+                if (transUnitNode.Attributes["translate"].Value == "no")
+                {
+                    isTranslatable = false;
+                }
+                else if (transUnitNode.Attributes["translate"].Value == "yes")
+                {
+                    isTranslatable = true;
+                }
+                else
+                {
+                    isNotWellFormed = true;
+                }
 
-            if(sourceNode.ParsingSuccess == false)
-            {
-                parsingSuccess = false;
-                isNotWellFormed = true;
-            }
+            }         
 
         }
 

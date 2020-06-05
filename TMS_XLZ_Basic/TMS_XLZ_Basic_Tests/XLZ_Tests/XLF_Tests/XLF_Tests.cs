@@ -8,6 +8,18 @@ using System.Linq;
 
 namespace TMS_XLZ_Basic_Tests.XLZ_Tests.XLF_Tests
 {
+
+    /* NOTE: I found out that XLF documents do not necessarily contains trans-unit segments with ID field filled with a number. Sometimes, for example we 
+     * can find segments like: 
+     <trans-unit translate="yes" id="document.xml.3">
+				<source>https://connect.otis.com/Documents/Yammer Etiquette and Use Guide_Final.pdf</source>
+	 </trans-unit>
+     * Also after inquiery, it look like the segment 
+     <trans-unit translate="no" id="13">
+		        <target>gt</target>
+	 </trans-unit>
+     * is also null. */
+
     [TestClass]
     public class XLF_Tests
     {
@@ -94,6 +106,27 @@ namespace TMS_XLZ_Basic_Tests.XLZ_Tests.XLF_Tests
                 Assert.AreEqual(i, auxiliaryTransUnitNode.Data.ID);
 
             }
+
+        }
+
+        [TestMethod]
+        public void XLF_GetTransUnitNodeByID_Test_3_13()
+        {
+
+            /* Initialization. */
+
+            XmlDocument xlfDocument = new XmlDocument();
+            xlfDocument.Load(xliffPath);
+            XLF testXLF = new XLF(xlfDocument);
+
+            TransUnitNode auxiliaryTransUnitNode;
+
+            /* Set of Assertions. */
+
+            //auxiliaryTransUnitNode = testXLF.GetTransUnitNodeByID(13);
+            TransUnitData auxiliaryTransUnitData = testXLF.TransUnitDataList.First(x => x.ID == 13);
+            
+            Assert.AreEqual(13, auxiliaryTransUnitData.ID);
 
         }
 

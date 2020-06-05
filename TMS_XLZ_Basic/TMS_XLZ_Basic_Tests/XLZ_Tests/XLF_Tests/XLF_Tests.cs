@@ -129,15 +129,12 @@ namespace TMS_XLZ_Basic_Tests.XLZ_Tests.XLF_Tests
             XLF testXLF = new XLF(xlfDocument);
 
             int doublyLinkedListCount = testXLF.TransUnitDoublyLinkedList.Count;
-            TransUnitNode auxiliaryTransUnitNode = testXLF.GetTransUnitNode(106);
 
             /* Set of Assertions. */
 
-            Assert.AreEqual("document.xml.3", auxiliaryTransUnitNode.Data.GeneralID);
-            Assert.AreEqual(-1, auxiliaryTransUnitNode.Data.ID);
-            //Assert.IsNotNull(auxiliaryTransUnitNode);
-            //Assert.AreEqual(doublyLinkedListCount, auxiliaryTransUnitNode.Data.ID);
-            //Assert.AreEqual(testXLF.TransUnitDoublyLinkedList.Head, auxiliaryTransUnitNode);
+            Assert.AreEqual(doublyLinkedListCount, testXLF.MaximalNumericalID + testXLF.NonNumericalIDCount);
+            Assert.AreEqual("166", testXLF.GetTransUnitData(doublyLinkedListCount - 1).GeneralID);
+            Assert.AreEqual(166, testXLF.GetTransUnitData(doublyLinkedListCount - 1).ID);
 
         }
 
@@ -152,19 +149,29 @@ namespace TMS_XLZ_Basic_Tests.XLZ_Tests.XLF_Tests
             xlfDocument.Load(xliffPath);
             XLF testXLF = new XLF(xlfDocument);
 
+            int auxiliaryNumber = 0;
             TransUnitNode auxiliaryTransUnitNode;
 
             /* Set of Assertions. */
 
-            for (int i = 1; i < testXLF.TransUnitDoublyLinkedList.Count; i++)
+            for (int i = 0; i < testXLF.TransUnitDoublyLinkedList.Count; i++)
             {
-                auxiliaryTransUnitNode = testXLF.GetTransUnitNodeByID(i);
+                auxiliaryTransUnitNode = testXLF.GetTransUnitNode(i);
+
+                if(auxiliaryTransUnitNode.Data.DoesHaveNumericalID == false)
+                {
+                    auxiliaryNumber++;
+                }
+
+                if (auxiliaryTransUnitNode.Data.DoesHaveNumericalID)
+                {
+                    Assert.AreEqual(i - auxiliaryNumber, auxiliaryTransUnitNode.Data.ID - 1);
+                }
 
                 if (auxiliaryTransUnitNode == null)
                 {
                     Assert.Fail("Trans Unit node of id = {0} is null.", i);
-                }
-                Assert.AreEqual(i, auxiliaryTransUnitNode.Data.ID);
+                }                   
             }
         }
 
@@ -215,15 +222,15 @@ namespace TMS_XLZ_Basic_Tests.XLZ_Tests.XLF_Tests
             XLF testXLF = new XLF(xlfDocument);
 
             int doublyLinkedListCount = testXLF.TransUnitDoublyLinkedList.Count;
-            TransUnitNode auxiliaryTransUnitNode = testXLF.GetTransUnitNodeByID(doublyLinkedListCount);
 
             /* Set of Assertions. */
 
-            Assert.IsNotNull(auxiliaryTransUnitNode);
-            Assert.AreEqual(doublyLinkedListCount, auxiliaryTransUnitNode.Data.ID);
-            Assert.AreEqual(testXLF.TransUnitDoublyLinkedList.Head, auxiliaryTransUnitNode);
+            Assert.AreEqual(doublyLinkedListCount, testXLF.MaximalNumericalID + testXLF.NonNumericalIDCount);
+            Assert.AreEqual("166", testXLF.GetTransUnitData(doublyLinkedListCount - 1).GeneralID);
+            Assert.AreEqual(166, testXLF.GetTransUnitData(doublyLinkedListCount - 1).ID);
 
         }
+
 
         [TestMethod]
         public void XLF_GetTransUnitNodeByID_Xliff2_Test_4()
@@ -235,19 +242,29 @@ namespace TMS_XLZ_Basic_Tests.XLZ_Tests.XLF_Tests
             xlfDocument.Load(xliffPath2);
             XLF testXLF = new XLF(xlfDocument);
 
+            int auxiliaryNumber = 0;
             TransUnitNode auxiliaryTransUnitNode;
 
             /* Set of Assertions. */
 
-            for (int i = 1; i < testXLF.TransUnitDoublyLinkedList.Count; i++)
+            for (int i = 0; i < testXLF.TransUnitDoublyLinkedList.Count; i++)
             {
-                auxiliaryTransUnitNode = testXLF.GetTransUnitNodeByID(i);
+                auxiliaryTransUnitNode = testXLF.GetTransUnitNode(i);
+
+                if (auxiliaryTransUnitNode.Data.DoesHaveNumericalID == false)
+                {
+                    auxiliaryNumber++;
+                }
+
+                if (auxiliaryTransUnitNode.Data.DoesHaveNumericalID)
+                {
+                    Assert.AreEqual(i - auxiliaryNumber, auxiliaryTransUnitNode.Data.ID - 1);
+                }
 
                 if (auxiliaryTransUnitNode == null)
                 {
                     Assert.Fail("Trans Unit node of id = {0} is null.", i);
                 }
-                Assert.AreEqual(i, auxiliaryTransUnitNode.Data.ID);
             }
         }
 
@@ -298,15 +315,15 @@ namespace TMS_XLZ_Basic_Tests.XLZ_Tests.XLF_Tests
             XLF testXLF = new XLF(xlfDocument);
 
             int doublyLinkedListCount = testXLF.TransUnitDoublyLinkedList.Count;
-            TransUnitNode auxiliaryTransUnitNode = testXLF.GetTransUnitNodeByID(doublyLinkedListCount);
 
             /* Set of Assertions. */
 
-            Assert.IsNotNull(auxiliaryTransUnitNode);
-            Assert.AreEqual(doublyLinkedListCount, auxiliaryTransUnitNode.Data.ID);
-            Assert.AreEqual(testXLF.TransUnitDoublyLinkedList.Head, auxiliaryTransUnitNode);
+            Assert.AreEqual(doublyLinkedListCount, testXLF.MaximalNumericalID + testXLF.NonNumericalIDCount);
+            Assert.AreEqual("125", testXLF.GetTransUnitData(doublyLinkedListCount - 1).GeneralID);
+            Assert.AreEqual(125, testXLF.GetTransUnitData(doublyLinkedListCount - 1).ID);
 
         }
+
 
         [TestMethod]
         public void XLF_GetTransUnitNodeByID_Xliff3_Test_4()
@@ -318,19 +335,29 @@ namespace TMS_XLZ_Basic_Tests.XLZ_Tests.XLF_Tests
             xlfDocument.Load(xliffPath3);
             XLF testXLF = new XLF(xlfDocument);
 
+            int auxiliaryNumber = 0;
             TransUnitNode auxiliaryTransUnitNode;
 
             /* Set of Assertions. */
 
-            for (int i = 1; i < testXLF.TransUnitDoublyLinkedList.Count; i++)
+            for (int i = 0; i < testXLF.TransUnitDoublyLinkedList.Count; i++)
             {
-                auxiliaryTransUnitNode = testXLF.GetTransUnitNodeByID(i);
+                auxiliaryTransUnitNode = testXLF.GetTransUnitNode(i);
+
+                if (auxiliaryTransUnitNode.Data.DoesHaveNumericalID == false)
+                {
+                    auxiliaryNumber++;
+                }
+
+                if (auxiliaryTransUnitNode.Data.DoesHaveNumericalID)
+                {
+                    Assert.AreEqual(i - auxiliaryNumber, auxiliaryTransUnitNode.Data.ID - 1);
+                }
 
                 if (auxiliaryTransUnitNode == null)
                 {
                     Assert.Fail("Trans Unit node of id = {0} is null.", i);
                 }
-                Assert.AreEqual(i, auxiliaryTransUnitNode.Data.ID);
             }
         }
 

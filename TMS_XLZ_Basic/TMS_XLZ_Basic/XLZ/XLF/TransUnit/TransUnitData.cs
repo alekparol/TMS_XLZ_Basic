@@ -87,7 +87,7 @@ namespace TMS_XLZ_Basic
         {
             get
             {
-                if (this.iD == -1 && this.generalID != string.Empty)
+                if (this.iD != -1 && this.generalID != string.Empty)
                 {
                     return true;
                 }

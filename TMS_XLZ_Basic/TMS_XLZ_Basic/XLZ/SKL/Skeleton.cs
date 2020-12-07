@@ -18,7 +18,7 @@ namespace TMS_XLZ_Basic
 
         /* Fields */
 
-        public XmlDocument baseDocument;
+        public XmlDocument sklDocument;
 
         public List<SkeletonUnit> skeletonUnitsList;
 
@@ -44,11 +44,11 @@ namespace TMS_XLZ_Basic
 
         public Skeleton(XmlDocument inputFile)
         {
-            baseDocument = inputFile;
+            sklDocument = inputFile;
 
             skeletonUnitsList = new List<SkeletonUnit>();
 
-            XmlNodeList auxillaryList = baseDocument.GetElementsByTagName("tu-placeholder");
+            XmlNodeList auxillaryList = sklDocument.GetElementsByTagName("tu-placeholder");
             SkeletonUnit auxillarySkeletonUnit;
 
             foreach(XmlNode entity in auxillaryList)

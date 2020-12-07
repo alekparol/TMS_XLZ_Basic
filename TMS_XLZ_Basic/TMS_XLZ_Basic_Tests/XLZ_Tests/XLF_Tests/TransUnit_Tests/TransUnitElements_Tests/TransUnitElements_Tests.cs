@@ -5,7 +5,7 @@ using TMS_XLZ_Basic;
 using TMS_XLZ_Basic.XLZ.Xliff.TransUnit.TransUnitElements;
 
 
-namespace TMS_XLZ_Basic_Tests
+namespace TMS_XLZ_Basic_Tests.XLZTest
 {
 
 

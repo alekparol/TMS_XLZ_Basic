@@ -14,13 +14,13 @@ using System.Dynamic;
 
 namespace TMS_XLZ_Basic
 {
-    class SkeletonUnit
+    public class SkeletonUnit
     {
 
         /* Fields */
 
         public XmlNode formattingNode;
-        public XmlNode placehodlerNode;
+        public XmlNode placeholderNode;
 
         int ID;
 
@@ -31,18 +31,27 @@ namespace TMS_XLZ_Basic
             return ID;
         }
 
+        public XmlNode GetFormattingNode()
+        {
+            return formattingNode;
+        }
+
         /* Note: There could be placeholderNode and no formattingNode, but not the opposite. 
          * Base node for the object of this kind should be tu-placeholder. */
 
         public SkeletonUnit(XmlNode skeletonXmlNode)
         {
-            placehodlerNode = skeletonXmlNode;
+            placeholderNode = skeletonXmlNode;
 
-            if(skeletonXmlNode.PreviousSibling.Name == "formatting")
+            if(skeletonXmlNode.PreviousSibling != null)
+            {
+                if(skeletonXmlNode.PreviousSibling.Name == "formatting")
             {
                    formattingNode = skeletonXmlNode.PreviousSibling;
             }
 
+            }
+            
             bool success = Int32.TryParse(skeletonXmlNode.Attributes["id"].Value, out int transUnitID);
 
             if (success)

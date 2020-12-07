@@ -88,10 +88,9 @@ namespace TMS_XLZ_Basic
         {
             if(xmlNodeContainingSource.InnerXml.Contains("<source>") && xmlNodeContainingSource.InnerXml.Contains("</source>"))
             {
-                if (xmlNodeContainingSource.SelectSingleNode("./source") != null)
+                if ((xmlNode = xmlNodeContainingSource.SelectSingleNode("./source")) != null)
                 {
                     parsingSuccess = true;
-                    xmlNode = xmlNodeContainingSource.SelectSingleNode("./source");
 
                     outerXml = xmlNode.OuterXml;
                     innerXml = xmlNode.InnerXml;

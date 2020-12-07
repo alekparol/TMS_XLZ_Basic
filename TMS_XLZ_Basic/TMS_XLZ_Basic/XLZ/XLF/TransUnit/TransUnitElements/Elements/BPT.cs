@@ -14,7 +14,7 @@ using System.Collections.Generic;
  * a_1,...,a_i are denoting some specifical value of the attribute. 
  * 
  * All <bpt> tags have corresponding <ept> tags - correspondence is denoted by the same Id attribute's value. 
- * But it is worth to mention that those pairs doesn't have to be places within the boundries of one trans-unit node. 
+ * But it is worth to mention that those pairs doesn't have to be placed within the boundries of one trans-unit node. 
  * We can find a lot of examples where whole content of a one trans-unit node is between <bpt> tags or <ept> tags. 
  * In those cases, mostly those trans-unit nodes are not translatable. But there also some examples where <bpt> appears in the end of
  * the trans-unit node and there is no corresponding <ept> tag within the same trans-unit node. But few segments after, we can find 

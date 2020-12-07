@@ -1,7 +1,7 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using TMS_XLZ_Basic;
 
-namespace TMS_XLZ_Basic_Tests
+namespace TMS_XLZ_Basic_Tests.TransUnitElements_Tests
 {
     [TestClass]
     public class BPTUnitTests
